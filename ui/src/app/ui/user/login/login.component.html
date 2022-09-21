@@ -1,2 +1,40 @@
-<p>login works!</p>
-<button mat-button color='primary'>mat button</button>
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>Sign In </mat-card-title>
+    <mat-card-subtitle>at Twitter</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form
+      [formGroup]="form"
+      (submit)="submit()"
+    >
+      <mat-form-field>
+        <input matInput placeholder="username" formControlName="username" />
+        <mat-error>*username required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="password" formControlName="password" 
+        [type]="hidden? 'password' : 'text' "/>
+        <button mat-icon-button type="button" matSuffix (click)="hidden=!hidden"><mat-icon>
+          {{
+           hidden? "visibility_off":"visibility" 
+          }}
+        </mat-icon></button>
+        <mat-error>*password required</mat-error>
+      </mat-form-field>
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Sign In
+      </button>
+    </form>
+  </mat-card-content>
+  <mat-card-footer>
+      do not have any account?
+      <button mat-button color="primary" routerLink="/account/sign-up">sign up</button>
+  </mat-card-footer>
+</mat-card>

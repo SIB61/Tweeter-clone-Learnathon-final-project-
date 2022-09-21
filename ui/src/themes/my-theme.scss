@@ -1,0 +1,39 @@
+@use "@angular/material" as mat;
+@use "sass:map";
+@include mat.core();
+// @include mat.strong-focus-indicators(
+//   (
+//     border-style: dotted,
+//     border-width: 4px,
+//     border-radius: 2px,
+//   )
+// );
+
+$my-primary: mat.define-palette(mat.$blue-palette, 500);
+$my-accent: mat.define-palette(mat.$teal-palette, A200);
+
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+    ),
+  )
+);
+
+$color-config: mat.get-color-config($my-theme);
+$primary-palette: map.get($color-config, "primary");
+$accent-palette: map.get($color-config, "accent");
+$warn-palette: map.get($color-config, "warn");
+$is-dark-theme: map.get($color-config, "is-dark");
+
+$primary: mat.get-color-from-palette($primary-palette, 400);
+$accent: mat.get-color-from-palette($accent-palette, A200);
+
+:root {
+  --primary: #{$primary};
+  --accent: #{$accent};
+}
+
+@include mat.all-component-themes($my-theme);
+@include mat.strong-focus-indicators-theme(purple);

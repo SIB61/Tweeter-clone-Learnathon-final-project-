@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-export const AccountRoute:Routes=[
+export const AccountRoutes:Routes=[
   {
     path:'',
     pathMatch:'full',
@@ -8,10 +8,10 @@ export const AccountRoute:Routes=[
   },
   {
     path:'sign-in',
-    loadComponent:()=>import('src/app/ui/user/login/login.component').then(m=>m.LoginComponent)
+    loadComponent:()=>import('@ui/user/login/login.component').then(m=>m.LoginComponent)
   },
   {
     path:'sign-up',
-    loadComponent:()=>import('src/app/ui/user/register/register.component').then(m=>m.RegisterComponent)
+    loadComponent:()=>import('@ui/user/register/register.component').then(m=>m.RegisterComponent)
   },
 ]

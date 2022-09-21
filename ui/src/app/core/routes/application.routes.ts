@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
-import { AccountRoute } from './account.routes';
+import { AccountRoutes } from './account.routes';
+import { HomeRoutes } from './home.routes';
 
 export const ApplicationRoutes:Routes = [
   {
@@ -9,8 +10,13 @@ export const ApplicationRoutes:Routes = [
   },
   {
     path:'account',
-    loadComponent:()=>import('src/app/ui/layouts/account/account.component').then(m=>m.AccountComponent),
-    children:AccountRoute
+    loadComponent:()=>import('@ui/layouts/account/account.component').then(m=>m.AccountComponent),
+    children:AccountRoutes
+  },
+  {
+    path:'home',
+    loadComponent:()=>import('@ui/layouts/home/home.component').then(m=>m.HomeComponent),
+    children:HomeRoutes
   }
 ]
 
