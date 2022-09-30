@@ -1,17 +1,27 @@
 <mat-drawer-container>
-  <mat-drawer opened mode='side' position='start'> 
-   <div class="drawer"> 
-    <button mat-icon-button style="margin:5px 20px"><img src="assets/twitter48.svg" style="width:35px;"></button>
+  <mat-drawer opened mode="side" position="start">
+    <div class="drawer">
       <div class="nav">
-    <app-side-navigation></app-side-navigation>
+        <span>
+          <button mat-button>
+            <img src="assets/twitter48.svg" style="width: 35px" />
+          </button>
+        </span>
+        <app-side-navigation></app-side-navigation>
       </div>
     </div>
   </mat-drawer>
-  <mat-drawer [opened]="(breakPoint.breakpoint$ | async) != breakpoints.Small" mode='side' position='end'> 
-    <div class="drawer">
-    </div>
+  <mat-drawer
+    [opened]="(breakPoint.breakpoint$ | async) != breakpoints.Small"
+    mode="side"
+    position="end"
+  >
+    <div class="drawer"></div>
   </mat-drawer>
   <mat-drawer-content>
-    <router-outlet></router-outlet>
+    <app-title-bar class="appbar"></app-title-bar>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
   </mat-drawer-content>
 </mat-drawer-container>

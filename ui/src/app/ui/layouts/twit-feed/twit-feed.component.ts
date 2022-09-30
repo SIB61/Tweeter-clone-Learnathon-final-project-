@@ -8,15 +8,18 @@ import { TweetViewComponent } from '@ui/tweet/tweet-view/tweet-view.component';
 @Component({
   selector: 'app-twit-feed',
   standalone: true,
-  imports: [CommonModule,MaterialModule,RouterModule,CreateTweetComponent,TweetViewComponent],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    RouterModule,
+    CreateTweetComponent,
+    TweetViewComponent,
+  ],
   templateUrl: './twit-feed.component.html',
-  styleUrls: ['./twit-feed.component.scss']
+  styleUrls: ['./twit-feed.component.scss'],
 })
 export class TwitFeedComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  constructor() {}
+  ngOnInit(): void {}
 }

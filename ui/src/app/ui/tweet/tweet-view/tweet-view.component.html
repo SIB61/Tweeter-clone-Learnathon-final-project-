@@ -1,1 +1,40 @@
-<p>tweet-view works!</p>
+<mat-card>
+  <mat-card-header>
+    <img src="http://placeimg.com/40/40/boy" matCardAvatar />
+    <mat-card-title>Sabit</mat-card-title>
+    <mat-card-subtitle>@sib61</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <span class="text-xl">
+      There is no one but Allah can Help us. We love Muhammad SW . No one can
+      make us
+    </span>
+    <mat-chip-list class="chip-list" #tagList aria-label="Fruit selection">
+      <mat-chip style="background-color: aliceblue" *ngFor="let tag of tags">
+        #{{ tag }}
+      </mat-chip>
+    </mat-chip-list>
+  </mat-card-content>
+  <mat-card-footer>
+    <div>
+      <button mat-icon-button (click)="isLiked = !isLiked">
+        <mat-icon [class.text-red-500]="isLiked">{{
+          isLiked ? "favorite" : "favorite_outline"
+        }}</mat-icon>
+      </button>
+      23
+    </div>
+    <div>
+      <button mat-icon-button>
+        <mat-icon class="material-icon-outlined">comment</mat-icon>
+      </button>
+      21
+    </div>
+    <div>
+      <button mat-icon-button (click)="isRetweeted = true">
+        <mat-icon [class.text-green-500]="isRetweeted">ios_share</mat-icon>
+      </button>
+      76
+    </div>
+  </mat-card-footer>
+</mat-card>

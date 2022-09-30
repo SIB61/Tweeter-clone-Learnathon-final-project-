@@ -18,6 +18,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatChipsModule } from '@angular/material/chips';
 const matModules = [
   MatFormFieldModule,
   MatPaginatorModule,
@@ -29,6 +30,7 @@ const matModules = [
   MatInputModule,
   MatListModule,
   ScrollingModule,
+  MatChipsModule,
   MatSidenavModule,
   MatCardModule,
   MatButtonToggleModule,

@@ -1,0 +1,14 @@
+mat-card {
+  margin: 16px 0px;
+}
+.mat-card-footer {
+  // background-color: aliceblue;
+  border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
+  display: flex;
+  justify-content: space-evenly;
+}
+.mat-card-actions {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: aliceblue;
+}

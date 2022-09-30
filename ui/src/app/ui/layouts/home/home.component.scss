@@ -1,23 +1,45 @@
-mat-drawer-container{
-  height:100%;
-  width:100%;
+mat-drawer-container {
+  height: 100%;
+  width: 100%;
 }
-.drawer{
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+.drawer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
 }
-mat-drawer{
-  width:25%;
-}
-mat-drawer-content{
-    background-color:white;
+mat-drawer {
+  width: 20%;
 }
 
-.nav{
-  width:100%;
-  padding:0% 20%;
+.nav {
+  padding: 0% 0%;
+}
 
+.mat-drawer-content {
+  height: 100%;
+  position: relative;
+  background-color: aliceblue;
+
+  .appbar {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 90;
+  }
+
+  .content {
+    position: absolute;
+    width: 100%;
+    // padding: 10px;
+    padding-top: 70px;
+    height: calc(100vh);
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 }

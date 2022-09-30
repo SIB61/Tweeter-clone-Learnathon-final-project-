@@ -7,7 +7,7 @@ export const HomeRoutes:Routes=[
     redirectTo:'tweet-feed'
   },
   {
-    path:'twit-feed',
+    path:'tweet-feed',
     loadComponent:()=>import('@ui/layouts/twit-feed/twit-feed.component').then(m=>m.TwitFeedComponent)
   },
   {

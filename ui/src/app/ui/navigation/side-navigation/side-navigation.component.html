@@ -1,27 +1,29 @@
-<div *ngIf="(breakpointService.breakpoint$ | async) == breakpoints.Large then expand else collapse">
-</div>
+<div
+  *ngIf="
+    (breakpointService.breakpoint$ | async) == breakpoints.Large;
+    then expand;
+    else collapse
+  "
+></div>
 
 <ng-template #collapse>
   <div class="container">
     <div class="inner">
-  <button mat-icon-button [ngClass]="isSelected(1)? 'selected':''" routerLink='/home/twit-feed' >
-    <mat-icon>home</mat-icon> 
-  </button>
-  <button mat-icon-button  [ngClass]="isSelected(2)? 'selected':''" routerLink='/home/search'>
-    <mat-icon>tag</mat-icon> 
-  </button>
-  <button mat-icon-button  [ngClass]="isSelected(3)? 'selected':''" routerLink='/home/notification' >
-    <mat-icon>notifications</mat-icon> 
-  </button>
-  <button mat-icon-button  [ngClass]="isSelected(4)? 'selected':''" routerLink='/home/profile' >
-    <mat-icon>person</mat-icon> 
-  </button>
-  <button mat-icon-button [ngClass]="isSelected(5)? 'selected':''" routerLink='/home/network' >
-    <mat-icon>group</mat-icon>
-  </button>
-  <button mat-icon-button  color='primary' style="color:white;justify-content:center;" >
-    <mat-icon>add</mat-icon>
-  </button>
+      <button
+        *ngFor="let navOption of navList"
+        mat-icon-button
+        [routerLink]="navOption.route"
+        [class.selected]="isSelected(navOption.route)"
+      >
+        <mat-icon>{{ navOption.icon }}</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="primary"
+        style="color: white; justify-content: center"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
   </div>
 </ng-template>
@@ -29,18 +31,24 @@
 <ng-template #expand>
   <div class="container">
     <div class="inner">
-  <button mat-button class="my-button" [ngClass]="isSelected(1)? 'selected':''" routerLink='/home/twit-feed' >
-    <mat-icon>home</mat-icon> 
-    <span *ngIf="(breakpointService.breakpoint$ | async) == breakpoints.Large"> Home</span> 
-  </button>
-  <button mat-button class="my-button"  [ngClass]="isSelected(2)? 'selected':''" routerLink='/home/search'>
-    <mat-icon>tag</mat-icon> 
-    <span *ngIf="(breakpointService.breakpoint$ | async) == breakpoints.Large">Explore</span> 
-  </button>
-  <button mat-button class="my-button"  [ngClass]="isSelected(3)? 'selected':''" routerLink='/home/notification' ><mat-icon>notifications</mat-icon> <span *ngIf="(breakpointService.breakpoint$ | async) == breakpoints.Large">Notification</span> </button>
-  <button mat-button class="my-button"  [ngClass]="isSelected(4)? 'selected':''" routerLink='/home/profile' ><mat-icon>person</mat-icon> <span *ngIf="(breakpointService.breakpoint$ | async) == breakpoints.Large">Profile</span> </button>
-  <button mat-button class="my-button" [ngClass]="isSelected(5)? 'selected':''" routerLink='/home/network' ><mat-icon>group</mat-icon> <span *ngIf="(breakpointService.breakpoint$ | async) == breakpoints.Large">Network</span> </button>
-  <button mat-raised-button  color='primary' class="my-button" style="color:white; width:100%; justify-content:center" >Tweet</button>
-  </div>
+      <button
+        *ngFor="let navOption of navList"
+        mat-button
+        class="my-button"
+        [routerLink]="navOption.route"
+        [class.selected]="isSelected(navOption.route)"
+      >
+        <mat-icon class="mr-2">{{ navOption.icon }}</mat-icon>
+        <span>{{ navOption.title }}</span>
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="my-button"
+        style="color: white; width: 100%; justify-content: center"
+      >
+        Tweet
+      </button>
+    </div>
   </div>
 </ng-template>
