@@ -18,11 +18,19 @@ mat-card-actions {
   align-items: flex-end;
 }
 mat-card {
-  margin: 20px 0px;
+  // margin: 20px 0px;
+  border-bottom: 1px solid #eee;
+  border-radius: 0px;
 }
 input {
   outline: none;
   border: none;
   width: 100%;
   font-size: 15px;
+}
+button {
+  border-radius: 30px;
+  height: max-content;
+  padding: 5px 20px;
+  font-weight: bold;
 }

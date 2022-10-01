@@ -1,4 +1,8 @@
-<div class="container p-4">
-  <app-create-tweet></app-create-tweet>
-  <app-tweet-view *ngFor="let i of arr"></app-tweet-view>
+<div class="tweet-feed-container">
+  <app-title-bar class="appbar" [title]="(route.data | async)['title']">
+  </app-title-bar>
+  <div class="feed">
+    <app-create-tweet></app-create-tweet>
+    <app-tweet-view *ngFor="let i of arr"></app-tweet-view>
+  </div>
 </div>

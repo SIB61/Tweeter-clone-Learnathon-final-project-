@@ -2,7 +2,7 @@
   *ngIf="
     (breakpointService.breakpoint$ | async) == breakpoints.Large;
     then expand;
-    else collapse
+    else expand
   "
 ></div>
 
@@ -31,6 +31,9 @@
 <ng-template #expand>
   <div class="container">
     <div class="inner">
+      <button mat-icon-button class="icon" color="primary">
+        <img src="assets/twitter48.svg" style="width: 35px" />
+      </button>
       <button
         *ngFor="let navOption of navList"
         mat-button

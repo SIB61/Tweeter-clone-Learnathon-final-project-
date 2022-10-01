@@ -16,9 +16,15 @@
 }
 .my-button {
   border-radius: 30px;
-  margin: 5px;
+  margin: 5px 0px;
   padding: 10px 20px;
   font-size: 120%;
+}
+.icon {
+  padding: 10px;
+  width: max-content;
+  height: max-content;
+  margin: 10px 10px;
 }
 .selected {
   background-color: aliceblue;

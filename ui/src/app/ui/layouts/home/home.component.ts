@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '@shared/material/material.module';
 import { SideNavigationComponent } from '@ui/navigation/side-navigation/side-navigation.component';
 import { Breakpoints } from '@angular/cdk/layout';
@@ -22,7 +22,6 @@ import { TitleBarComponent } from '@ui/navigation/title-bar/title-bar.component'
 })
 export class HomeComponent implements OnInit {
   breakpoints = Breakpoints;
-  constructor(public breakPoint: BreakPointService) {}
-
+  constructor(public breakPoint: BreakPointService, public router: Router) {}
   ngOnInit(): void {}
 }

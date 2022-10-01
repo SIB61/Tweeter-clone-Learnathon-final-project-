@@ -2,11 +2,6 @@
   <mat-drawer opened mode="side" position="start">
     <div class="drawer">
       <div class="nav">
-        <span>
-          <button mat-button>
-            <img src="assets/twitter48.svg" style="width: 35px" />
-          </button>
-        </span>
         <app-side-navigation></app-side-navigation>
       </div>
     </div>
@@ -19,9 +14,6 @@
     <div class="drawer"></div>
   </mat-drawer>
   <mat-drawer-content>
-    <app-title-bar class="appbar"></app-title-bar>
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>
