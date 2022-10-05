@@ -1,18 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MaterialModule } from '@shared/material/material.module';
 
 @Component({
   selector: 'app-network-layout',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MaterialModule],
   templateUrl: './network-layout.component.html',
-  styleUrls: ['./network-layout.component.scss']
+  styleUrls: ['./network-layout.component.scss'],
 })
 export class NetworkLayoutComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
+  links = [
+    {
+      label: 'Follower',
+      route: '/home/network/follower',
+    },
+    {
+      label: 'Following',
+      route: '/home/network/following',
+    },
+  ];
+  activeLink = this.links[0];
 }

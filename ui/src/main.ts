@@ -15,6 +15,11 @@ import { HttpErrorHandlerService } from '@core/services/error-handling/http-erro
 import { AbsHttpErrorHandlerService } from '@core/abs-services/error-handling/abs-http-error-handler.service';
 import { TokenInterceptorService } from '@core/interceptors/token-interceptor.service';
 import { ErrorHandlingInterceptorService } from '@core/interceptors/error-handling-interceptor.service';
+import { AbsLocalTokenService } from '@shared/abs-services/user/abs-local-token.service';
+import { LocalUserInfoService } from '@shared/services/user/local-user-info.service';
+import { AbsLocalUserService } from '@shared/abs-services/user/abs-local-user.service';
+import { MaterialModule } from '@shared/material/material.module';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 if (environment.production) {
   enableProdMode();
@@ -25,7 +30,9 @@ bootstrapApplication(BootstrapComponent, {
     importProvidersFrom(
       RouterModule.forRoot(ApplicationRoutes),
       BrowserAnimationsModule,
-      HttpClientModule
+      HttpClientModule,
+      MaterialModule,
+      InfiniteScrollModule
     ),
     BreakPointService,
     {
@@ -49,6 +56,14 @@ bootstrapApplication(BootstrapComponent, {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlingInterceptorService,
       multi: true,
+    },
+    {
+      provide: AbsLocalTokenService,
+      useClass: LocalUserInfoService,
+    },
+    {
+      provide: AbsLocalUserService,
+      useClass: LocalUserInfoService,
     },
   ],
 }).catch((err) => console.error(err));

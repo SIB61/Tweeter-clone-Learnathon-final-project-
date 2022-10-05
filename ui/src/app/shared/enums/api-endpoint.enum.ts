@@ -1,7 +1,8 @@
 export enum ApiEndpoints {
   USERS = 'users',
   LOGIN = 'Account/login',
-  REGISTER = 'Account/sing-up',
+  REGISTER = 'Account/sign-up',
   ONLINE = 'online',
   REFRESH = 'refresh',
+  TWEET = 'Tweet',
 }

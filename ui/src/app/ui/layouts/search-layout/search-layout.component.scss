@@ -1,0 +1,19 @@
+.searchbox {
+  background-color: aliceblue;
+  padding: 4px 8px;
+  border-radius: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  input {
+    padding: 0px 8px;
+    background-color: transparent;
+    border-width: 0px;
+    width: 100%;
+    &:focus {
+      outline: 0px;
+      border-width: 0px;
+    }
+  }
+}

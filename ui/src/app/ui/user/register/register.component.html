@@ -4,10 +4,16 @@
     <mat-card-subtitle>at Twitter</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <form
-      [formGroup]="form"
-      (submit)="submit()"
-    >
+    <form [formGroup]="form" (submit)="submit()">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="full name"
+          formControlName="fullName"
+          autocomplete="false"
+        />
+        <mat-error>{{ getErrorMsg(form.get("fullName")) }}</mat-error>
+      </mat-form-field>
       <mat-form-field>
         <input
           matInput
@@ -15,10 +21,7 @@
           formControlName="username"
           autocomplete="false"
         />
-        <mat-error *ngIf="invalidUserName">username allready exists</mat-error>
-        <mat-error>{{
-          getErrorMsg(form.get("username"))
-        }}</mat-error>
+        <mat-error>{{ getErrorMsg(form.get("username")) }}</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input
@@ -27,10 +30,7 @@
           formControlName="email"
           autocomplete="false"
         />
-        <mat-error *ngIf="invalidEmail">email allready exists</mat-error>
-        <mat-error>{{
-          getErrorMsg(form.get("email"))
-        }}</mat-error>
+        <mat-error>{{ getErrorMsg(form.get("email")) }}</mat-error>
       </mat-form-field>
       <mat-form-field>
         <input
@@ -40,9 +40,7 @@
           formControlName="birthDate"
         />
         <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-error >{{
-          getErrorMsg(form.get("birthDate"))
-        }}</mat-error>
+        <mat-error>{{ getErrorMsg(form.get("birthDate")) }}</mat-error>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -54,14 +52,17 @@
           formControlName="password"
           autocomplete="false"
         />
-        <button mat-icon-button type="button" matSuffix (click)=" hidden = !hidden"><mat-icon>
-          {{
-           hidden? "visibility_off":"visibility" 
-          }}
-        </mat-icon></button>
-        <mat-error >{{
-          getErrorMsg(form.get("password"))
-        }}</mat-error>
+        <button
+          mat-icon-button
+          type="button"
+          matSuffix
+          (click)="hidden = !hidden"
+        >
+          <mat-icon>
+            {{ hidden ? "visibility_off" : "visibility" }}
+          </mat-icon>
+        </button>
+        <mat-error>{{ getErrorMsg(form.get("password")) }}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -72,14 +73,17 @@
           formControlName="repeatedPassword"
           autocomplete="false"
         />
-        <button mat-icon-button type="button" matSuffix (click)="rHidden = !rHidden"><mat-icon>
-          {{
-           rHidden? "visibility_off":"visibility" 
-          }}
-        </mat-icon></button>
-        <mat-error>{{
-          getErrorMsg(form.get("repeatedPassword"))
-        }}</mat-error>
+        <button
+          mat-icon-button
+          type="button"
+          matSuffix
+          (click)="rHidden = !rHidden"
+        >
+          <mat-icon>
+            {{ rHidden ? "visibility_off" : "visibility" }}
+          </mat-icon>
+        </button>
+        <mat-error>{{ getErrorMsg(form.get("repeatedPassword")) }}</mat-error>
       </mat-form-field>
       <button
         mat-flat-button
@@ -92,7 +96,9 @@
     </form>
   </mat-card-content>
   <mat-card-footer class="bg-blue-50">
-      allready have an account?
-      <button mat-button color="primary" routerLink="/account/sign-in">sign in</button>
+    allready have an account?
+    <button mat-button color="primary" routerLink="/account/sign-in">
+      sign in
+    </button>
   </mat-card-footer>
 </mat-card>

@@ -1,11 +1,16 @@
 <mat-card class="mat-elevation-z0">
   <mat-card-header>
     <img src="http://placeimg.com/40/40/person" matCardAvatar />
-    <mat-card-title>Sabit</mat-card-title>
-    <mat-card-subtitle>@sib61</mat-card-subtitle>
+    <mat-card-title>{{ localUser.fullName }}</mat-card-title>
+    <mat-card-subtitle>{{ localUser.userName }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <textarea appAutoResize class="text text-xl" placeholder="write"></textarea>
+    <textarea
+      appAutoResize
+      class="text"
+      placeholder="write"
+      [(ngModel)]="content"
+    ></textarea>
     <mat-chip-list class="chip-list" #tagList>
       <mat-chip
         style="background-color: aliceblue"
@@ -34,6 +39,13 @@
         (matChipInputTokenEnd)="add($event)"
       />
     </div>
-    <button mat-raised-button matSuffix color="primary">Tweet</button>
+    <div class="flex">
+      <button mat-flat-button matSuffix color="primary" (click)="tweet()">
+        Tweet
+      </button>
+    </div>
   </mat-card-actions>
+  <mat-card-footer *ngIf="showProgress">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-footer>
 </mat-card>

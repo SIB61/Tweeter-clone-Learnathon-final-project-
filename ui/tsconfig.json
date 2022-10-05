@@ -18,15 +18,12 @@
     "importHelpers": true,
     "target": "es2020",
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
-    "paths":{
-      "@ui/*":["src/app/ui/*"],
-      "@core/*":["src/app/core/*"],
-      "@shared/*":["src/app/shared/*"],
-      "@store/*":["src/app/store/*"]
+    "lib": ["es2020", "dom"],
+    "paths": {
+      "@ui/*": ["src/app/ui/*"],
+      "@core/*": ["src/app/core/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@state/*": ["src/app/state/*"]
     }
   },
   "angularCompilerOptions": {

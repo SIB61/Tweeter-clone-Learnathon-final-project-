@@ -15,6 +15,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -38,6 +39,7 @@ const matModules = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatIconModule,
+  MatProgressSpinnerModule,
   MatSnackBarModule,
   MatTabsModule,
   MatRippleModule,
