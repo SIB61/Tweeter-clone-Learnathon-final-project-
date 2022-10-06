@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '@shared/material/material.module';
-import { BreakPointService } from '@core/services/break-point/break-point.service';
 import { Breakpoints } from '@angular/cdk/layout';
+import { BreakPointService } from '@core/services/concrete/break-point/break-point.service';
 
 @Component({
   selector: 'app-side-navigation',

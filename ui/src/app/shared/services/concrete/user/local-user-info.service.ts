@@ -1,10 +1,10 @@
 import { useAnimation } from '@angular/animations';
 import { Injectable } from '@angular/core';
-import { AbsStorageService } from '@core/abs-services/storage/abs-storage.service';
-import { AbsLocalTokenService } from '@shared/abs-services/user/abs-local-token.service';
-import { AbsLocalUserService } from '@shared/abs-services/user/abs-local-user.service';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { TokenModel } from '@shared/models/token.model';
 import { UserModel } from '@shared/models/user.model';
+import { AbsLocalTokenService } from '@shared/services/abstract/user/abs-local-token.service';
+import { AbsLocalUserService } from '@shared/services/abstract/user/abs-local-user.service';
 
 @Injectable({
   providedIn: 'root',

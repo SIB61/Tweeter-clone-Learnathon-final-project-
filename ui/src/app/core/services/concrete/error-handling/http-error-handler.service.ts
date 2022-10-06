@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AbsHttpErrorHandlerService } from '@core/abs-services/error-handling/abs-http-error-handler.service';
+import { AbsHttpErrorHandlerService } from '@core/services/abstract/error-handling/abs-http-error-handler.service';
 import { Observable, of, throwError } from 'rxjs';
 
 @Injectable({

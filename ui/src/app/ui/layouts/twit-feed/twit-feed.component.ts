@@ -6,9 +6,11 @@ import { CreateTweetComponent } from '@ui/tweet/create-tweet/create-tweet.compon
 import { TweetViewComponent } from '@ui/tweet/tweet-view/tweet-view.component';
 import { TitleBarComponent } from '@ui/navigation/title-bar/title-bar.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { TweetService } from '@shared/services/tweet/tweet.service';
-import { AbsTweetService } from '@shared/abs-services/tweet/abs-tweet.service';
 import { Observable } from 'rxjs';
+import { AbsTweetService } from '@shared/services/abstract/tweet/abs-tweet.service';
+import { TweetService } from '@shared/services/concrete/tweet/tweet.service';
+import { AbsTimelineService } from '@shared/services/abstract/tweet/abs-timeline.service';
+import { TimeLineService } from '@shared/services/concrete/tweet/timeline.service';
 
 @Component({
   selector: 'app-twit-feed',
@@ -29,11 +31,16 @@ import { Observable } from 'rxjs';
       provide: AbsTweetService,
       useClass: TweetService,
     },
+    {
+      provide: AbsTimelineService,
+      useClass: TimeLineService,
+    },
   ],
 })
 export class TwitFeedComponent implements OnInit {
   constructor(
     public tweetService: AbsTweetService,
+    public TimeLineService: AbsTimelineService,
     public route: ActivatedRoute
   ) {}
   tweetModels$: Observable<any>;
@@ -43,18 +50,17 @@ export class TwitFeedComponent implements OnInit {
   currentPage = 1;
   loadTweet(pageNumber: number) {
     if (pageNumber < 1) pageNumber = 1;
-    this.tweetModels$ = this.tweetService.getTimeline(pageNumber, 5);
+    this.tweetModels$ = this.TimeLineService.getTimeline(pageNumber);
   }
   onScrollDown() {
     console.warn('scrolled');
-    this.tweetModels$ = this.tweetService.getTimeline(this.currentPage + 1, 5);
+    this.tweetModels$ = this.TimeLineService.getTimeline(this.currentPage + 1);
     this.currentPage++;
   }
   onScrollUp() {
     if (this.currentPage > 1) {
-      this.tweetModels$ = this.tweetService.getTimeline(
-        this.currentPage - 1,
-        5
+      this.tweetModels$ = this.TimeLineService.getTimeline(
+        this.currentPage - 1
       );
       this.currentPage--;
     }

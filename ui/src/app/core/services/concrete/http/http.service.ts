@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AbsHttpService } from '@core/abs-services/http/abs-http.service';
+import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '@core/services/http/http.service';
-import { AbsAuthService } from '@shared/abs-services/auth/abs-auth.service';
-import { AbsLocalTokenService } from '@shared/abs-services/user/abs-local-token.service';
-import { AbsLocalUserService } from '@shared/abs-services/user/abs-local-user.service';
+import { HttpService } from '@core/services/concrete/http/http.service';
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
 import { AuthResponseModel } from '@shared/models/auth-response.model';
+import { AbsAuthService } from '@shared/services/abstract/auth/abs-auth.service';
+import { AbsLocalTokenService } from '@shared/services/abstract/user/abs-local-token.service';
+import { AbsLocalUserService } from '@shared/services/abstract/user/abs-local-user.service';
 import { tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 

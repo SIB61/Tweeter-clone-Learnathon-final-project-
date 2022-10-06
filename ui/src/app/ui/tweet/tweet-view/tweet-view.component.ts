@@ -16,30 +16,31 @@ export class TweetViewComponent implements OnInit {
   @Input() public tweetModel: any;
   isLiked = true;
   isRetweeted = false;
-  tags = ['We_Love_Muhammad', 'Allahuakbar'];
+  tags = [];
   addOnBlur = true;
   likes = 4;
   comments = 2;
   retweets = 1;
+  panelOpenState = false;
+  isExpanded = false;
+  s = true;
   ngOnInit(): void {
     console.warn(this.tweetModel);
-    this.tags = this.tweetModel.hashTag;
-  }
-  remove(tag: string): void {
-    const index = this.tags.indexOf(tag);
-
-    if (index >= 0) {
-      this.tags.splice(index, 1);
-    }
+    let hashTag: string = this.tweetModel.hashTag;
+    this.tags = hashTag.split(' ');
   }
 
   retweet() {
     this.retweets++;
     this.isRetweeted = true;
   }
-  commnet() {}
+  commnet() {
+    this.isExpanded = !this.isExpanded;
+  }
   like() {
     this.isLiked ? this.likes-- : this.likes++;
     this.isLiked = !this.isLiked;
   }
+
+  change() {}
 }

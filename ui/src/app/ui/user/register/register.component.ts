@@ -15,9 +15,9 @@ import {
   validAge,
 } from 'src/app/shared/validators/custom.validator';
 import { MaterialModule } from '@shared/material/material.module';
-import { AbsUserService } from '@shared/abs-services/user/abs-user.service';
 import { UserModel } from '@shared/models/user.model';
-import { UserService } from '@shared/services/user/user.service';
+import { AbsUserService } from '@shared/services/abstract/user/abs-user.service';
+import { UserService } from '@shared/services/concrete/user/user.service';
 
 @Component({
   selector: 'app-register',
@@ -25,12 +25,12 @@ import { UserService } from '@shared/services/user/user.service';
   imports: [CommonModule, MaterialModule, RouterModule, ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers:[
+  providers: [
     {
-      provide:AbsUserService,
-      useClass:UserService
-    }
-  ]
+      provide: AbsUserService,
+      useClass: UserService,
+    },
+  ],
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;

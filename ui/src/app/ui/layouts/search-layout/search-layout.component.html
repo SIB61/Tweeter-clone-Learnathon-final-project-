@@ -1,12 +1,36 @@
 <div class="container bg-white h-screen overflow-hidden relative">
   <mat-toolbar class="appbar glass">
     <div class="searchbox">
-      <input type="text" placeholder="Search" />
-      <button mat-icon-button matSuffix color="primary" class="ml-2">
+      <input type="text" placeholder="Search" [(ngModel)]="searchText" />
+      <button
+        mat-icon-button
+        matSuffix
+        color="primary"
+        class="ml-2"
+        (click)="search()"
+      >
         <mat-icon color="primary">search</mat-icon>
       </button>
     </div>
   </mat-toolbar>
-  <div class="h-screen overflow-scroll"></div>
+  <div *ngIf="isTweetSearch; then tweet; else user"></div>
 </div>
+
+<ng-template #tweet>
+  <div class="search-result" *ngIf="tweetModels$ | async as tweetModels">
+    <app-tweet-view
+      *ngFor="let tweetModel of tweetModels"
+      [tweetModel]="tweetModel"
+    ></app-tweet-view>
+  </div>
+</ng-template>
+<ng-template #user class="search-result">
+  <div class="search-result" *ngIf="userModels$ | async as userModels">
+    <app-user-preview-cart
+      *ngFor="let user of userModels"
+      [user]="user"
+      [actionText]="'Follow'"
+    ></app-user-preview-cart>
+  </div>
+</ng-template>
 <!-- class="bg-[aliceblue] w-full rounded-3xl py-2 px-4 active:outline-none active:border-none" -->

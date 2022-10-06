@@ -5,4 +5,8 @@ export enum ApiEndpoints {
   ONLINE = 'online',
   REFRESH = 'refresh',
   TWEET = 'Tweet',
+  TWEET_SEARCH = 'TWEET/search',
+  USER_SEARCH = 'Users/serach-users',
+  FOLLOWER = 'Follower/follower',
+  FOLLOWING = 'Follower/following',
 }

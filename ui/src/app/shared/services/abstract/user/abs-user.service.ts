@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export abstract class AbsUserService {
-  public abstract getAllUser(): Observable<any>;
-  public abstract getProfile(id: string): Observable<any>;
+  public abstract getAllUser(): Observable<UserModel[]>;
+  public abstract getProfile(id: string): Observable<UserModel>;
   public abstract getUserByPage(
     pageSize: number,
     pageNumber: number
@@ -14,7 +14,7 @@ export abstract class AbsUserService {
     name: string,
     pageSize: number,
     pageNumber: number
-  ): Observable<any>;
+  ): Observable<UserModel[]>;
   public abstract updateUser(user: UserModel): Observable<any>;
   public abstract deleteUser(id: string): Observable<any>;
   public abstract createUser(user: UserModel): Observable<any>;

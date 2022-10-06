@@ -1,0 +1,12 @@
+.mat-card {
+  border-radius: 0px;
+  border-bottom: 1px solid #eee;
+  ::ng-deep .mat-card-header-text {
+    width: 100%;
+  }
+}
+button {
+  border-radius: 30px;
+  margin-right: 20px;
+  padding: 5px 20px;
+}

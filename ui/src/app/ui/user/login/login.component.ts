@@ -8,8 +8,8 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '@shared/material/material.module';
-import { AbsAuthService } from '@shared/abs-services/auth/abs-auth.service';
-import { AuthService } from '@shared/services/auth/auth.service';
+import { AbsAuthService } from '@shared/services/abstract/auth/abs-auth.service';
+import { AuthService } from '@shared/services/concrete/auth/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,

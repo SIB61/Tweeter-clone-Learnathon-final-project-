@@ -7,10 +7,5 @@ import { Observable } from 'rxjs';
 })
 export abstract class AbsTweetService {
   public abstract tweet(tweet: TweetModel): Observable<any>;
-  public abstract getTimeline(
-    pageNumber: number,
-    pageSize: number
-  ): Observable<TweetModel[]>;
-  public abstract getPreviousPage(): Observable<any>;
-  public abstract getNextPage(): Observable<any>;
+  public abstract searchTweet(tag: string): Observable<TweetModel[]>;
 }

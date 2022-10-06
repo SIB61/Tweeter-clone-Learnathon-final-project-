@@ -20,9 +20,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
 const matModules = [
   MatFormFieldModule,
   MatPaginatorModule,
+  MatExpansionModule,
   MatMenuModule,
   MatToolbarModule,
   MatTableModule,
