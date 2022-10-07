@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from '@core/guards/auth.guard';
+import { NetworkRoutes } from './network.routes';
 
 export const HomeRoutes: Routes = [
   {
@@ -12,7 +12,7 @@ export const HomeRoutes: Routes = [
     loadComponent: () =>
       import('@ui/layouts/twit-feed/twit-feed.component').then(
         (m) => m.TwitFeedComponent
-          ),
+      ),
     data: { title: 'Tweet Feed' },
   },
   {
@@ -21,7 +21,8 @@ export const HomeRoutes: Routes = [
       import('@ui/layouts/network-layout/network-layout.component').then(
         (m) => m.NetworkLayoutComponent
       ),
-    data: { title: 'Network' },
+    children: NetworkRoutes,
+    // data: { title: 'Network' },
   },
   {
     path: 'notification',

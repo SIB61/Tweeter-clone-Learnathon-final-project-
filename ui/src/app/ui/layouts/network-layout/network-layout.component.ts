@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-network-layout',
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule, RouterModule],
   templateUrl: './network-layout.component.html',
   styleUrls: ['./network-layout.component.scss'],
 })

@@ -12,6 +12,7 @@
           mat-tab-link
           class="w-1/2"
           *ngFor="let link of links"
+          [routerLink]="link.route"
           (click)="activeLink = link"
           [active]="activeLink == link"
         >
@@ -21,4 +22,7 @@
       <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
     </mat-toolbar-row>
   </mat-toolbar>
+  <div class="route">
+    <router-outlet></router-outlet>
+  </div>
 </div>

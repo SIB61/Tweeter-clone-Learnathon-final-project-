@@ -9,8 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { TweetModel } from '@shared/models/tweet.model';
 import { AbsTweetService } from '@shared/services/abstract/tweet/abs-tweet.service';
 import { TweetService } from '@shared/services/concrete/tweet/tweet.service';
-import { AbsLocalUserService } from '@shared/services/abstract/user/abs-local-user.service';
 import { LocalUserInfoService } from '@shared/services/concrete/user/local-user-info.service';
+import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 @Component({
   selector: 'app-create-tweet',
   standalone: true,
@@ -20,7 +20,7 @@ import { LocalUserInfoService } from '@shared/services/concrete/user/local-user-
   providers: [
     { provide: AbsTweetService, useClass: TweetService },
     {
-      provide: AbsLocalUserService,
+      provide: AbsLocalUserInfoService,
       useClass: LocalUserInfoService,
     },
   ],
@@ -28,7 +28,7 @@ import { LocalUserInfoService } from '@shared/services/concrete/user/local-user-
 export class CreateTweetComponent implements OnInit {
   constructor(
     private tweetService: AbsTweetService,
-    private localUserService: AbsLocalUserService
+    private localUserService: AbsLocalUserInfoService
   ) {}
 
   observer: Observable<any>;

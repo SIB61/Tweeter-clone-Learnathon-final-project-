@@ -8,6 +8,8 @@ export interface UserModel {
   totalFollowings?: number;
   totalTweets?: number;
   createdAt?: Date;
+  role?: string;
+  following?: string;
   password?: string;
   repeatedPassword?: string;
 }

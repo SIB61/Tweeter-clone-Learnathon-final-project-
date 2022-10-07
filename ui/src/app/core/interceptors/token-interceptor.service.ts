@@ -6,13 +6,14 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenInterceptorService implements HttpInterceptor {
-  constructor() {}
+  constructor(private localUserInfoService: AbsLocalUserInfoService) {}
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -20,7 +21,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     req = req.clone({
       headers: new HttpHeaders().append(
         'Authorization',
-        'Bearer ' + localStorage.getItem('access_token')
+        'Bearer ' + this.localUserInfoService.getLocalToken()?.token
       ),
     });
     return next.handle(req);

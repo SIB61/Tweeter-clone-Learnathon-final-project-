@@ -8,15 +8,17 @@ export const ApplicationRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: AuthService.loggedIn ? 'home' : 'account',
+    redirectTo: localStorage.getItem('USER') ? 'home' : 'account',
   },
   {
     path: 'account',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('@ui/layouts/account/account.component').then(
         (m) => m.AccountComponent
       ),
     children: AccountRoutes,
+    data: { data: 'account' },
   },
   {
     path: 'home',
@@ -24,5 +26,6 @@ export const ApplicationRoutes: Routes = [
     loadComponent: () =>
       import('@ui/layouts/home/home.component').then((m) => m.HomeComponent),
     children: HomeRoutes,
+    data: { data: 'home' },
   },
 ];

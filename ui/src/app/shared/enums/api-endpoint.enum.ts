@@ -7,6 +7,6 @@ export enum ApiEndpoints {
   TWEET = 'Tweet',
   TWEET_SEARCH = 'TWEET/search',
   USER_SEARCH = 'Users/serach-users',
-  FOLLOWER = 'Follower/follower',
+  FOLLOWER = 'Follower/follwer',
   FOLLOWING = 'Follower/following',
 }

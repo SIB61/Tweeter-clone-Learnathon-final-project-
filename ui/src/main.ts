@@ -17,9 +17,8 @@ import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.s
 import { StorageService } from '@core/services/concrete/storage/storage.service';
 import { AbsHttpErrorHandlerService } from '@core/services/abstract/error-handling/abs-http-error-handler.service';
 import { HttpErrorHandlerService } from '@core/services/concrete/error-handling/http-error-handler.service';
-import { AbsLocalTokenService } from '@shared/services/abstract/user/abs-local-token.service';
 import { LocalUserInfoService } from '@shared/services/concrete/user/local-user-info.service';
-import { AbsLocalUserService } from '@shared/services/abstract/user/abs-local-user.service';
+import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 
 if (environment.production) {
   enableProdMode();
@@ -35,6 +34,10 @@ bootstrapApplication(BootstrapComponent, {
       InfiniteScrollModule
     ),
     BreakPointService,
+    {
+      provide: AbsLocalUserInfoService,
+      useClass: LocalUserInfoService,
+    },
     {
       provide: AbsHttpService,
       useClass: HttpService,
@@ -56,14 +59,6 @@ bootstrapApplication(BootstrapComponent, {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlingInterceptorService,
       multi: true,
-    },
-    {
-      provide: AbsLocalTokenService,
-      useClass: LocalUserInfoService,
-    },
-    {
-      provide: AbsLocalUserService,
-      useClass: LocalUserInfoService,
     },
   ],
 }).catch((err) => console.error(err));

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '@core/services/concrete/http/http.service';
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
-import { AuthResponseModel } from '@shared/models/auth-response.model';
 import { AbsAuthService } from '@shared/services/abstract/auth/abs-auth.service';
-import { AbsLocalTokenService } from '@shared/services/abstract/user/abs-local-token.service';
-import { AbsLocalUserService } from '@shared/services/abstract/user/abs-local-user.service';
+import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 import { tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -12,19 +10,17 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AuthService implements AbsAuthService {
-  static loggedIn: boolean = localStorage.getItem('access_token') != null;
   constructor(
     private httpService: HttpService,
-    private localUserService: AbsLocalUserService,
-    private localTokenService: AbsLocalTokenService
+    private localUserInfoService: AbsLocalUserInfoService
   ) {}
   login(username: string, password: string) {
     return this.httpService
       .post(ApiEndpoints.LOGIN, { username, password })
       .pipe(
         tap((value) => {
-          this.localUserService.setLocalUser(value.data.user);
-          this.localTokenService.setLocalToken(value.data.token);
+          this.localUserInfoService.setLocalUser(value.data.user);
+          this.localUserInfoService.setLocalToken(value.data.token);
         })
       );
   }
