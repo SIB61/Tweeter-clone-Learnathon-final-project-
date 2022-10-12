@@ -1,11 +1,24 @@
 <mat-card class="mat-elevation-z0">
   <mat-card-header class="flex justify-between">
-    <img src="http://placeimg.com/40/40/man" matCardAvatar />
+    <div class="avatar" matCardAvatar>
+      <div class="font-bold text-2xl">{{ user.fullName[0] }}</div>
+    </div>
     <mat-card-title>{{ user.fullName }}</mat-card-title>
-    <mat-card-subtitle>{{ user.userName }}</mat-card-subtitle>
+    <mat-card-subtitle>@{{ user.userName }}</mat-card-subtitle>
     <mat-card-actions>
-      <button mat-flat-button color="primary" (click)="onAction()">
-        {{ actionText }}
+      <button mat-flat-button color="primary" (click)="onAction()" class="flex">
+        <div class="flex justify-evenly align-middle w-full">
+          <mat-progress-spinner
+            mode="indeterminate"
+            diameter="20"
+            color="accent"
+            *ngIf="loading"
+            style="align-self: center"
+          ></mat-progress-spinner>
+          <div>
+            {{ buttonText }}
+          </div>
+        </div>
       </button>
     </mat-card-actions>
   </mat-card-header>

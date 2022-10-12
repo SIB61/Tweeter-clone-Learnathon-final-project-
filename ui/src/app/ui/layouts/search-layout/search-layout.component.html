@@ -1,5 +1,5 @@
-<div class="container bg-white h-screen overflow-hidden relative">
-  <mat-toolbar class="appbar glass">
+<div class="home-container">
+  <mat-toolbar class="appbar">
     <div class="searchbox">
       <input type="text" placeholder="Search" [(ngModel)]="searchText" />
       <button
@@ -17,19 +17,18 @@
 </div>
 
 <ng-template #tweet>
-  <div class="search-result" *ngIf="tweetModels$ | async as tweetModels">
+  <div class="home-content mt-16" *ngIf="tweetModels$ | async as tweetModels">
     <app-tweet-view
       *ngFor="let tweetModel of tweetModels"
       [tweetModel]="tweetModel"
     ></app-tweet-view>
   </div>
 </ng-template>
-<ng-template #user class="search-result">
-  <div class="search-result" *ngIf="userModels$ | async as userModels">
+<ng-template #user>
+  <div class="home-content mt-16" *ngIf="userModels$ | async as userModels">
     <app-user-preview-cart
       *ngFor="let user of userModels"
       [user]="user"
-      [actionText]="'Follow'"
     ></app-user-preview-cart>
   </div>
 </ng-template>

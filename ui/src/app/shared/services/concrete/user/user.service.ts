@@ -17,8 +17,8 @@ export class UserService implements AbsUserService {
     return this.httpService.post(ApiEndpoints.REGISTER, user).pipe(
       distinctUntilChanged(),
       tap((value) => {
-        this.localUserInfoService.setLocalToken(value.data.token);
-        this.localUserInfoService.setLocalUser(value.data.user);
+        this.localUserInfoService.setLocalToken(value.data.item1);
+        this.localUserInfoService.setLocalUser(value.data.item2);
       }),
       map((value) => value.data)
     );
@@ -32,7 +32,7 @@ export class UserService implements AbsUserService {
     pageNumber: number
   ): Observable<UserModel[]> {
     return this.httpService
-      .get(ApiEndpoints.USER_SEARCH, new HttpParams().append('FullName', name))
+      .get(ApiEndpoints.USERS, new HttpParams().append('FullName', name))
       .pipe(
         map((response) => {
           console.warn(response);
@@ -43,9 +43,12 @@ export class UserService implements AbsUserService {
   public getAllUser(): Observable<UserModel[]> {
     return of();
   }
-  public getProfile(id: string): Observable<UserModel> {
-    return of();
+  public getUser(id: string): Observable<UserModel> {
+    return this.httpService
+      .get(`${ApiEndpoints.USERS}/${id}`)
+      .pipe(map((response) => response.data));
   }
+
   public getUserByPage(
     pageSize: number,
     pageNumber: number

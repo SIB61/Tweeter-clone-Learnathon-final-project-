@@ -2,7 +2,8 @@
   width: 100%;
   height: 100%;
   border: 0px;
-  font-size: 16px;
+  margin-top: 16px;
+  font-size: 20px;
   resize: none;
   overflow-y: hidden;
 
@@ -17,7 +18,7 @@ mat-card-actions {
   justify-content: space-between;
   align-items: center;
 }
-mat-card {
+.main {
   // margin: 20px 0px;
   border-bottom: 1px solid #eee;
   border-radius: 0px;
@@ -31,4 +32,12 @@ input {
 button {
   border-radius: 30px;
   padding: 5px 30px;
+}
+
+.mat-expansion-panel-header {
+  height: max-content;
+  padding: 10px 10px;
+  .mat-panel-title {
+    height: max-content;
+  }
 }

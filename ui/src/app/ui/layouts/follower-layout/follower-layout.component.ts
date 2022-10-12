@@ -5,6 +5,7 @@ import { AbsFollowService } from '@shared/services/abstract/user/abs-follow.serv
 import { Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { FollowService } from '@shared/services/concrete/user/follow.service';
+import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 
 @Component({
   selector: 'app-follower-layout',
@@ -15,9 +16,14 @@ import { FollowService } from '@shared/services/concrete/user/follow.service';
   providers: [{ provide: AbsFollowService, useClass: FollowService }],
 })
 export class FollowerLayoutComponent implements OnInit {
-  constructor(private followService: AbsFollowService) {}
+  constructor(
+    private followService: AbsFollowService,
+    private localUserInfo: AbsLocalUserInfoService
+  ) {}
   followers$: Observable<any>;
   ngOnInit(): void {
-    this.followers$ = this.followService.getFollowers('');
+    this.followers$ = this.followService.getFollowers(
+      this.localUserInfo.getLocalUser().id
+    );
   }
 }

@@ -1,12 +1,15 @@
-export enum ApiEndpoints {
-  USERS = 'users',
-  LOGIN = 'Account/login',
-  REGISTER = 'Account/sign-up',
-  ONLINE = 'online',
-  REFRESH = 'refresh',
-  TWEET = 'Tweet',
-  TWEET_SEARCH = 'TWEET/search',
-  USER_SEARCH = 'Users/serach-users',
-  FOLLOWER = 'Follower/follwer',
-  FOLLOWING = 'Follower/following',
-}
+export const ApiEndpoints = {
+  USERS: 'user',
+  LOGIN: 'login',
+  REGISTER: 'register',
+  REFRESH: 'refresh',
+  CHANGE_PASSWORD: 'change-password',
+  COMMENT: 'comment',
+  TWEET: 'tweet',
+  TIMELINE: 'tweet/timeline',
+  TWEETID: (id: string): string => `tweet/${id}`,
+  FOLLOWER: (id: string): string => `${id}/followers`,
+  FOLLOWING: (id: string): string => `${id}/followings`,
+  FOLLOW: (id: string): string => `${id}/follow`,
+  LIKE: (id: string): string => `like/${id}`,
+};

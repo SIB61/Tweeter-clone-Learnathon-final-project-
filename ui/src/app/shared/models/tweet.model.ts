@@ -1,12 +1,13 @@
-import { TweetType } from '@shared/enums/tweet.enum';
 export interface TweetModel {
   id?: string;
   userId?: string;
+  fullName?: string;
   content: string;
-  tags: string;
+  hashTag?: string;
   totalLikes?: number;
   totalComments?: number;
   totalRetweets?: number;
   createdAt?: Date;
-  tweetType?: TweetType;
+  isRetweet?: boolean;
+  isLiked?: boolean;
 }

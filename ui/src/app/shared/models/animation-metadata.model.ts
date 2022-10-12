@@ -1,5 +1,4 @@
-import { Direction } from "@shared/enums/direction.enum";
-
+import { Direction } from '@shared/enums/direction.enum';
 export interface SlideInAnimationMetadata {
   direction?: Direction;
   position?: string;

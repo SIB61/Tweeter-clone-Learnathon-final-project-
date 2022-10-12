@@ -44,25 +44,20 @@ export class TwitFeedComponent implements OnInit {
     public route: ActivatedRoute
   ) {}
   tweetModels$: Observable<any>;
-  ngOnInit(): void {
-    this.loadTweet(1);
-  }
   currentPage = 1;
-  loadTweet(pageNumber: number) {
-    if (pageNumber < 1) pageNumber = 1;
-    this.tweetModels$ = this.TimeLineService.getTimeline(pageNumber);
+  ngOnInit(): void {
+    this.loadTimeline();
+  }
+  loadTimeline() {
+    if (this.currentPage < 1) this.currentPage = 1;
+    this.tweetModels$ = this.TimeLineService.getTimeline(this.currentPage);
   }
   onScrollDown() {
-    console.warn('scrolled');
-    this.tweetModels$ = this.TimeLineService.getTimeline(this.currentPage + 1);
     this.currentPage++;
+    this.loadTimeline();
   }
   onScrollUp() {
-    if (this.currentPage > 1) {
-      this.tweetModels$ = this.TimeLineService.getTimeline(
-        this.currentPage - 1
-      );
-      this.currentPage--;
-    }
+    this.currentPage--;
+    this.loadTimeline();
   }
 }

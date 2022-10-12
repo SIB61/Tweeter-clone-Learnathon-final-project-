@@ -12,4 +12,5 @@ export interface UserModel {
   following?: string;
   password?: string;
   repeatedPassword?: string;
+  isFollow?: boolean;
 }

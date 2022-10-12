@@ -19,8 +19,8 @@ export class AuthService implements AbsAuthService {
       .post(ApiEndpoints.LOGIN, { username, password })
       .pipe(
         tap((value) => {
-          this.localUserInfoService.setLocalUser(value.data.user);
-          this.localUserInfoService.setLocalToken(value.data.token);
+          this.localUserInfoService.setLocalUser(value.data.item1);
+          this.localUserInfoService.setLocalToken(value.data.item2);
         })
       );
   }

@@ -1,40 +1,53 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
 import { UserModel } from '@shared/models/user.model';
 import { AbsFollowService } from '@shared/services/abstract/user/abs-follow.service';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable, of, take, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FollowService implements AbsFollowService {
-  constructor(private httpService: AbsHttpService) {}
+  constructor(
+    private httpService: AbsHttpService,
+    private snackbar: MatSnackBar
+  ) {}
 
-  follow(): Observable<any> {
-    return of();
+  follow(userId: string): Observable<any> {
+    return this.httpService.post(ApiEndpoints.FOLLOW(userId), {}).pipe(take(1));
   }
-  unfollow(): Observable<any> {
-    return of();
+  unfollow(userId: string): Observable<any> {
+    return this.httpService.delete(ApiEndpoints.FOLLOW(userId)).pipe(take(1));
   }
-  getFollowers(id: string): Observable<UserModel[]> {
-    return this.httpService.get(ApiEndpoints.FOLLOWER).pipe(
+
+  getFollowers(
+    userId: string,
+    pageNumber?: number,
+    pageSize?: number
+  ): Observable<UserModel[]> {
+    return this.httpService.get(ApiEndpoints.FOLLOWER(userId)).pipe(
       map((response) => {
         console.warn(response);
         return response.data;
       })
     );
   }
-  getFollowings(id: string): Observable<any> {
+
+  getFollowings(
+    userId: string,
+    pageNumber?: number,
+    pageSize?: number
+  ): Observable<UserModel[]> {
     return this.httpService
       .get(
-        ApiEndpoints.FOLLOWING,
+        ApiEndpoints.FOLLOWING(userId),
         new HttpParams().append('PageNumber', 1).append('PageSize', 10)
       )
       .pipe(
         map((response) => {
-          console.warn(response);
           return response.data;
         })
       );

@@ -1,16 +1,6 @@
-<div class="tweet-feed-container">
-  <app-title-bar class="appbar" [title]="(route.data | async)['title']">
-  </app-title-bar>
-  <div
-    class="feed"
-    infiniteScroll
-    [infiniteScrollDistance]="1"
-    [infiniteScrollThrottle]="2"
-    [infiniteScrollUpDistance]="1"
-    [scrollWindow]="false"
-    (scrolled)="onScrollDown()"
-    (scrolledUp)="onScrollUp()"
-  >
+<div class="home-container">
+  <mat-toolbar class="appbar"> Tweet Feed </mat-toolbar>
+  <div class="home-content pt-16">
     <app-create-tweet></app-create-tweet>
     <app-tweet-view
       *ngFor="let tweetModel of tweetModels$ | async"
@@ -19,3 +9,10 @@
   </div>
 </div>
 <!-- *ngFor="let tweetModel of tweetService.getTimeline() | async" -->
+<!-- infiniteScroll -->
+<!-- [infiniteScrollDistance]="1" -->
+<!-- [infiniteScrollThrottle]="2" -->
+<!-- [infiniteScrollUpDistance]="1" -->
+<!-- [scrollWindow]="false" -->
+<!-- (scrolled)="onScrollDown()" -->
+<!-- (scrolledUp)="onScrollUp()" -->

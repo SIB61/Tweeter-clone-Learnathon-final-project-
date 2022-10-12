@@ -13,8 +13,8 @@ export class TimeLineService implements AbsTimelineService {
   getTimeline(pageNumber: number): Observable<TweetModel[]> {
     return this.httpService
       .get(
-        ApiEndpoints.TWEET + '/timeline',
-        new HttpParams().append('PageNumber', pageNumber).append('PageSize', 10)
+        ApiEndpoints.TIMELINE,
+        new HttpParams().append('PageNumber', pageNumber).append('PageSize', 5)
       )
       .pipe(
         map((value) => {

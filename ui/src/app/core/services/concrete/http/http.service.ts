@@ -31,6 +31,8 @@ export class HttpService extends AbsHttpService {
     });
   }
   delete(url: string, params?: HttpParams): Observable<any> {
-    return this.httpClient.get(environment.base_url + url, { params: params });
+    return this.httpClient.delete(environment.base_url + url, {
+      params: params,
+    });
   }
 }

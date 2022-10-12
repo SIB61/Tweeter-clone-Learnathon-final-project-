@@ -1,5 +1,5 @@
-<div class="container bg-white h-screen overflow-hidden relative">
-  <mat-toolbar class="appbar glass">
+<div class="home-container">
+  <mat-toolbar class="appbar">
     <mat-toolbar-row> Network/{{ activeLink.label }} </mat-toolbar-row>
     <mat-toolbar-row class="tabbarrow">
       <nav
@@ -22,7 +22,7 @@
       <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div class="route">
+  <div class="home-content pt-32">
     <router-outlet></router-outlet>
   </div>
 </div>

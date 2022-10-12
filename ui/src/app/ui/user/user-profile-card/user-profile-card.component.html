@@ -1,0 +1,36 @@
+<div class="profile" *ngIf="user$ | async as user">
+  <div class="avatar w-32 my-10">
+    <div class="font-bold text-5xl">{{ user.fullName[0] }}</div>
+  </div>
+  <div class="text-3xl font-mono font-bold">{{ user.fullName }}</div>
+  <div class="text-xl font-semibold font-mono">@{{ user.userName }}</div>
+  <div class="horizontal-divider"></div>
+  <div class="flex">
+    <mat-icon>email</mat-icon>
+    <div class="text-lg font-mono font-bold">{{ user.email }}</div>
+  </div>
+  <div class="flex">
+    <mat-icon>date</mat-icon>
+    <div class="text-lg font-mono">
+      Birth Date : {{ user.dateOfBirth | date }}
+    </div>
+  </div>
+  <div class="horizontal-divider"></div>
+  <div class="flex justify-evenly w-full">
+    <div>
+      <div class="font-semibold text-lg">Followers</div>
+      <div class="font-bold text-lg text-center">
+        {{ user.totalFollowers }}
+      </div>
+    </div>
+    <div>
+      <div class="flex flex-col align-middle">
+        <div class="font-semibold text-lg">Followings</div>
+        <div class="font-bold text-lg text-center">
+          {{ user.totalFollowings }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="horizontal-divider"></div>
+</div>

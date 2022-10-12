@@ -31,6 +31,7 @@ export class CreateTweetComponent implements OnInit {
     private localUserService: AbsLocalUserInfoService
   ) {}
 
+  isOpen = false;
   observer: Observable<any>;
   tagDisabled = true;
   ngOnInit(): void {}
@@ -67,7 +68,7 @@ export class CreateTweetComponent implements OnInit {
     for (let i in this.tags) hashTag += this.tags[i] + ' ';
     hashTag = hashTag.trim();
     this.tweetService
-      .tweet({ content: this.content, tags: hashTag })
+      .tweet({ content: this.content, hashTag: hashTag })
       .subscribe({
         next: (_) => {
           this.showProgress = false;

@@ -1,11 +1,15 @@
 <mat-card>
   <mat-card-header>
-    <img src="http://placeimg.com/40/40/man" matCardAvatar />
+    <div class="avatar" matCardAvatar>
+      <div class="font-bold text-2xl text-gray-500">
+        {{ tweetModel.fullName[0] }}
+      </div>
+    </div>
     <mat-card-title>{{ tweetModel.fullName }}</mat-card-title>
     <mat-card-subtitle>{{ tweetModel.createdAt | date }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <span>
+    <span class="text-[16px]">
       {{ tweetModel.content }}
     </span>
     <mat-chip-list class="chip-list my-2" #tagList>
@@ -14,61 +18,41 @@
       </mat-chip>
     </mat-chip-list>
   </mat-card-content>
-  <mat-card-footer>
-    <!-- <div [class.text-red-500]="isLiked"> -->
-    <!--   <button mat-icon-button (click)="like()" class="font-thin"> -->
-    <!--     <mat-icon>{{ isLiked ? "favorite" : "favorite_outline" }}</mat-icon> -->
-    <!--   </button> -->
-    <!--   {{ likes }} -->
-    <!-- </div> -->
-    <!-- <div> -->
-    <!--   <button mat-icon-button (click)="commnet()"> -->
-    <!--     <mat-icon class="material-icon-outlined">chat_bubble_outline</mat-icon> -->
-    <!--   </button> -->
-    <!--   {{ comments }} -->
-    <!-- </div> -->
-    <!-- <div [class.text-green-500]="isRetweeted"> -->
-    <!--   <button mat-icon-button (click)="retweet()"> -->
-    <!--     <mat-icon>ios_share</mat-icon> -->
-    <!--   </button> -->
-    <!--   {{ retweets }} -->
-    <!-- </div> -->
-
+  <mat-card-footer class="flex flex-col">
+    <div class="flex justify-evenly">
+      <div [class.text-red-500]="isLiked">
+        <button mat-icon-button (click)="like()" class="font-thin">
+          <mat-icon>{{ isLiked ? "favorite" : "favorite_outline" }}</mat-icon>
+        </button>
+        {{ likes }}
+      </div>
+      <div>
+        <button mat-icon-button (click)="commnet()">
+          <mat-icon class="material-icon-outlined"
+            >chat_bubble_outline</mat-icon
+          >
+        </button>
+        {{ comments }}
+      </div>
+      <div [class.text-green-500]="isRetweeted">
+        <button mat-icon-button (click)="retweet()">
+          <mat-icon>ios_share</mat-icon>
+        </button>
+        {{ retweets }}
+      </div>
+    </div>
     <mat-expansion-panel
       [expanded]="isExpanded"
-      [disabled]="s"
       (expandedChange)="change()"
       class="mat-elevation-z0 w-full"
     >
-      <mat-expansion-panel-header class="w-full">
-        <mat-panel-description class="flex justify-evenly w-full">
-          <div [class.text-red-500]="isLiked">
-            <button mat-icon-button (click)="like()" class="font-thin">
-              <mat-icon>{{
-                isLiked ? "favorite" : "favorite_outline"
-              }}</mat-icon>
-            </button>
-            {{ likes }}
-          </div>
-          <div>
-            <button mat-icon-button (click)="commnet()">
-              <mat-icon class="material-icon-outlined"
-                >chat_bubble_outline</mat-icon
-              >
-            </button>
-            {{ comments }}
-          </div>
-          <div [class.text-green-500]="isRetweeted">
-            <button mat-icon-button (click)="retweet()">
-              <mat-icon>ios_share</mat-icon>
-            </button>
-            {{ retweets }}
-          </div>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
       <mat-divider></mat-divider>
       <mat-form-field appearance="outline" class="w-full">
+        <mat-label>comment</mat-label>
         <input matInput class="w-full" placeholder="write your comment" />
+        <button mat-icon-button color="primary" matSuffix>
+          <mat-icon>send</mat-icon>
+        </button>
       </mat-form-field>
     </mat-expansion-panel>
   </mat-card-footer>

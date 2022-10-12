@@ -13,6 +13,8 @@ import { UserModel } from '@shared/models/user.model';
 import { FormsModule } from '@angular/forms';
 import { TweetViewComponent } from '@ui/tweet/tweet-view/tweet-view.component';
 import { UserPreviewCartComponent } from '@ui/user/user-preview-cart/user-preview-cart.component';
+import { AbsFollowService } from '@shared/services/abstract/user/abs-follow.service';
+import { FollowService } from '@shared/services/concrete/user/follow.service';
 
 @Component({
   selector: 'app-search-layout',
@@ -33,30 +35,41 @@ import { UserPreviewCartComponent } from '@ui/user/user-preview-cart/user-previe
       provide: AbsUserService,
       useClass: UserService,
     },
+    {
+      provide: AbsFollowService,
+      useClass: FollowService,
+    },
   ],
 })
 export class SearchLayoutComponent implements OnInit {
   constructor(
     public route: ActivatedRoute,
     private tweetService: AbsTweetService,
-    private userService: AbsUserService
+    private userService: AbsUserService,
+    private followService: AbsFollowService
   ) {}
   ngOnInit(): void {}
 
   tweetModels$: Observable<TweetModel[]> = of([]);
   userModels$: Observable<UserModel[]> = of([]);
   public searchText: string;
-
   isTweetSearch = true;
-
   search() {
     let value = this.searchText.trim();
     if (value[0] == '#') {
-      this.tweetModels$ = this.tweetService.searchTweet('We_Love_Bangladesh');
+      value = value.slice(1, value.length);
+      this.tweetModels$ = this.tweetService.searchTweet(value);
       this.isTweetSearch = true;
     } else {
       this.userModels$ = this.userService.searchUser(value, 1, 5);
       this.isTweetSearch = false;
     }
+  }
+  onUserAction(user: UserModel) {
+    if (user.isFollow) {
+      this.followService.unfollow(user.id).subscribe();
+      
+    }
+    else this.followService.follow(user.id).subscribe();
   }
 }

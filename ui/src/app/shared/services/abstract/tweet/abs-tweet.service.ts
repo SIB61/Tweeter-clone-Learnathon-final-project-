@@ -8,4 +8,5 @@ import { Observable } from 'rxjs';
 export abstract class AbsTweetService {
   public abstract tweet(tweet: TweetModel): Observable<any>;
   public abstract searchTweet(tag: string): Observable<TweetModel[]>;
+  public abstract getUserTweets(userId: string): Observable<TweetModel[]>;
 }

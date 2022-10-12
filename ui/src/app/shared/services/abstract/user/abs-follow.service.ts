@@ -4,8 +4,16 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export abstract class AbsFollowService {
-  abstract follow(): Observable<any>;
-  abstract unfollow(): Observable<any>;
-  abstract getFollowers(id: string): Observable<UserModel[]>;
-  abstract getFollowings(id: string): Observable<UserModel[]>;
+  abstract follow(userId: string): Observable<any>;
+  abstract unfollow(userId: string): Observable<any>;
+  abstract getFollowers(
+    userId: string,
+    pageNumber?: number,
+    pageSize?: number
+  ): Observable<UserModel[]>;
+  abstract getFollowings(
+    userId: string,
+    pageNumber?: number,
+    pageSize?: number
+  ): Observable<UserModel[]>;
 }
