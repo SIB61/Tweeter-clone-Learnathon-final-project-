@@ -46,4 +46,11 @@ export class TweetService implements AbsTweetService {
         })
       );
   }
+
+   public getTweet(tweetId:string):Observable<TweetModel>{
+    return this.httpService.get(ApiEndpoints.TWEETID(tweetId))
+    .pipe(map(response=>response.data))
+  }
+
+
 }

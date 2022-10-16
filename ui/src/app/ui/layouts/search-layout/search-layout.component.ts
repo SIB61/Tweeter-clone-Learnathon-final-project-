@@ -68,7 +68,6 @@ export class SearchLayoutComponent implements OnInit {
   onUserAction(user: UserModel) {
     if (user.isFollow) {
       this.followService.unfollow(user.id).subscribe();
-      
     }
     else this.followService.follow(user.id).subscribe();
   }

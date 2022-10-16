@@ -19,13 +19,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ScrollingModule as ExperimentalScrollingModule } from '@angular/cdk-experimental/scrolling';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 const matModules = [
   MatFormFieldModule,
   MatPaginatorModule,
   MatExpansionModule,
   MatMenuModule,
+  ExperimentalScrollingModule,
   MatToolbarModule,
   MatTableModule,
   MatButtonModule,
@@ -45,6 +48,7 @@ const matModules = [
   MatSnackBarModule,
   MatTabsModule,
   MatRippleModule,
+  FontAwesomeModule
 ];
 
 @NgModule({

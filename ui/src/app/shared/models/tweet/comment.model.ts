@@ -1,4 +1,9 @@
 export interface CommentModel {
-  tweetId: string;
-  comment: string;
+  id?: string;
+  createdAt?: string;
+  userName?:string;
+  tweetId?: string;
+  userId?: string;
+  fullName?: string;
+  content?: string;
 }

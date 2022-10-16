@@ -1,19 +1,33 @@
-<mat-card>
+<div *ngIf="tweetModel.isRetweet" class="text-xs text-gray-500 pt-3 pl-4 capitalize font-bold">
+  <fa-icon [icon]="faRetweet" class="mx-2"></fa-icon>
+  {{ tweetModel.fullName }} retweeted </div>
+<mat-card class="mat-elevation-z0" [@slideInRight]>
   <mat-card-header>
     <div class="avatar" matCardAvatar>
       <div class="font-bold text-2xl text-gray-500">
-        {{ tweetModel.fullName[0] }}
+        {{ tweet.fullName[0] }}
       </div>
     </div>
-    <mat-card-title>{{ tweetModel.fullName }}</mat-card-title>
-    <mat-card-subtitle>{{ tweetModel.createdAt | date }}</mat-card-subtitle>
+    <mat-card-title>{{ tweet.fullName }}</mat-card-title>
+    <mat-card-subtitle
+      >@{{ tweet.userName }} .
+      {{ tweet.createdAt | timeago: live }}</mat-card-subtitle
+    >
   </mat-card-header>
   <mat-card-content>
-    <span class="text-[16px]">
-      {{ tweetModel.content }}
+    <span class="text-[16px] mb-0" [class.line-clamp-3]="isClamp">
+      {{ tweet.content }}
     </span>
+    <span
+      (click)="isClamp = !isClamp"
+      class="text-gray-400 hover:underline cursor-pointer"
+      >{{ isClamp ? "see more" : "see less" }}</span
+    >
     <mat-chip-list class="chip-list my-2" #tagList>
-      <mat-chip style="background-color: aliceblue" *ngFor="let tag of tags">
+      <mat-chip
+        style="background-color: aliceblue; font-weight: bolder"
+        *ngFor="let tag of tags"
+      >
         #{{ tag }}
       </mat-chip>
     </mat-chip-list>
@@ -22,23 +36,21 @@
     <div class="flex justify-evenly">
       <div [class.text-red-500]="isLiked">
         <button mat-icon-button (click)="like()" class="font-thin">
-          <mat-icon>{{ isLiked ? "favorite" : "favorite_outline" }}</mat-icon>
+          <fa-icon [icon]="faHeart" class="text-lg" ></fa-icon>
         </button>
-        {{ likes }}
+        {{ tweet.totalLikes }}
       </div>
       <div>
-        <button mat-icon-button (click)="commnet()">
-          <mat-icon class="material-icon-outlined"
-            >chat_bubble_outline</mat-icon
-          >
+        <button mat-icon-button (click)="comment()">
+          <fa-icon [icon]="faComment" class="text-lg"></fa-icon>
         </button>
-        {{ comments }}
+        {{ tweet.totalComments }}
       </div>
       <div [class.text-green-500]="isRetweeted">
         <button mat-icon-button (click)="retweet()">
-          <mat-icon>ios_share</mat-icon>
+          <fa-icon class="text-lg" [icon]="faRetweet"></fa-icon>
         </button>
-        {{ retweets }}
+        {{ tweet.totalRetweets }}
       </div>
     </div>
     <mat-expansion-panel
@@ -47,10 +59,26 @@
       class="mat-elevation-z0 w-full"
     >
       <mat-divider></mat-divider>
+      <div
+        class="my-1 w-max hover:underline cursor-pointer text-blue-500"
+        [routerLink]="'/home/' + tweet.id + '/comments'"
+      >
+        see all comments
+      </div>
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>comment</mat-label>
-        <input matInput class="w-full" placeholder="write your comment" />
-        <button mat-icon-button color="primary" matSuffix>
+        <input
+          [(ngModel)]="commentText"
+          matInput
+          class="w-full"
+          placeholder="write your comment"
+        />
+        <button
+          mat-icon-button
+          color="primary"
+          matSuffix
+          (click)="sendComment()"
+        >
           <mat-icon>send</mat-icon>
         </button>
       </mat-form-field>

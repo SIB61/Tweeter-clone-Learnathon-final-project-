@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { PageResponse } from '@shared/models/structures/response.model';
 import { CommentModel } from '@shared/models/tweet/comment.model';
 import { Observable } from 'rxjs';
 
@@ -13,6 +12,6 @@ export abstract class AbsTweetActionService {
     tweetId: string,
     pageNumber?: number,
     pageSize?: number
-  ): Observable<PageResponse<CommentModel[]>>;
+  ): Observable<CommentModel[]>;
   abstract deleteComment(commentId: string): Observable<any>;
 }

@@ -5,6 +5,7 @@ import { UserModel } from '@shared/models/user.model';
 import { AbsFollowService } from '@shared/services/abstract/user/abs-follow.service';
 import { FollowService } from '@shared/services/concrete/user/follow.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-user-preview-cart',
@@ -30,19 +31,25 @@ export class UserPreviewCartComponent implements OnInit {
   onAction() {
     this.loading = true;
     if (this.buttonText == 'Unfollow') {
-      this.followService.unfollow(this.user.id).subscribe({
-        next: (_) => {
-          this.buttonText = 'Follow';
-          this.loading = false;
-        },
-      });
+      this.followService
+        .unfollow(this.user.id)
+        .pipe(
+          tap((_) => {
+            this.buttonText = 'Follow';
+            this.loading = false;
+          })
+        )
+        .subscribe();
     } else {
-      this.followService.follow(this.user.id).subscribe({
-        next: (_) => {
-          this.buttonText = 'Unfollow';
-          this.loading = false;
-        },
-      });
+      this.followService
+        .follow(this.user.id)
+        .pipe(
+          tap((_) => {
+            this.buttonText = 'Unfollow';
+            this.loading = false;
+          })
+        )
+        .subscribe();
     }
   }
 }

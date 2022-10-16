@@ -5,7 +5,7 @@ import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
 import { PageResponse } from '@shared/models/structures/response.model';
 import { CommentModel } from '@shared/models/tweet/comment.model';
 import { AbsTweetActionService } from '@shared/services/abstract/tweet/abs-tweet-action.service';
-import { Observable, take } from 'rxjs';
+import { map, Observable, take, tap } from 'rxjs';
 
 @Injectable()
 export class TweetActionService implements AbsTweetActionService {
@@ -26,16 +26,18 @@ export class TweetActionService implements AbsTweetActionService {
   }
 
   comment(commentModel: CommentModel): Observable<any> {
-    return this.httpService
-      .post(ApiEndpoints.COMMENT, commentModel)
-      .pipe(take(1));
+    console.warn(commentModel);
+    return this.httpService.post(ApiEndpoints.COMMENT, commentModel).pipe(
+      tap((v) => console.warn(v)),
+      take(1)
+    );
   }
 
   loadComments(
     tweetId: string,
     pageNumber?: number,
     pageSize?: number
-  ): Observable<PageResponse<CommentModel[]>> {
+  ): Observable<CommentModel[]> {
     return this.httpService
       .get(
         ApiEndpoints.COMMENT,
@@ -44,7 +46,10 @@ export class TweetActionService implements AbsTweetActionService {
           .append('PageNumber', pageNumber)
           .append('PageSize', pageSize)
       )
-      .pipe(take(1));
+      .pipe(
+        take(1),
+        map((response) => response.data)
+      );
   }
 
   deleteComment(commentId: string): Observable<any> {

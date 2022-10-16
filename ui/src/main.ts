@@ -19,7 +19,11 @@ import { AbsHttpErrorHandlerService } from '@core/services/abstract/error-handli
 import { HttpErrorHandlerService } from '@core/services/concrete/error-handling/http-error-handler.service';
 import { LocalUserInfoService } from '@shared/services/concrete/user/local-user-info.service';
 import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
-
+import { LoadingService } from '@core/services/concrete/loading.service';
+import { LoadingInterceptor } from '@core/interceptors/loading.interceptor';
+import { TimeagoClock, TimeagoModule } from 'ngx-timeago';
+import { MyClock } from '@core/services/concrete/time-ago-clock';
+import { FormsModule } from '@angular/forms';
 if (environment.production) {
   enableProdMode();
 }
@@ -31,8 +35,10 @@ bootstrapApplication(BootstrapComponent, {
       BrowserAnimationsModule,
       HttpClientModule,
       MaterialModule,
-      InfiniteScrollModule
+      InfiniteScrollModule,
+      TimeagoModule.forRoot({clock:{provide:TimeagoClock,useClass:MyClock}}),
     ),
+    LoadingService,
     BreakPointService,
     {
       provide: AbsLocalUserInfoService,
@@ -58,6 +64,11 @@ bootstrapApplication(BootstrapComponent, {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlingInterceptorService,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
       multi: true,
     },
   ],

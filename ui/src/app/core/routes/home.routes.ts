@@ -48,4 +48,11 @@ export const HomeRoutes: Routes = [
       ),
     data: { title: 'profile' },
   },
+  {
+    path: ':id/comments',
+    loadComponent: () =>
+      import('@ui/layouts/comments-layout/comments-layout.component').then(
+        (m) => m.CommentsLayoutComponent
+      ),
+  },
 ];

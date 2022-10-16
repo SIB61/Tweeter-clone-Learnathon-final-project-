@@ -1,0 +1,30 @@
+<!-- <mat-card -->
+<!--   class="mat-elevation-z0" -->
+<!--   style="border-radius: 0px; border-bottom: 1px solid #eee" -->
+<!-- > -->
+<!--   <mat-card-header> -->
+<!--     <div class="avatar w-16" matCardAvatar> -->
+<!--       <div class="text-2xl font-bold">{{ comment.fullName[0] }}</div> -->
+<!--     </div> -->
+<!--     <mat-card-title class="text-xs">{{ comment.fullName }}</mat-card-title> -->
+<!--     <mat-card-subtitle>@{{ comment.userName }}</mat-card-subtitle> -->
+<!--   </mat-card-header> -->
+<!--   <mat-card-content class=""> -->
+<!--     {{comment.content}} -->
+<!--   </mat-card-content> -->
+<!-- </mat-card> -->
+<div class="p-2 flex">
+  <div class="avatar w-12 h-min mt-2 border-gray-100 border">
+    <div class="text-2xl font-bold">{{ comment.fullName[0] }}</div>
+  </div>
+    <div class="p-2 w-full">
+  <div class="flex flex-col border border-gray-100 rounded">
+      <div class="bg-[aliceblue] p-2 ">{{comment.fullName}} 
+     <span class="opacity-70 text-xs">
+          @{{comment.userName}} . {{comment.createdAt | timeago}}
+        </span>   
+      </div>
+    <div class="p-3">{{comment.content}}</div>
+  </div>
+    </div>
+</div>

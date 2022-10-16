@@ -4,5 +4,5 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export abstract class AbsTimelineService {
-  abstract getTimeline(pageNumber: number): Observable<TweetModel[]>;
+  abstract getTimeline(pageNumber: number,pageSize: number): Observable<TweetModel[]>;
 }

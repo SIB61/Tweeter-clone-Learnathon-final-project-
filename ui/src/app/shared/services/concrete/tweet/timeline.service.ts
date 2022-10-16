@@ -10,11 +10,11 @@ import { map, Observable } from 'rxjs';
 export class TimeLineService implements AbsTimelineService {
   constructor(private httpService: AbsHttpService) {}
 
-  getTimeline(pageNumber: number): Observable<TweetModel[]> {
+  getTimeline(pageNumber: number,pageSize:number): Observable<TweetModel[]> {
     return this.httpService
       .get(
         ApiEndpoints.TIMELINE,
-        new HttpParams().append('PageNumber', pageNumber).append('PageSize', 5)
+        new HttpParams().append('PageNumber', pageNumber).append('PageSize', pageSize)
       )
       .pipe(
         map((value) => {

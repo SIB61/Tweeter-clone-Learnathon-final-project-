@@ -3,6 +3,7 @@
     <div class="avatar" matCardAvatar>
       <div class="font-bold text-2xl">{{ user.fullName[0] }}</div>
     </div>
+      
     <mat-card-title>{{ user.fullName }}</mat-card-title>
     <mat-card-subtitle>@{{ user.userName }}</mat-card-subtitle>
     <mat-card-actions>
@@ -15,6 +16,7 @@
             *ngIf="loading"
             style="align-self: center"
           ></mat-progress-spinner>
+            
           <div>
             {{ buttonText }}
           </div>
@@ -23,3 +25,9 @@
     </mat-card-actions>
   </mat-card-header>
 </mat-card>
+
+<!-- <mat-toolbar> -->
+<!--   <mat-toolbar-row> -->
+<!--    <div class="font-bold text-2xl">{{ user.fullName[0] }}</div> -->
+<!--   </mat-toolbar-row>  -->
+<!-- </mat-toolbar> -->

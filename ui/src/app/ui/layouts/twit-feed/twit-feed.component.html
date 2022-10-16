@@ -1,18 +1,16 @@
 <div class="home-container">
   <mat-toolbar class="appbar"> Tweet Feed </mat-toolbar>
-  <div class="home-content pt-16">
+  <cdk-virtual-scroll-viewport class="h-screen overflow-scroll" itemSize="200" #scroller>
+    <div class="h-16"></div>
     <app-create-tweet></app-create-tweet>
     <app-tweet-view
-      *ngFor="let tweetModel of tweetModels$ | async"
+      *cdkVirtualFor="let tweetModel of tweetModels$ | async;"
       [tweetModel]="tweetModel"
-    ></app-tweet-view>
-  </div>
+      @slideInRight
+    >
+    </app-tweet-view>
+    <div class="flex justify-center align-middle" *ngIf="isLoading">
+    <mat-progress-spinner diameter="40" mode="indeterminate"></mat-progress-spinner>
+    </div>
+  </cdk-virtual-scroll-viewport>
 </div>
-<!-- *ngFor="let tweetModel of tweetService.getTimeline() | async" -->
-<!-- infiniteScroll -->
-<!-- [infiniteScrollDistance]="1" -->
-<!-- [infiniteScrollThrottle]="2" -->
-<!-- [infiniteScrollUpDistance]="1" -->
-<!-- [scrollWindow]="false" -->
-<!-- (scrolled)="onScrollDown()" -->
-<!-- (scrolledUp)="onScrollUp()" -->
