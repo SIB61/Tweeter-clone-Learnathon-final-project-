@@ -1,24 +1,25 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
 import { UserModel } from '@shared/models/user.model';
 import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 import { AbsUserService } from '@shared/services/abstract/user/abs-user.service';
-import { distinctUntilChanged, map, Observable, of, tap } from 'rxjs';
+import { distinctUntilChanged, map, Observable, of, take, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService implements AbsUserService {
   constructor(
     private httpService: AbsHttpService,
-    private localUserInfoService: AbsLocalUserInfoService
+    private storageService: AbsStorageService
   ) {}
   public createUser(user: UserModel): Observable<any> {
     return this.httpService.post(ApiEndpoints.REGISTER, user).pipe(
-      distinctUntilChanged(),
+      take(1),
       tap((value) => {
-        this.localUserInfoService.setLocalToken(value.data.item1);
-        this.localUserInfoService.setLocalUser(value.data.item2);
+        this.storageService.setObject('user',value.data.item1)
+        this.storageService.setObject('token',value.data.token)
       }),
       map((value) => value.data)
     );

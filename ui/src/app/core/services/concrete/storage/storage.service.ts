@@ -11,7 +11,14 @@ export class StorageService extends AbsStorageService {
   get(key: string) {
     return localStorage.getItem(key);
   }
-  save(key: string, value: string) {
-    return localStorage.setItem(key, value);
+  set(key: string, value: string): void {
+    localStorage.setItem(key, value);
+  }
+  getObject<T>(key: string): T|null {
+    return JSON.parse(localStorage.getItem(key)) as T
+  }
+  setObject(key: string, value: any): void {
+    let userJsonString = JSON.stringify(value);
+    localStorage.setItem(key,userJsonString);
   }
 }

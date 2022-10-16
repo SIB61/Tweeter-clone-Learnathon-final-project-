@@ -1,4 +1,18 @@
-<div class="bg-account"></div>
-<div class="container">
-<router-outlet></router-outlet>
+<div class="h-100s w-100s flex">
+<div class="bg-primary w-50s h-100s shadow-primary shadow-2xl  hidden lg:flex justify-center items-center">
+    <div class="flex flex-col">
+      <img src="assets/twitter48.svg" alt="" class="bg-white">
+      <span class="text-white opacity-80 text-3xl">
+      Welcome to 
+      </span>
+      <span class="text-white text-4xl">
+      LEARNATHON TWEETER  
+      </span>
+    </div>
+</div>
+<div class="flex justify-center items-center h-100s w-100s lg:w-50s">
+  <div class="h-max w-1/2 min-w-min shadow-2xl rounded-lg overflow-hidden" style="max-width: 320px;">
+        <router-outlet></router-outlet>
+  </div>
+</div>
 </div>

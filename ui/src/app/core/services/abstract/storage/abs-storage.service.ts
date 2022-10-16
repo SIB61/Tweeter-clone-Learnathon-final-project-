@@ -10,6 +10,8 @@ export abstract class AbsStorageService{
   refreshToken="refresh_token"
 
   abstract get(key:string):string|null; 
-  abstract save(key:string,value:string):void;
+  abstract set(key:string,value:string):void;
+  abstract getObject<T>(key:string):T|null
+  abstract setObject(key:string,value:any):void; 
 
 }

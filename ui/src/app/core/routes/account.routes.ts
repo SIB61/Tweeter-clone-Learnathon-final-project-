@@ -4,18 +4,25 @@ export const AccountRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'sign-up',
+    redirectTo: 'sign-in',
   },
   {
     path: 'sign-in',
     loadComponent: () =>
-      import('@ui/user/login/login.component').then((m) => m.LoginComponent),
+      import('@ui/auth/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'sign-up',
     loadComponent: () =>
-      import('@ui/user/register/register.component').then(
+      import('@ui/auth/register/register.component').then(
         (m) => m.RegisterComponent
+      ),
+  },
+  {
+    path: 'forget-password',
+    loadComponent: () =>
+      import('@ui/layouts/forget-password/forget-password.component').then(
+        (m) => m.ForgetPasswordComponent
       ),
   },
 ];

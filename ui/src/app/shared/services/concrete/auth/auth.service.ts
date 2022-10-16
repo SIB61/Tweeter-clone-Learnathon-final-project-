@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { HttpService } from '@core/services/concrete/http/http.service';
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
 import { AbsAuthService } from '@shared/services/abstract/auth/abs-auth.service';
@@ -12,15 +13,15 @@ import { environment } from 'src/environments/environment';
 export class AuthService implements AbsAuthService {
   constructor(
     private httpService: HttpService,
-    private localUserInfoService: AbsLocalUserInfoService
+    private storageService: AbsStorageService
   ) {}
   login(username: string, password: string) {
     return this.httpService
       .post(ApiEndpoints.LOGIN, { username, password })
       .pipe(
         tap((value) => {
-          this.localUserInfoService.setLocalUser(value.data.item1);
-          this.localUserInfoService.setLocalToken(value.data.item2);
+          this.storageService.setObject('user',value.data.item1)
+          this.storageService.setObject('token',value.data.item2)
         })
       );
   }

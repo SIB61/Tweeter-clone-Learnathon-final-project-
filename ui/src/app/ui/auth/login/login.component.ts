@@ -10,6 +10,9 @@ import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '@shared/material/material.module';
 import { AbsAuthService } from '@shared/services/abstract/auth/abs-auth.service';
 import { AuthService } from '@shared/services/concrete/auth/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SendCodeComponent } from '../send-code/send-code.component';
+import { ForgetPasswordComponent } from '@ui/layouts/forget-password/forget-password.component';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -18,21 +21,20 @@ import { AuthService } from '@shared/services/concrete/auth/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent    {
   form: FormGroup;
   hidden = true;
   constructor(
     formBuilder: FormBuilder,
     private router: Router,
-    private authService: AbsAuthService
+    private authService: AbsAuthService,
+    private dialog:MatDialog
   ) {
     this.form = formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
-  ngOnInit(): void {}
-  ngOnDestroy(): void {}
   submit() {
     this.authService
       .login(this.form.value.username, this.form.value.password)
@@ -41,5 +43,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('/home');
         },
       });
+  }
+
+  forgetPassword(){
+    this.dialog.open(ForgetPasswordComponent)
   }
 }

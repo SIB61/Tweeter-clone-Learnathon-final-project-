@@ -16,7 +16,7 @@ export class LocalUserInfoService implements AbsLocalUserInfoService {
   }
   setLocalUser(user: UserModel): boolean {
     let userJsonString = JSON.stringify(user);
-    this.storage.save('USER', userJsonString);
+    this.storage.set('USER', userJsonString);
     return true;
   }
 
@@ -26,7 +26,7 @@ export class LocalUserInfoService implements AbsLocalUserInfoService {
   }
 
   setLocalToken(token: TokenModel): boolean {
-    this.storage.save('TOKEN', JSON.stringify(token));
+    this.storage.set('TOKEN', JSON.stringify(token));
     return true;
   }
 }

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
+import { AdminGuard } from '@core/guards/admin.guard';
 import { AuthGuard } from '@core/guards/auth.guard';
-import { AuthService } from '@shared/services/concrete/auth/auth.service';
+import { StorageService } from '@core/services/concrete/storage/storage.service';
 import { AccountRoutes } from './account.routes';
 import { HomeRoutes } from './home.routes';
 
@@ -8,7 +9,7 @@ export const ApplicationRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: localStorage.getItem('USER') ? 'home' : 'account',
+    redirectTo: 'account'
   },
   {
     path: 'account',
@@ -28,4 +29,9 @@ export const ApplicationRoutes: Routes = [
     children: HomeRoutes,
     data: { data: 'home' },
   },
+  {
+    path:'admin',
+    canActivate: [AdminGuard,AuthGuard],
+    loadComponent: () => import('@ui/layouts/admin-layout/admin-layout.component').then(m=>m.AdminLayoutComponent)
+  }
 ];

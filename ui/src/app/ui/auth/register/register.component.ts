@@ -40,8 +40,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(formBuilder: FormBuilder, private userService: AbsUserService) {
     this.form = formBuilder.group({
-      fullName: ['', Validators.required],
-      username: ['', Validators.required],
+      fullName: ['', [Validators.required,Validators.minLength(4)]],
+      username: ['', [Validators.required,Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       birthDate: ['', [Validators.required, validAge]],
       password: ['', [Validators.required, strongPassword]],
@@ -57,30 +57,27 @@ export class RegisterComponent implements OnInit {
   }
 
   getErrorMsg(control: AbstractControl | null) {
+    if (control?.hasError('required')) return '*required';
     switch (control) {
+      case this.form.get('fullName'):
+        if (control?.hasError('minlength')) return '*minimum length is 4';
+        break;
       case this.form.get('username'):
-        if (control?.hasError('required')) return '*username required';
+        if (control?.hasError('minlength')) return '*minimum length is 3';
         break;
       case this.form.get('email'):
-        if (control?.hasError('required')) return '*email required';
-        else if (control?.hasError('email')) return '*invalid email';
+        if (control?.hasError('email')) return '*invalid email';
         break;
       case this.form.get('birthDate'):
-        if (control?.hasError('required')) return '*date for birth is required';
-        else if (control?.hasError('validAge')) return '*minimum age is 18';
+        if (control?.hasError('validAge')) return '*minimum age is 18';
         break;
       case this.form.get('password'):
-        if (control?.hasError('required')) return '*password required';
-        else if (control?.hasError('strongPassword'))
+        if (control?.hasError('strongPassword'))
           return '*weak! must include lowercase uppercase and number';
         break;
       case this.form.get('repeatedPassword'):
-        if (control?.hasError('required')) return '*repeated password required';
-        else if (control?.hasError('matchPassword'))
-          return "*password didn't match";
+        if (control?.hasError('matchPassword')) return "*password didn't match";
         break;
-      default:
-        return '*error';
     }
     return '*error';
   }

@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z8">
+<mat-card class="mat-elevation-z0 w-full h-full">
   <mat-card-header>
     <mat-card-title>Sign In </mat-card-title>
     <mat-card-subtitle>at Twitter</mat-card-subtitle>
@@ -13,7 +13,7 @@
         <mat-error>*username required</mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class="mb-2">
         <input matInput placeholder="password" formControlName="password" 
         [type]="hidden? 'password' : 'text' "/>
         <button mat-icon-button type="button" matSuffix (click)="hidden=!hidden"><mat-icon>
@@ -33,8 +33,16 @@
       </button>
     </form>
   </mat-card-content>
-  <mat-card-footer>
+    <div class="horizontal-divider"></div>
+      <button mat-button color="primary" class="w-full" routerLink="/account/forget-password">forget password?</button>
+
+  <mat-card-footer class="bg-aliceblue">
+    <div class="p-2 flex flex-col justify-center items-center" >
+      <!-- <button mat-button color="primary" class="w-min" (click)="forgetPassword()">forget password?</button> -->
+    <div class="flex justify-center items-center">
       do not have any account?
       <button mat-button color="primary" routerLink="/account/sign-up">sign up</button>
+    </div>
+    </div>
   </mat-card-footer>
 </mat-card>
