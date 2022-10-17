@@ -1,7 +1,9 @@
-<div class="home-container">
-  <mat-toolbar class="appbar"> Tweet Feed </mat-toolbar>
+<div class="w-full h-full relative">
+  <div class="absolute border-b border-b-gray-300 w-full top-16 lg:top-0 md:top-0 z-50" >
+  <mat-toolbar class="glass"> Tweet Feed </mat-toolbar>
+  </div>
   <cdk-virtual-scroll-viewport class="h-screen overflow-scroll" itemSize="200" #scroller>
-    <div class="h-16"></div>
+    <div class="h-32 lg:h-16 md:h-16"></div>
     <app-create-tweet></app-create-tweet>
     <app-tweet-view
       *cdkVirtualFor="let tweetModel of tweetModels$ | async;"

@@ -1,5 +1,7 @@
 <div class="home-container">
-  <mat-toolbar class="appbar">
+  <div class="w-full border-b border-b-gray-300 absolute top-16 lg:top-0 md:top-0 z-50">
+
+  <mat-toolbar class="glass">
     <div class="searchbox">
       <input type="text" placeholder="Search" [(ngModel)]="searchText" />
       <button
@@ -13,6 +15,7 @@
       </button>
     </div>
   </mat-toolbar>
+  </div>
   <div *ngIf="isTweetSearch; then tweet; else user"></div>
 </div>
 

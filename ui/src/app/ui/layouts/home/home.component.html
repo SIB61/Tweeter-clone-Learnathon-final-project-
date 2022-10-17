@@ -1,10 +1,10 @@
-<div class="flex flex-col-reverse lg:flex-row justify-between w-100s h-100s ">
-  <div  class="w-full h-16 lg:w-1/4">
-    <div class="h-100s w-full flex flex-col items-center justify-between">
-      <div>
+<div class="flex flex-col-reverse lg:flex-row md:flex-row justify-between w-100s h-100s overflow-hidden">
+  <div  class="w-full  h-16 lg:h-full md:h-full lg:w-1/4 md:w-1/4">
+    <div class="h-full  w-full flex flex-col items-center justify-between">
+      <div class="w-full">
         <app-side-navigation></app-side-navigation>
       </div>
-    <div class="h-max w-full p-4  flex justify-center items-center">
+    <div class="hidden h-max w-full p-4  lg:flex md:flex justify-center items-center">
       <div matRipple class="cursor-pointer h-max w-max bg-primary pl-2 pr-8 py-2  rounded-full justify-center items-center flex">
         <div class="avatar w-12 h-min mr-4">
           <div class="font-bold text-lg">
@@ -12,7 +12,7 @@
             </div>
         </div>
           <div>
-          <div class="font-bold text-lg text-white">
+          <div class="font-bold text-lg text-white line-clamp-1">
               {{user.fullName}}
           </div>
             <div class="text-white">
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div class="w-full lg:w-1/2 border lg:border-x-gray-300">
+  <div class="flex-auto border border-gray-300 ">
     <router-outlet></router-outlet>
   </div>
 
