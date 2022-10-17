@@ -6,6 +6,8 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
+import { TokenModel } from '@shared/models/token.model';
 import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 import { Observable } from 'rxjs';
 
@@ -13,7 +15,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TokenInterceptorService implements HttpInterceptor {
-  constructor(private localUserInfoService: AbsLocalUserInfoService) {}
+  constructor(private storageService: AbsStorageService) {}
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -21,7 +23,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     req = req.clone({
       headers: new HttpHeaders().append(
         'Authorization',
-        'Bearer ' + this.localUserInfoService.getLocalToken()?.token
+        'Bearer ' + this.storageService.getObject<TokenModel>('token')?.token
       ),
     });
     return next.handle(req);

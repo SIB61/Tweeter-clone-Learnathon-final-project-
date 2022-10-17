@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { FollowService } from '@shared/services/concrete/user/follow.service';
 import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
+import { UserModel } from '@shared/models/user.model';
 
 @Component({
   selector: 'app-follower-layout',
@@ -18,12 +20,12 @@ import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-loca
 export class FollowerLayoutComponent implements OnInit {
   constructor(
     private followService: AbsFollowService,
-    private localUserInfo: AbsLocalUserInfoService
+    private storageService: AbsStorageService
   ) {}
   followers$: Observable<any>;
   ngOnInit(): void {
     this.followers$ = this.followService.getFollowers(
-      this.localUserInfo.getLocalUser().id
+      this.storageService.getObject<UserModel>('user')?.id
     );
   }
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
+import { PageResponse } from '@shared/models/structures/response.model';
 import { UserModel } from '@shared/models/user.model';
 import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 import { AbsUserService } from '@shared/services/abstract/user/abs-user.service';
@@ -10,10 +11,13 @@ import { distinctUntilChanged, map, Observable, of, take, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService implements AbsUserService {
+  user:UserModel;
   constructor(
     private httpService: AbsHttpService,
     private storageService: AbsStorageService
-  ) {}
+  ) {
+    this.user = storageService.getObject<UserModel>('user')
+  }
   public createUser(user: UserModel): Observable<any> {
     return this.httpService.post(ApiEndpoints.REGISTER, user).pipe(
       take(1),
@@ -35,9 +39,9 @@ export class UserService implements AbsUserService {
     return this.httpService
       .get(ApiEndpoints.USERS, new HttpParams().append('FullName', name))
       .pipe(
-        map((response) => {
+        map((response:PageResponse<UserModel[]>) => {
           console.warn(response);
-          return response.data;
+          return response.data.filter(user=>user.id!=this.user.id);
         })
       );
   }

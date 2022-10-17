@@ -10,9 +10,9 @@
       [routerLink]="navOption.route"
       [class.selected]="isSelected(navOption.route)"
     >
-      <mat-icon class="mr-2">{{ navOption.icon }}</mat-icon>
+      <mat-icon>{{ navOption.icon }}</mat-icon>
       <!-- <span class="hidden md:lg:inline-block">{{ navOption.title }}</span> -->
-      <span class="h-min">
+      <span class="h-min ml-2 hidden lg:inline-block">
         {{ navOption.title }}
       </span>
     </button>

@@ -12,4 +12,7 @@ export const ApiEndpoints = {
   FOLLOWING: (id: string): string => `${id}/followings`,
   FOLLOW: (id: string): string => `${id}/follow`,
   LIKE: (id: string): string => `like/${id}`,
+  SEND_CODE:'forget-password',
+  VARIFY_CODE:'resetcode-check',
+  CHANGE_FORGET_PASSWORD:'code-password',
 };

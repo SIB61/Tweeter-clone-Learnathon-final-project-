@@ -6,6 +6,8 @@ import { SideNavigationComponent } from '@ui/navigation/side-navigation/side-nav
 import { Breakpoints } from '@angular/cdk/layout';
 import { TitleBarComponent } from '@ui/navigation/title-bar/title-bar.component';
 import { BreakPointService } from '@core/services/concrete/break-point/break-point.service';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
+import { UserModel } from '@shared/models/user.model';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +24,9 @@ import { BreakPointService } from '@core/services/concrete/break-point/break-poi
 })
 export class HomeComponent implements OnInit {
   breakpoints = Breakpoints;
-  constructor(public breakPoint: BreakPointService, public router: Router) {}
+  user:UserModel
+  constructor(public breakPoint: BreakPointService, public router: Router,private storageService:AbsStorageService) {
+    this.user = storageService.getObject<UserModel>('user')
+  }
   ngOnInit(): void {}
 }

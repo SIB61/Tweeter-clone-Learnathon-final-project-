@@ -5,6 +5,7 @@ import { UserModel } from '@shared/models/user.model';
 import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 import { MaterialModule } from '@shared/material/material.module';
 import { TweetViewComponent } from '@ui/tweet/tweet-view/tweet-view.component';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 
 @Component({
   selector: 'app-profile-layout',
@@ -15,8 +16,8 @@ import { TweetViewComponent } from '@ui/tweet/tweet-view/tweet-view.component';
 })
 export class ProfileLayoutComponent implements OnInit {
   user: UserModel;
-  constructor(public localUserInfoService: AbsLocalUserInfoService) {}
+  constructor(public storageService: AbsStorageService) {}
   ngOnInit(): void {
-    this.user = this.localUserInfoService.getLocalUser();
+    this.user = this.storageService.getObject<UserModel>('user');
   }
 }

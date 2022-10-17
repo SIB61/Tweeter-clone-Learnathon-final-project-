@@ -11,6 +11,8 @@ import { AbsTweetService } from '@shared/services/abstract/tweet/abs-tweet.servi
 import { TweetService } from '@shared/services/concrete/tweet/tweet.service';
 import { LocalUserInfoService } from '@shared/services/concrete/user/local-user-info.service';
 import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
+import { UserModel } from '@shared/models/user.model';
 @Component({
   selector: 'app-create-tweet',
   standalone: true,
@@ -28,7 +30,7 @@ import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-loca
 export class CreateTweetComponent implements OnInit {
   constructor(
     private tweetService: AbsTweetService,
-    private localUserService: AbsLocalUserInfoService
+    private storageService: AbsStorageService
   ) {}
 
   isOpen = false;
@@ -42,7 +44,7 @@ export class CreateTweetComponent implements OnInit {
   showTweet = false;
   @Input() content: string = '';
   @Output() submit = new EventEmitter<string>();
-  localUser = this.localUserService.getLocalUser();
+  localUser = this.storageService.getObject<UserModel>('user');
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();

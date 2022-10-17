@@ -22,7 +22,7 @@ export class SideNavigationComponent implements OnInit {
   }
 
   isSelected(route: string): boolean {
-    return this.router.url == route;
+    return this.router.url.startsWith(route);
   }
 
   ngOnInit(): void {}
@@ -52,6 +52,7 @@ export class SideNavigationComponent implements OnInit {
       title: 'Network',
       icon: 'group',
       route: '/home/network',
+
     },
   ];
 }

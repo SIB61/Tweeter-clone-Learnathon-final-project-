@@ -22,7 +22,6 @@ export class FollowService implements AbsFollowService {
   unfollow(userId: string): Observable<any> {
     return this.httpService.delete(ApiEndpoints.FOLLOW(userId)).pipe(take(1));
   }
-
   getFollowers(
     userId: string,
     pageNumber?: number,
@@ -35,7 +34,6 @@ export class FollowService implements AbsFollowService {
       })
     );
   }
-
   getFollowings(
     userId: string,
     pageNumber?: number,
