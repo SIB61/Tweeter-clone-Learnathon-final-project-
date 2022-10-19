@@ -3,7 +3,60 @@
   <mat-toolbar class="glass">
     <mat-toolbar-row > Notification </mat-toolbar-row>
   </mat-toolbar>
-  </div>
 
+  <div class="" *ngIf="notificationService.showNotification">
+    <div class="notification">
+      <div   *ngFor="let notification  of (notificationService.notificationThread$| async)">
+
+        <div class="notification-item">
+
+          <mat-card class="example-card">
+            <mat-card-title-group>
+              <mat-card-title>{{notification.fullName}}</mat-card-title>
+              <mat-card-subtitle>{{notification.createdAt | timeago}}</mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-card-content>
+              {{notification.type}}
+              <span *ngIf="notification.postId">
+                On Post
+              </span>
+            </mat-card-content>
+          </mat-card>
+
+            <!-- <div>
+                {{notification.createdAt | timeago}}
+            </div>
+            <div>
+              {{notification.fullName}} {{notification.type}} 
+              
+              <span *ngIf="notification.postId">
+                On Post
+              </span>
+              
+            </div>
+            
+           <div>
+                {{notification.from}}
+            </div> -->
+        </div>
+    
+    
+       
+      </div>
+    </div>
+    
+    <div>
+      <mat-paginator [length]="PNotification.totalRecords!"
+      [pageSize]="PNotification.pageSize!"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+      (page)="getPaginatorData($event)"
+      >
+    </mat-paginator>
+    </div>
+  </div>
+ 
+ 
+</div>
   <div class="home-content pt-16"></div>
 </div>

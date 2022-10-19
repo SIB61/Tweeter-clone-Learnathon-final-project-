@@ -26,10 +26,12 @@
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@microsoft/signalr": "^6.0.10",
     "@tailwindcss/line-clamp": "^0.4.2",
     "angular-animations": "^0.11.0",
     "ngx-infinite-scroll": "^14.0.0",
     "ngx-timeago": "^2.0.0",
+    "ngx-toastr": "^15.2.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

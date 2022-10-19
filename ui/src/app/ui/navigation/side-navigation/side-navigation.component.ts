@@ -6,6 +6,7 @@ import { Breakpoints } from '@angular/cdk/layout';
 import { BreakPointService } from '@core/services/concrete/break-point/break-point.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {faUser, faHashtag, faHome, faPerson, faUserGroup,faBell } from '@fortawesome/free-solid-svg-icons';
+import { NotificationService } from '@shared/services/concrete/notification/-notification.service';
 
 @Component({
   selector: 'app-side-navigation',
@@ -44,7 +45,7 @@ export class SideNavigationComponent implements OnInit {
     {
       title: 'Notification',
       icon: faBell,
-      route: '/home/notification',
+      route: '/home/notification'
     },
     {
       title: 'Network',
