@@ -23,7 +23,7 @@ import { LoadingService } from '@core/services/concrete/loading.service';
 import { LoadingInterceptor } from '@core/interceptors/loading.interceptor';
 import { TimeagoClock, TimeagoModule } from 'ngx-timeago';
 import { MyClock } from '@core/services/concrete/time-ago-clock';
-import { FormsModule } from '@angular/forms';
+
 if (environment.production) {
   enableProdMode();
 }

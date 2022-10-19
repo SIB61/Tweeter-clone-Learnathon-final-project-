@@ -120,6 +120,9 @@ export class TwitFeedComponent implements OnInit, AfterViewInit {
       })
     );
   }
+
+
+  
   nextPage() {
     if (!this.isEnd) this.pageOffset.next(this.pageOffset.value + 1);
   }
