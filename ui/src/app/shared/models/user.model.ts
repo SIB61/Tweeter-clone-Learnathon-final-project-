@@ -13,4 +13,5 @@ export interface UserModel {
   password?: string;
   repeatedPassword?: string;
   isFollow?: boolean;
+  isBlocked?:boolean;
 }

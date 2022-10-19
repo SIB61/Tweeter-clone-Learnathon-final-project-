@@ -1,4 +1,4 @@
-<mat-toolbar style="background-color: aliceblue;">
+<mat-toolbar >
   <mat-toolbar-row>
     <button
       mat-icon-button
@@ -22,6 +22,10 @@
     <app-admin-sidebar></app-admin-sidebar>
   </mat-drawer>
   <mat-drawer-content> 
+    <div class="w-full h-full p-4 bg-white">
+      <div class="bg-aliceblue rounded-xl overflow-hidden">
     <router-outlet></router-outlet>
+      </div>
+    </div>
   </mat-drawer-content>
 </mat-drawer-container>

@@ -4,6 +4,7 @@ import { AuthGuard } from '@core/guards/auth.guard';
 import { StorageService } from '@core/services/concrete/storage/storage.service';
 import { UserModel } from '@shared/models/user.model';
 import { AccountRoutes } from './account.routes';
+import { AdminRoutes } from './admin.routes';
 import { HomeRoutes } from './home.routes';
 
 export const ApplicationRoutes: Routes = [
@@ -33,7 +34,8 @@ export const ApplicationRoutes: Routes = [
   {
     path:'admin',
     canActivate: [AdminGuard,AuthGuard],
-    loadComponent: () => import('@ui/layouts/admin-layout/admin-layout.component').then(m=>m.AdminLayoutComponent)
+    loadComponent: () => import('@ui/layouts/admin-layout/admin-layout.component').then(m=>m.AdminLayoutComponent),
+    children:AdminRoutes
   }
 ];
 

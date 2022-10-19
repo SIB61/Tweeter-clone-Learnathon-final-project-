@@ -1,1 +1,47 @@
-<p>user-list works!</p>
+
+<div class="rounded-xl overflow-hidden h-full w-full bg-aliceblue">
+<mat-paginator [length]="totalPages"
+              [pageSizeOptions]="[5, 10, 25,50, 100]"
+              (page)="pageEvent($event)"
+              aria-label="Select page">
+</mat-paginator>
+    <div class="horizontal-divider"></div>
+<table mat-table [dataSource]="users$|async" class="mat-elevation-z0 ">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="user_name">
+    <th mat-header-cell *matHeaderCellDef> User Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="full_name">
+    <th mat-header-cell *matHeaderCellDef> Full Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="birth_date">
+    <th mat-header-cell *matHeaderCellDef> Birth Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.dateOfBirth|date}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="actions">
+     <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element"> 
+        <div class="flex">
+        <button mat-flat-button color="primary">block</button>
+          <div class="vertical-divider"></div>
+        <button mat-flat-button color="primary">update</button>
+        </div>
+      </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>
