@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AdminGuard } from '@core/guards/admin.guard';
 import { AuthGuard } from '@core/guards/auth.guard';
 import { StorageService } from '@core/services/concrete/storage/storage.service';
+import { UserModel } from '@shared/models/user.model';
 import { AccountRoutes } from './account.routes';
 import { HomeRoutes } from './home.routes';
 
@@ -9,7 +10,7 @@ export const ApplicationRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'account'
+    redirectTo: getAppRediraction()
   },
   {
     path: 'account',
@@ -35,3 +36,12 @@ export const ApplicationRoutes: Routes = [
     loadComponent: () => import('@ui/layouts/admin-layout/admin-layout.component').then(m=>m.AdminLayoutComponent)
   }
 ];
+
+function getAppRediraction():string{
+  const user = new StorageService().getObject<UserModel>('user')
+  if(!user) return 'account'
+  else  if(user.role == 'Admin') return 'admin'
+  else if(user.role == 'User') return 'home'
+  return ''
+}
+

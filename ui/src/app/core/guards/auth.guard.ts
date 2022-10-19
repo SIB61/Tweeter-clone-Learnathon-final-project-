@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    let canLoadHome = this.storageService.getObject<UserModel>('user') != null;
-    return route.data['data'] == 'home' ? canLoadHome : !canLoadHome;
+    let isLoggedIn = this.storageService.getObject<UserModel>('user') != null;
+    return route.data['data'] == 'account' ? !isLoggedIn : isLoggedIn;
   }
 }
