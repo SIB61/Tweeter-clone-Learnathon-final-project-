@@ -1,4 +1,7 @@
+import { useAnimation } from '@angular/animations';
 import { Routes } from '@angular/router';
+import { StorageService } from '@core/services/concrete/storage/storage.service';
+import { UserModel } from '@shared/models/user.model';
 
 export const AccountRoutes: Routes = [
   {
@@ -26,3 +29,4 @@ export const AccountRoutes: Routes = [
       ),
   },
 ];
+

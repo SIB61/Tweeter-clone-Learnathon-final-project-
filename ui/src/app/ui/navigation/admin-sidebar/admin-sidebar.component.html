@@ -1,0 +1,12 @@
+<div class="h-full w-full flex flex-col justify-start items-center p-5">
+  <button
+    mat-flat-button
+    class="w-full mb-5"
+    *ngFor="let option of options; let i = index"
+    [color]="lastClicked === i ? 'primary' : ''"
+    (click)="lastClicked=i"
+    [routerLink]="option.link"  
+  >
+    Users
+  </button>
+</div>
