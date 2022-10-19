@@ -40,7 +40,7 @@ export class LoginComponent    {
       .login(this.form.value.username, this.form.value.password)
       .subscribe({
         next: () => {
-          this.router.navigateByUrl('');
+          this.router.navigateByUrl('/home');
         },
       });
   }

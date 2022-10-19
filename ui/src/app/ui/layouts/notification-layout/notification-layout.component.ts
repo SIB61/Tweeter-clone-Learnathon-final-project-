@@ -43,10 +43,6 @@ export class NotificationLayoutComponent implements OnInit {
   constructor(public notificationService: NotificationService, private storageService: AbsStorageService) {}
 
   ngOnInit(): void {
-
-    
-    // UserModel
-
     
     const user: UserModel = JSON.parse(localStorage.getItem('user'));
 
@@ -57,8 +53,9 @@ export class NotificationLayoutComponent implements OnInit {
         this.notificationService.showNotification = true;
       }
     });
-
+    console.log(user.id);
     this.notificationService.createHubConnection(user.id);
+    
   }
 
 

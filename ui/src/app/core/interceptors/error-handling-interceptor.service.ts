@@ -37,7 +37,7 @@ export class ErrorHandlingInterceptorService implements HttpInterceptor {
               this._snackBar.open(err.status, err.error.data);
               break;
             case 500:
-              this._snackBar.open(err.status, err.error.data);
+              this._snackBar.open(err.status, err.error.message);
               break;
           }
         }
