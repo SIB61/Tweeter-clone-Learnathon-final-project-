@@ -23,7 +23,7 @@ export class UserService implements AbsUserService {
       take(1),
       tap((value) => {
         this.storageService.setObject('user',value.data.item1)
-        this.storageService.setObject('token',value.data.token)
+        this.storageService.setObject('token',value.data.item2)
       }),
       map((value) => value.data)
     );
