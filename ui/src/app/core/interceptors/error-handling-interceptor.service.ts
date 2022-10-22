@@ -27,6 +27,28 @@ export class ErrorHandlingInterceptorService implements HttpInterceptor {
           {
             case 400: 
               this._snackBar.open("authentication error",'ok',{duration:2*1000});
+// =======
+//               if (err.error.errors) {
+//                 const modalStateErrors = [];
+//                 for (const key in err.error.errors) {
+//                   if (err.error.errors[key]) {
+//                     modalStateErrors.push(err.error.errors[key])
+//                   }
+//                 }
+//                
+//                 modalStateErrors.forEach(elememt => {
+//                   this._snackBar.open(err.status, elememt);
+//                 });
+//               
+//                 throw modalStateErrors.flat();
+//               } else if (typeof(err.error) === 'object') {
+//                 console.log("Object" + err);
+//                 this._snackBar.open(err.statusText, err.status);
+//               } else {
+//                 console.log(err);
+//                 this._snackBar.open(err.error.data, err.status);
+//               }
+// >>>>>>> af3f800c22f043aa078055f7cf98f79ee8136a0a
               break;
             case 401:
               console.log(err);
@@ -38,6 +60,9 @@ export class ErrorHandlingInterceptorService implements HttpInterceptor {
               break;
             case 500:
               this._snackBar.open(err.status, err.error.data,{duration:20000});
+              break;
+            case 500:
+              this._snackBar.open(err.status, err.error.message);
               break;
           }
         }

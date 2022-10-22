@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
   AbstractControl,
@@ -38,7 +38,9 @@ export class RegisterComponent implements OnInit {
   hidden = true;
   rHidden = true;
 
-  constructor(formBuilder: FormBuilder, private userService: AbsUserService) {
+  constructor(formBuilder: FormBuilder,
+       private router: Router, 
+       private userService: AbsUserService) {
     this.form = formBuilder.group({
       fullName: ['', [Validators.required,Validators.minLength(4)]],
       username: ['', [Validators.required,Validators.minLength(3)]],
@@ -93,6 +95,10 @@ export class RegisterComponent implements OnInit {
         dateOfBirth: user.birthDate as string,
         password: user.password as string,
       })
-      .subscribe();
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl('/home');
+        },
+      });
   }
 }
