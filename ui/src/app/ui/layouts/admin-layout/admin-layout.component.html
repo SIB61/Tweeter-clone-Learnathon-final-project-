@@ -1,5 +1,5 @@
-<div class="home-container">
-<div class="absolute border-b border-b-gray-300 w-full top-16  md:top-0 z-50" >
+<div class="home-container bg-white">
+<div class="absolute border-b border-b-gray-300 w-full top-0  md:top-0 z-50" >
 <mat-toolbar class="glass">
   <mat-toolbar-row>
     <button
@@ -13,19 +13,21 @@
   </mat-toolbar-row>
 </mat-toolbar>
 </div>
-<mat-drawer-container class="h-full w-full pt-32 lg:pt-16">
+<mat-drawer-container class="h-full w-full">
   <mat-drawer
     mode="side"
-    class="w-4/5 lg:w-1/5 overflow-hidden pt-32 lg:pt-16"
+    class="w-4/5 lg:w-1/5 overflow-hidden"
     opened="false"
   >
     <app-admin-sidebar></app-admin-sidebar>
   </mat-drawer>
   <mat-drawer-content> 
-    <div class="w-full h-full p-4 bg-white">
+    <div class="w-full h-screen pt-16 bg-white">
+      <div class="p-4 w-full">
       <div class="bg-aliceblue rounded-xl overflow-hidden">
        <router-outlet></router-outlet>
       </div>
+        </div>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>

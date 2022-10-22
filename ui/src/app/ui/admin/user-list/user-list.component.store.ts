@@ -53,15 +53,15 @@ export class UserListComponentStore extends ComponentStore<UserListState>{
   block = this.effect((user$: Observable<UserModel>) => {
     return user$.pipe(
       exhaustMap(user => {
-        if (!user.isBlocked)
+        if (!user.isBlock)
           return this.adminService.block(user.id).pipe(tap(_ => {
             this.snackbar.open(`Blocked ${user.userName}`, '', { duration: 2000 })
-            user.isBlocked = !user.isBlocked
+            user.isBlock = true
             this.updateUserData(user)
           }))
         else return this.adminService.unblock(user.id).pipe(tap(_ => {
           this.snackbar.open(`Unblocked ${user.userName}`, '', { duration: 2000 })
-          user.isBlocked = !user.isBlocked
+          user.isBlock = false 
           this.updateUserData(user)
         }))
       })
@@ -84,7 +84,7 @@ export class UserListComponentStore extends ComponentStore<UserListState>{
     return loadUserData$.pipe(
       mergeMap((data) => {
         return this.adminService.getUsers(data.filter, data.page.pageIndex + 1, data.page.pageSize).pipe(tap(
-          response => { this.updateUser(response.data); this.updatePageFromApi({ pageIndex: response.pageNumber - 1, pageSize: response.pageSize, length: response.totalRecords }) }
+          response => {this.updateUser(response.data); this.updatePageFromApi({ pageIndex: response.pageNumber - 1, pageSize: response.pageSize, length: response.totalRecords }) }
         )
         )
       })
