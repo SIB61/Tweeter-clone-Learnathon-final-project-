@@ -24,21 +24,23 @@ export class AdminService implements AbsAdminService {
       .pipe(take(1));
   }
   getUsers(
+    filter:string,
     pageNumber: number,
     pageSize: number
   ): Observable<PageResponse<UserModel[]>> {
     return this.httpService
       .get(
-        ApiEndpoints.ADMIN_GET_USER,
+        ApiEndpoints.ADMIN_USER,
         new HttpParams()
           .append('pageNumber', pageNumber)
           .append('pageSize', pageSize)
+        .append('blockpros',filter)
       )
       .pipe(take(1));
   }
   updateUser(userId: string, user: UserModel): Observable<Response<any>> {
     return this.httpService
-      .put(ApiEndpoints.ADMIN_UPDATE_USER(userId), user)
+      .put(ApiEndpoints.ADMIN_USER_ById(userId), user)
       .pipe(take(1));
   }
 }

@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 export abstract class AbsAdminService{
   abstract block(userId:string):Observable<Response<any>>
   abstract unblock(userId:string):Observable<Response<any>>
-  abstract getUsers(pageNumber:number,pageSize:number):Observable<PageResponse<UserModel[]>>
+  abstract getUsers(filter:string,pageNumber:number,pageSize:number):Observable<PageResponse<UserModel[]>>
   abstract updateUser(userId:string,user:UserModel):Observable<Response<any>>
 }
 

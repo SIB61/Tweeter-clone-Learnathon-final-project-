@@ -23,6 +23,8 @@ import { LoadingService } from '@core/services/concrete/loading.service';
 import { LoadingInterceptor } from '@core/interceptors/loading.interceptor';
 import { TimeagoClock, TimeagoModule } from 'ngx-timeago';
 import { MyClock } from '@core/services/concrete/time-ago-clock';
+import { StoreModule } from '@ngrx/store';
+import { Reducers } from '@store/app.state';
 
 if (environment.production) {
   enableProdMode();
@@ -37,6 +39,7 @@ bootstrapApplication(BootstrapComponent, {
       MaterialModule,
       InfiniteScrollModule,
       TimeagoModule.forRoot({clock:{provide:TimeagoClock,useClass:MyClock}}),
+      StoreModule.forRoot(Reducers)
     ),
     LoadingService,
     BreakPointService,
@@ -58,17 +61,17 @@ bootstrapApplication(BootstrapComponent, {
     },
     {
       provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlingInterceptorService,
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingInterceptor,
       multi: true,
     },
   ],

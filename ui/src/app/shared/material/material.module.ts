@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -23,6 +24,7 @@ import { ScrollingModule as ExperimentalScrollingModule } from '@angular/cdk-exp
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { MatSelectModule } from '@angular/material/select';
 const matModules = [
   MatFormFieldModule,
   MatPaginatorModule,
@@ -30,6 +32,8 @@ const matModules = [
   MatMenuModule,
   ExperimentalScrollingModule,
   MatToolbarModule,
+  MatTooltipModule,
+  MatSelectModule,
   MatTableModule,
   MatButtonModule,
   MatDialogModule,

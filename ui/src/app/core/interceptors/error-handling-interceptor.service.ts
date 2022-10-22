@@ -21,28 +21,27 @@ export class ErrorHandlingInterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((err) => {
-        console.log(err);
+        // console.log(err);
         if(err){
           switch(err.status)
           {
             case 400: 
-              this._snackBar.open(err.status, err.error.data);
+              this._snackBar.open("authentication error",'ok',{duration:2*1000});
               break;
             case 401:
               console.log(err);
-              this._snackBar.open(err.status, err.error.data);
+              this._snackBar.open(err.status, err.error.data,{duration:20000});
               break;
             case 404:
               console.log(err.error.data);
-              this._snackBar.open(err.status, err.error.data);
+              this._snackBar.open(err.status, err.error.data,{duration:20000});
               break;
             case 500:
-              this._snackBar.open(err.status, err.error.data);
+              this._snackBar.open(err.status, err.error.data,{duration:20000});
               break;
           }
         }
-
-        return of(err);
+        return of(err) ;
       })
     );
   }

@@ -10,42 +10,33 @@ import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '@shared/material/material.module';
 import { AbsAuthService } from '@shared/services/abstract/auth/abs-auth.service';
 import { AuthService } from '@shared/services/concrete/auth/auth.service';
-import { MatDialog } from '@angular/material/dialog';
-import { SendCodeComponent } from '../send-code/send-code.component';
-import { ForgetPasswordComponent } from '@ui/layouts/forget-password/forget-password.component';
+import { LoginComponentStore, LoginState } from './login.component.store';
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, MaterialModule, ReactiveFormsModule, RouterModule],
-  providers: [{ provide: AbsAuthService, useClass: AuthService }],
+  providers: [{ provide: AbsAuthService, useClass: AuthService },LoginComponentStore],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent    {
+export class LoginComponent  implements OnInit  {
   form: FormGroup;
   hidden = true;
   constructor(
-    formBuilder: FormBuilder,
-    private router: Router,
-    private authService: AbsAuthService,
-    private dialog:MatDialog
-  ) {
-    this.form = formBuilder.group({
+    private  formBuilder: FormBuilder,
+    private loginComponentStore:LoginComponentStore
+  ) {}
+  pending$=this.loginComponentStore.pending$
+  ngOnInit(): void {
+  this.pending$.subscribe(v=>console.log(v, "login state"))
+    this.form = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
-  submit() {
-    this.authService
-      .login(this.form.value.username, this.form.value.password)
-      .subscribe({
-        next: () => {
-          this.router.navigateByUrl('');
-        },
-      });
-  }
 
-  forgetPassword(){
-    this.dialog.open(ForgetPasswordComponent)
+  submit() {
+    let formValue:any=this.form.value
+    this.loginComponentStore.login({userName:formValue.username,password:formValue.password})
   }
 }

@@ -1,47 +1,94 @@
+<div class="rounded-xl overflow-hidden w-full bg-aliceblue h-full">
 
-<div class="rounded-xl overflow-hidden h-full w-full bg-aliceblue">
-<mat-paginator [length]="totalPages"
-              [pageSizeOptions]="[5, 10, 25,50, 100]"
-              (page)="pageEvent($event)"
-              aria-label="Select page">
+<div class="flex">
+<mat-form-field appearance="fill" >
+  <!-- <mat-label>filter by</mat-label> -->
+
+  <mat-select [(value)]="selected" (selectionChange)="selectionChanged()">
+    <mat-option value="All">All</mat-option>
+    <mat-option value="Block">Blocked</mat-option>
+    <mat-option value="Unblock">Unblocked</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-paginator
+    *ngIf="pageFromApi$|async as page"
+    [length]="page.length"
+    [pageIndex]="page.pageIndex"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    (page)="pageEvent($event)"
+    aria-label="Select page"
+    class="flex-auto"
+  >
 </mat-paginator>
-    <div class="horizontal-divider"></div>
-<table mat-table [dataSource]="users$|async" class="mat-elevation-z0 ">
 
-  <!--- Note that these columns can be defined in any order.
+</div>
+
+
+
+
+
+  <div class="horizontal-divider"></div>
+  <div class="overflow-scroll h-70s">
+  <table mat-table [dataSource]="users$ | async" class="mat-elevation-z0">
+    <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
-  <!-- Position Column -->
-  <ng-container matColumnDef="user_name">
-    <th mat-header-cell *matHeaderCellDef> User Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
-  </ng-container>
+    <!-- Position Column -->
+    <ng-container matColumnDef="user_name">
+      <th mat-header-cell *matHeaderCellDef>User Name</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.userName }}
+      </td>
+    </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="full_name">
-    <th mat-header-cell *matHeaderCellDef> Full Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
-  </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="full_name">
+      <th mat-header-cell *matHeaderCellDef>Full Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.fullName }}</td>
+    </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="birth_date">
-    <th mat-header-cell *matHeaderCellDef> Birth Date </th>
-    <td mat-cell *matCellDef="let element"> {{element.dateOfBirth|date}} </td>
-  </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="birth_date">
+      <th mat-header-cell *matHeaderCellDef>Birth Date</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.dateOfBirth | date }}
+      </td>
+    </ng-container>
 
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="actions">
-     <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element"> 
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element">
         <div class="flex">
-        <button mat-flat-button color="primary">block</button>
-          <div class="vertical-divider"></div>
-        <button mat-flat-button color="primary">update</button>
+          <button
+            mat-stroked-button
+            #tooltip="matTooltip"
+            [matTooltip]="element.isBlock ? 'Unblock' : 'Block'"
+            [class.text-red]="element.isBlock"
+            (click)="block(element)"
+          >
+            <fa-icon
+              [icon]="blockIcon"
+              [ngStyle]="element.isBlock ? { color: 'red' } : {}"
+            ></fa-icon>
+          </button>
+          <div class="h-full w-1 border-l border-l-gray-300"></div>
+          <button mat-stroked-button color="primary" (click)="update(element)"
+            #tooltip="matTooltip"
+            matTooltip="Update"
+          >
+            <fa-icon [icon]="updateIcon"></fa-icon>
+          </button>
+          <!-- <button mat-stroked-button color="primary" (click)="delete(element)">  -->
+          <!--    <fa-icon [icon]="deleteIcon"></fa-icon> -->
+          <!--   </button> -->
         </div>
       </td>
-  </ng-container>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  </div>
 </div>

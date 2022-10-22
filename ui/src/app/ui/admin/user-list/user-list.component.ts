@@ -1,50 +1,55 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
-import { BehaviorSubject, every, map, mergeMap, Observable, switchMap, take, tap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { UserModel } from '@shared/models/user.model';
 import { AbsAdminService } from '@shared/services/abstract/admin/abs-admin.service';
 import { AdminService } from '@shared/services/concrete/admin/admin.service';
+import { faBan, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { UserListComponentStore } from './user-list.component.store';
+import { MatDialog } from '@angular/material/dialog';
+import { UserUpdateComponent } from '@ui/dump/user-update/user-update.component';
+import {  ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule,MaterialModule],
+  imports: [CommonModule,MaterialModule,ReactiveFormsModule],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
-  providers: [{provide:AbsAdminService,useClass:AdminService}]
+  providers: [{provide:AbsAdminService,useClass:AdminService},UserListComponentStore]
 })
 export class UserListComponent implements OnInit {
  displayedColumns: string[] = ['user_name', 'full_name', 'birth_date', 'actions'];
-  totalPages:number;
-  page = new BehaviorSubject(new PageEvent());
-  users$:Observable<UserModel[]>
-  constructor(private adminService:AbsAdminService) { }
-
-
+  selected:string 
+  blockIcon = faBan
+  updateIcon = faPenToSquare
+  deleteIcon = faTrash
+  constructor(private userListComponentStore:UserListComponentStore,private dialog:MatDialog) { }
+  users:UserModel[]
+  users$ = this.userListComponentStore.users$
+  pageFromApi$ = this.userListComponentStore.pageFromApi$
   ngOnInit(): void {
-    let initialPage=new PageEvent(); 
-    initialPage.pageSize=5;
-    initialPage.pageIndex=0;
-    this.page.next(initialPage);
-    this.users$ = 
-      this.page.pipe(
-        mergeMap(p=>{
-          console.log(p)
-        return this.adminService.getUsers(p.pageIndex+1,p.pageSize).pipe(
-          tap(result=>{
-              console.log(result)
-          this.totalPages=result.totalPages}
-            ),
-          map(result=>result.data)
-        ) 
-      })
-    )
+    this.selected='All'
   }
 
-
   pageEvent(event:PageEvent){
-    console.log(event)
-    this.page.next(event)
+    this.userListComponentStore.updatePageFromUi(event)  
+  }
+ 
+  selectionChanged(){
+   this.userListComponentStore.updateFilter(this.selected)  
+  }
+
+  block(user:UserModel){
+    this.userListComponentStore.block(user)   
+  }
+  update(user:UserModel){
+   this.dialog.open(UserUpdateComponent,{data:user}).afterClosed().subscribe(result => {
+      if(result){
+      user.dateOfBirth = result.dateOfBirth
+      user.fullName = result.fullName
+      this.userListComponentStore.update(user)  
+      }
+    });
   }
 }

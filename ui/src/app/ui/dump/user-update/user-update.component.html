@@ -1,0 +1,29 @@
+<div class="" mat-dialog-content>
+<form action="" class="flex flex-col" [formGroup]="form">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="full name"
+          formControlName="fullName"
+          autocomplete="false"
+        />
+        <mat-error>*minimum length 4</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="birth date"
+          [matDatepicker]="picker"
+          formControlName="dateOfBirth"
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-error>*must be 18</mat-error>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+</form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="form.value" [disabled]="form.invalid">Update</button>
+</div>

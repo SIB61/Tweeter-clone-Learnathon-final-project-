@@ -1,5 +1,5 @@
 <div class="home-container">
-  <div class="w-full border-b border-b-gray-300 absolute top-16 lg:top-0 md:top-0 z-50">
+  <div class="w-full border-b border-b-gray-300 absolute top-16  md:top-0 z-50">
 
   <mat-toolbar class="glass">
     <div class="searchbox">
@@ -20,7 +20,7 @@
 </div>
 
 <ng-template #tweet>
-  <div class="home-content mt-16" *ngIf="tweetModels$ | async as tweetModels">
+  <div class="h-screen pt-32 md:pt-16" *ngIf="tweetModels$ | async as tweetModels">
     <app-tweet-view
       *ngFor="let tweetModel of tweetModels"
       [tweetModel]="tweetModel"
@@ -28,7 +28,7 @@
   </div>
 </ng-template>
 <ng-template #user>
-  <div class="home-content mt-16" *ngIf="userModels$ | async as userModels">
+  <div class="h-screen pt-32 md:pt-16" *ngIf="userModels$ | async as userModels">
     <app-user-preview-cart
       *ngFor="let user of userModels"
       [user]="user"
