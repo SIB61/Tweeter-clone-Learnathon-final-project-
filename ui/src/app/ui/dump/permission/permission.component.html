@@ -1,8 +1,6 @@
 
-<mat-dialog-content>
   <div mat-dialog-title>{{title}}</div>
-  <div mat-dialog-actions>
-    <button mat-dialog-close="yes">YES</button>
-    <button mat-dialog-close="no">NO</button>
+  <div mat-dialog-actions class="flex justify-evenly">
+    <button mat-flat-button mat-dialog-close="ok">OK</button>
+    <button mat-flat-button mat-dialog-close>CANCEL</button>
   </div>
-</mat-dialog-content>

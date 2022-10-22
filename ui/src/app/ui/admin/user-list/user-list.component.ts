@@ -10,6 +10,7 @@ import { UserListComponentStore } from './user-list.component.store';
 import { MatDialog } from '@angular/material/dialog';
 import { UserUpdateComponent } from '@ui/dump/user-update/user-update.component';
 import {  ReactiveFormsModule } from '@angular/forms';
+import { PermissionComponent } from '@ui/dump/permission/permission.component';
 @Component({
   selector: 'app-user-list',
   standalone: true,
@@ -42,7 +43,11 @@ export class UserListComponent implements OnInit {
   }
 
   block(user:UserModel){
-    this.userListComponentStore.block(user)   
+    let title = user.isBlock? `Unblock ${user.fullName}?`: `Block ${user.fullName}?`
+    this.dialog.open(PermissionComponent,{data:title}).afterClosed().subscribe(v=>{
+      if(v==="ok")
+         this.userListComponentStore.block(user)   
+    })
   }
   update(user:UserModel){
    this.dialog.open(UserUpdateComponent,{data:user}).afterClosed().subscribe(result => {
