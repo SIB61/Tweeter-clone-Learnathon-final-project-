@@ -19,7 +19,8 @@ import {  ReactiveFormsModule } from '@angular/forms';
   providers: [{provide:AbsAdminService,useClass:AdminService},UserListComponentStore]
 })
 export class UserListComponent implements OnInit {
- displayedColumns: string[] = ['user_name', 'full_name', 'birth_date', 'actions'];
+ displayedColumns: string[] = ['user_name', 'full_name', 'birth_date','total_followers','total_followings','total_posts', 'actions'];
+
   selected:string 
   blockIcon = faBan
   updateIcon = faPenToSquare

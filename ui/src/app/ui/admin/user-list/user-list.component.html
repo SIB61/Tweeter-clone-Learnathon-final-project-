@@ -55,7 +55,24 @@
         {{ element.dateOfBirth | date }}
       </td>
     </ng-container>
-
+    <ng-container matColumnDef="total_followers">
+      <th mat-header-cell *matHeaderCellDef>Total Followers</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.totalFollowers | number }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="total_followings">
+      <th mat-header-cell *matHeaderCellDef>Total Followings</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.totalFollowings | number }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="total_posts">
+      <th mat-header-cell *matHeaderCellDef>Total Tweets</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.totalTweets | number }}
+      </td>
+    </ng-container>
     <!-- Symbol Column -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
