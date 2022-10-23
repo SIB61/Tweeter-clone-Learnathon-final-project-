@@ -7,6 +7,9 @@ import { BreakPointService } from '@core/services/concrete/break-point/break-poi
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {faUser, faHashtag, faHome, faPerson, faUserGroup,faBell } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from '@shared/services/concrete/notification/-notification.service';
+import { StorageService } from '@core/services/concrete/storage/storage.service';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
+import { UserModel } from '@shared/models/user.model';
 
 @Component({
   selector: 'app-side-navigation',
@@ -14,16 +17,18 @@ import { NotificationService } from '@shared/services/concrete/notification/-not
   imports: [CommonModule, RouterModule, MaterialModule,FontAwesomeModule],
   templateUrl: './side-navigation.component.html',
   styleUrls: ['./side-navigation.component.scss'],
-})
+  providers:[{provide:AbsStorageService, useClass: StorageService}]})
 export class SideNavigationComponent implements OnInit {
   breakpoints = Breakpoints;
-
+  
   constructor(
     private router: Router,
-    public breakpointService: BreakPointService
+    public breakpointService: BreakPointService,
+    private storageService: AbsStorageService
   ) {
     console.warn(router.url);
   }
+  user = this.storageService.getObject<UserModel>('user')
 
   isSelected(route: string): boolean {
     return this.router.url.startsWith(route);
@@ -53,10 +58,10 @@ export class SideNavigationComponent implements OnInit {
       route: '/home/network',
 
     },
-    {
-      title: 'Profile',
-      icon: faUser,
-      route: '/home/profile',
-    },
+    // {
+    //   title: 'Profile',
+    //   icon: faUser,
+    //   route: '/home/profile',
+    // },
   ];
 }

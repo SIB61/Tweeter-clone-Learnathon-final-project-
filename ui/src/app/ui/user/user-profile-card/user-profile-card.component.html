@@ -1,35 +1,38 @@
 <div class="profile" *ngIf="user$ | async as user">
-  <div class="avatar w-32 my-10">
+  <div class="avatar w-32 my-10 shadow-2xl ">
     <div class="font-bold text-5xl">{{ user.fullName[0] }}</div>
   </div>
-  <div class="text-3xl font-mono font-bold">{{ user.fullName }}</div>
-  <div class="text-xl font-semibold font-mono">@{{ user.userName }}</div>
+  <div class="text-3xl font-mono font-bold text-primary">{{ user.fullName }}</div>
+  <div class="text-xl font-semibold font-mono opacity-80">@{{ user.userName }}</div>
   <div class="horizontal-divider"></div>
-  <div class="flex">
-    <mat-icon>email</mat-icon>
-    <div class="text-lg font-mono font-bold">{{ user.email }}</div>
+  <div class="text-lg font-bold opacity-80 flex justify-center items-center">
+    <fa-icon [icon]="faEmail" class="mr-2" ></fa-icon>
+    <div >{{ user.email }}</div>
   </div>
   <div class="flex">
-    <mat-icon>date</mat-icon>
-    <div class="text-lg font-mono">
+    <div class="text-base font-mono opacity-80">
       Birth Date : {{ user.dateOfBirth | date }}
     </div>
   </div>
   <div class="horizontal-divider"></div>
   <div class="flex justify-evenly w-full">
     <div>
-      <div class="font-semibold text-lg">Followers</div>
-      <div class="font-bold text-lg text-center">
-        {{ user.totalFollowers }}
+      <div class="font-bold text-2xl text-center text-primary">
+        {{ user.totalFollowers|thousand }}
       </div>
+      <div class="font-medium text-lg opacity-80">Followers</div>
     </div>
     <div>
-      <div class="flex flex-col align-middle">
-        <div class="font-semibold text-lg">Followings</div>
-        <div class="font-bold text-lg text-center">
-          {{ user.totalFollowings }}
+        <div class="font-bold text-2xl text-center text-primary">
+          {{ 1200|thousand }}
         </div>
-      </div>
+        <div class="font-medium text-lg opacity-80">Followings</div>
+    </div>
+    <div>
+        <div class="font-bold text-2xl text-center text-primary">
+          {{ 1200|thousand }}
+        </div>
+        <div class="font-medium text-lg opacity-80">Tweets</div>
     </div>
   </div>
   <div class="horizontal-divider"></div>

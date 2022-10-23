@@ -1,34 +1,35 @@
-<div class="flex flex-col-reverse lg:flex-row md:flex-row justify-between w-100s h-100s overflow-hidden">
-  <div  class="w-full  h-16  md:h-full  md:w-1/4">
-    <div class="h-full  w-full flex flex-col items-center justify-between">
+<div class="flex flex-col-reverse lg:flex-row md:flex-row justify-start w-100s h-100s overflow-hidden">
+  <div class="w-full h-16 md:h-full md:w-1/4">
+    <div class="h-full w-full flex flex-col items-center justify-between">
       <div class="w-full">
         <app-side-navigation></app-side-navigation>
       </div>
-    <div class="hidden h-max w-full p-4  lg:flex md:flex justify-center items-center">
-      <div matRipple class="cursor-pointer h-max w-max bg-primary pl-2 pr-8 py-2  rounded-full justify-center items-center flex">
-        <div class="avatar w-12 h-min mr-4">
-          <div class="font-bold text-lg">
-              {{user.fullName[0]}}
+      <!-- <div class=" hidden h-max w-full p-4 pb-6  md:flex justify-center items-center ">
+        <div matRipple
+          cdkDrag
+          class=" cursor-move h-max w-max bg-primary shadow-xl z-50  shadow-blue-400 p-2 rounded-full justify-center items-center flex">
+           
+          <div class="avatar w-12 h-min mr-4 cursor-pointer">
+            <div class="font-bold text-lg">
+              {{ user.fullName[0] }}
             </div>
-        </div>
-          <div>
-          <div class="font-bold text-lg text-white line-clamp-1">
-              {{user.fullName}}
           </div>
-            <div class="text-white">
-              @{{user.userName}}
+          <div class="pr-6">
+            <div class="font-bold text-lg text-white line-clamp-1">
+              {{ user.fullName }}
+            </div>
+            <div class="text-white">@{{ user.userName }}</div>
           </div>
         </div>
-      </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
-  <div class="flex-auto border border-gray-300 ">
+  <div class="w-full md:w-3/4 lg:w-1/2 border border-gray-300">
     <router-outlet></router-outlet>
   </div>
 
-  <div class="w-1/4 hidden lg:block">
+  <div class="w-1/4 hidden lg:flex">
     <div class="drawer"></div>
   </div>
 </div>

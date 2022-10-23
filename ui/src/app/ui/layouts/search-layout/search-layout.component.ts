@@ -15,6 +15,10 @@ import { TweetViewComponent } from '@ui/tweet/tweet-view/tweet-view.component';
 import { UserPreviewCartComponent } from '@ui/user/user-preview-cart/user-preview-cart.component';
 import { AbsFollowService } from '@shared/services/abstract/user/abs-follow.service';
 import { FollowService } from '@shared/services/concrete/user/follow.service';
+import { SearchLayoutComponentStore } from './search-layout.component.store';
+import { AbsSearchService } from '@shared/services/abstract/search/abs-search.service';
+import { SearchService } from '@shared/services/concrete/search/search.service';
+import { ComponentStore } from '@ngrx/component-store';
 
 @Component({
   selector: 'app-search-layout',
@@ -30,40 +34,36 @@ import { FollowService } from '@shared/services/concrete/user/follow.service';
   templateUrl: './search-layout.component.html',
   styleUrls: ['./search-layout.component.scss'],
   providers: [
-    { provide: AbsTweetService, useClass: TweetService },
-    {
-      provide: AbsUserService,
-      useClass: UserService,
-    },
     {
       provide: AbsFollowService,
       useClass: FollowService,
     },
+    {
+      provide:AbsSearchService,
+      useClass:SearchService
+    },
+    SearchLayoutComponentStore
   ],
 })
 export class SearchLayoutComponent implements OnInit {
   constructor(
     public route: ActivatedRoute,
-    private tweetService: AbsTweetService,
-    private userService: AbsUserService,
-    private followService: AbsFollowService
+    private followService: AbsFollowService,
+    private componentStore:SearchLayoutComponentStore
   ) {}
-  ngOnInit(): void {}
-
-  tweetModels$: Observable<TweetModel[]> = of([]);
-  userModels$: Observable<UserModel[]> = of([]);
-  public searchText: string;
-  isTweetSearch = true;
+  tweetModels$: Observable<TweetModel[]> 
+  userModels$: Observable<UserModel[]> 
+  isTweetSearch$ : Observable<boolean>
+  ngOnInit(): void {
+    this.tweetModels$ = this.componentStore.tweets$
+    this.userModels$ = this.componentStore.users$
+    this.isTweetSearch$ = this.componentStore.isTweetSearch$
+  }
+  public searchText: string='';
   search() {
     let value = this.searchText.trim();
-    if (value[0] == '#') {
-      value = value.slice(1, value.length);
-      this.tweetModels$ = this.tweetService.searchTweet(value);
-      this.isTweetSearch = true;
-    } else {
-      this.userModels$ = this.userService.searchUser(value, 1, 5);
-      this.isTweetSearch = false;
-    }
+    if(value.length>0)
+    this.componentStore.updateSearchKey(value)
   }
   onUserAction(user: UserModel) {
     if (user.isFollow) {

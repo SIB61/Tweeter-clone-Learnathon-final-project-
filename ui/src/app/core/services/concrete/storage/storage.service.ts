@@ -21,4 +21,7 @@ export class StorageService extends AbsStorageService {
     let userJsonString = JSON.stringify(value);
     localStorage.setItem(key,userJsonString);
   }
+  clear(): void {
+      localStorage.clear()
+  }
 }

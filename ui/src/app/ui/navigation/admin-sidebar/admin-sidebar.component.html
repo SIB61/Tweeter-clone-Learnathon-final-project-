@@ -2,11 +2,28 @@
   <button
     mat-flat-button
     class="w-full mb-5"
-    *ngFor="let option of options; let i = index"
-    [color]="lastClicked === i ? 'primary' : ''"
-    (click)="lastClicked=i"
-    [routerLink]="option.link"  
+    [color]="lastClicked === 1 ? 'primary' : ''"
+    (click)="lastClicked = 1"
+    routerLink="/admin"  
   >
-    {{option.text}}
+    Home   
+  </button>
+  <button
+    mat-flat-button
+    class="w-full mb-5"
+    [color]="lastClicked === 2 ? 'primary' : ''"
+    (click)="lastClicked=2"
+    routerLink="/home"  
+  >
+   Regular user
+  </button>
+
+  <button
+    mat-button
+    class="w-full mb-5"
+    [color]="lastClicked === 3 ? 'primary' : ''"
+    (click)="logout()"
+  >
+   Log out
   </button>
 </div>

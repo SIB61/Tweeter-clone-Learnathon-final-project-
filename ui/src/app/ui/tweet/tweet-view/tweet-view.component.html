@@ -1,7 +1,7 @@
 <div *ngIf="tweetModel.isRetweet" class="text-xs text-gray-500 pt-3 pl-4 capitalize font-bold">
   <fa-icon [icon]="faRetweet" class="mx-2"></fa-icon>
   {{ tweetModel.fullName }} retweeted </div>
-<mat-card class="mat-elevation-z0" [@slideInRight]>
+<mat-card class="mat-elevation-z0" *ngIf="!tweetModel.isRetweet || tweetModel.parentTweet!=null;else unavailable" [@slideInRight]>
   <mat-card-header>
     <div class="avatar" matCardAvatar>
       <div class="font-bold text-2xl text-gray-500">
@@ -85,3 +85,13 @@
     </mat-expansion-panel>
   </mat-card-footer>
 </mat-card>
+
+<ng-template #unavailable >
+  <div class="w-full p-4 border-b border-b-gray-300">
+    <div class=" bg-aliceblue rounded-lg w-full px-8 py-6">
+      <span class="font-mono font-semibold text-gray-600">
+      unavailable
+      </span>
+    </div>
+  </div>
+</ng-template>

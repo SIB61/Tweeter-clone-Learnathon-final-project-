@@ -25,6 +25,7 @@ import { TimeagoClock, TimeagoModule } from 'ngx-timeago';
 import { MyClock } from '@core/services/concrete/time-ago-clock';
 import { StoreModule } from '@ngrx/store';
 import { Reducers } from '@store/app.state';
+import { ThousandPipe } from '@shared/pipes/thousand.pipe';
 
 if (environment.production) {
   enableProdMode();
@@ -39,8 +40,10 @@ bootstrapApplication(BootstrapComponent, {
       MaterialModule,
       InfiniteScrollModule,
       TimeagoModule.forRoot({clock:{provide:TimeagoClock,useClass:MyClock}}),
-      StoreModule.forRoot(Reducers)
+      StoreModule.forRoot(Reducers),
+      RouterModule
     ),
+    ThousandPipe,
     LoadingService,
     BreakPointService,
     {

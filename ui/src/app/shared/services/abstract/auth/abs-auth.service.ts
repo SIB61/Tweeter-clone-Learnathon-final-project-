@@ -11,4 +11,5 @@ export abstract class AbsAuthService {
   abstract changeForgottenPassword(email:string,code:string,password:string):Observable<any>
   abstract login(username:string,password:string):Observable<any>
   abstract refresh():Observable<any>
+  abstract logout():void
 }

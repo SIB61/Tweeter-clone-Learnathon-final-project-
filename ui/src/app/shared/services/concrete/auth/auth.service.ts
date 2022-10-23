@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { HttpService } from '@core/services/concrete/http/http.service';
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
@@ -16,7 +17,8 @@ import { environment } from 'src/environments/environment';
 export class AuthService implements AbsAuthService {
   constructor(
     private httpService: HttpService,
-    private storageService: AbsStorageService
+    private storageService: AbsStorageService,
+    private router: Router
   ) {}
   login(username: string, password: string):Observable<UserModel> {
     return this.httpService
@@ -52,5 +54,9 @@ export class AuthService implements AbsAuthService {
 
   varifyCode(email: string, code: string): Observable<any> {
     return this.httpService.get(ApiEndpoints.VARIFY_CODE,new HttpParams().append('code',code).append('email',email)) 
+  }
+  logout(): void {
+   localStorage.clear()   
+   this.router.navigateByUrl('/account/sign-in')
   }
 }

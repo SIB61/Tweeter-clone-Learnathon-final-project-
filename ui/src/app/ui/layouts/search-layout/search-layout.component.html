@@ -16,7 +16,7 @@
     </div>
   </mat-toolbar>
   </div>
-  <div *ngIf="isTweetSearch; then tweet; else user"></div>
+  <div *ngIf="isTweetSearch$|async; then tweet; else user"></div>
 </div>
 
 <ng-template #tweet>

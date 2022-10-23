@@ -8,6 +8,7 @@ import { TitleBarComponent } from '@ui/navigation/title-bar/title-bar.component'
 import { BreakPointService } from '@core/services/concrete/break-point/break-point.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { UserModel } from '@shared/models/user.model';
+import {DragDropModule} from '@angular/cdk/drag-drop'
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ import { UserModel } from '@shared/models/user.model';
     RouterModule,
     MaterialModule,
     SideNavigationComponent,
+    DragDropModule,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
