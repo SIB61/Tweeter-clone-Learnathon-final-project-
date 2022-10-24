@@ -31,20 +31,7 @@ export class UserService implements AbsUserService {
   public deleteUser(id: string): Observable<any> {
     return this.httpService.delete(ApiEndpoints.USERS + '/' + id);
   }
-  public searchUser(
-    name: string,
-    pageSize: number,
-    pageNumber: number
-  ): Observable<UserModel[]> {
-    return this.httpService
-      .get(ApiEndpoints.SEARCHUSER, new HttpParams().append('FullName', name))
-      .pipe(
-        map((response:PageResponse<UserModel[]>) => {
-          console.warn(response);
-          return response.data.filter(user=>user.id!=this.user.id);
-        })
-      );
-  }
+
   public getAllUser(): Observable<UserModel[]> {
     return of();
   }

@@ -25,17 +25,6 @@ export class TweetService implements AbsTweetService {
     );
   }
 
-  public searchTweet(tag: string): Observable<TweetModel[]> {
-    return this.httpService
-      .get(ApiEndpoints.SEARCHTWEET, new HttpParams().append('hashTag', tag))
-      .pipe(
-        map((response) => {
-          console.warn(response);
-          return response.data;
-        })
-      );
-  }
-
   public getUserTweets(userId: string): Observable<TweetModel[]> {
     return this.httpService
       .get(ApiEndpoints.TWEET, new HttpParams().append('userId', userId))

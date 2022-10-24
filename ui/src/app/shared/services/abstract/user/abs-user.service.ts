@@ -10,11 +10,6 @@ export abstract class AbsUserService {
     pageSize: number,
     pageNumber: number
   ): Observable<any>;
-  public abstract searchUser(
-    name: string,
-    pageSize: number,
-    pageNumber: number
-  ): Observable<UserModel[]>;
   public abstract updateUser(user: UserModel): Observable<any>;
   public abstract deleteUser(id: string): Observable<any>;
   public abstract createUser(user: UserModel): Observable<any>;
