@@ -37,7 +37,7 @@ export class UserService implements AbsUserService {
     pageNumber: number
   ): Observable<UserModel[]> {
     return this.httpService
-      .get(ApiEndpoints.USERS, new HttpParams().append('FullName', name))
+      .get(ApiEndpoints.SEARCHUSER, new HttpParams().append('FullName', name))
       .pipe(
         map((response:PageResponse<UserModel[]>) => {
           console.warn(response);
