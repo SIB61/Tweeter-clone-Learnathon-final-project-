@@ -19,27 +19,30 @@ const initialState: LoginState = {
 
 @Injectable()
 export class LoginComponentStore extends ComponentStore<LoginState> {
-  pending$ = this.select((state) => state.loading);
+  loading$ = this.select((state) => state.loading);
   error$ = this.select((state) => state.error);
 
   constructor(private authService: AbsAuthService, private router: Router) {
     super(initialState);
   }
 
-  login = this.effect((credentials: Observable<LoginCredential>) => {
-    return credentials.pipe(
+  updateLoading = this.updater((state,loading:boolean)=>({...state,loading:loading}))
+
+  login = this.effect((credential$: Observable<LoginCredential>) => {
+    return credential$.pipe(
       exhaustMap((auth: LoginCredential) => {
-        this.patchState({loading: true});
+        this.updateLoading(true)
         return this.authService.login(auth.userName, auth.password).pipe(
-          tap(
+          tapResponse(
             (user:UserModel) => {
-              this.patchState({
-                loading: false,
-              });
+              this.updateLoading(false)
               if(user.role==='Admin')
               this.router.navigateByUrl('/admin');
               else this.router.navigateByUrl('/home')
             },
+            (err)=>{
+              this.updateLoading(false)
+            }
           ),
         );
       })

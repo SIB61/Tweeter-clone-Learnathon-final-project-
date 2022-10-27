@@ -38,6 +38,7 @@ import { TimeLineService } from '@shared/services/concrete/tweet/timeline.servic
 import { TweetModel } from '@shared/models/tweet.model';
 import { slideInRightAnimation } from 'angular-animations';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { TweetFeedComponentStore } from './tweet-feed.component.store';
 
 @Component({
   selector: 'app-twit-feed',
@@ -62,72 +63,18 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
       provide: AbsTimelineService,
       useClass: TimeLineService,
     },
+    TweetFeedComponentStore,
   ],
   animations: [slideInRightAnimation()],
 })
-export class TwitFeedComponent implements OnInit, AfterViewInit {
-  pageOffset = new BehaviorSubject(1);
-  tweetModels$: Observable<TweetModel[]>;
-  isEnd: boolean = false;
-  @ViewChild(CdkVirtualScrollViewport) scroller: CdkVirtualScrollViewport;
-  isLoading = false;
+export class TwitFeedComponent    {
+  tweetModels$ = this.store.tweets$;
+  isLoading$ = this.store.loading$;
   constructor(
-    public tweetService: AbsTweetService,
-    public timeLineService: AbsTimelineService,
-    public route: ActivatedRoute,
-    private ngZone: NgZone
-  ) { }
-  ngOnInit(): void {
-    this.pageOffset.next(1);
-    const _tweetModels = this.pageOffset.pipe(
-      mergeMap((pageNumber) => this.loadTimeline(pageNumber)),
-      scan((acc, curr) => {
-        console.warn(acc);
-        return { ...acc, ...curr };
-      }, {})
-    );
-    this.tweetModels$ = _tweetModels.pipe(map((obj) => Object.values(obj)));
-  }
+    private store: TweetFeedComponentStore
+  ) {}
 
-  ngAfterViewInit(): void {
-    this.scroller
-      .elementScrolled()
-      .pipe(
-        map((_) => this.scroller.measureScrollOffset('bottom')),
-        pairwise(),
-        filter(([y1, y2]) => y2 < y1 && y2 < 100),
-        throttleTime(1000)
-      )
-      .subscribe((_) => {
-        this.ngZone.run(() => this.nextPage());
-      });
-  }
-
-  loadTimeline(pageNumber: number): Observable<TweetModel> {
-    if (pageNumber < 1) pageNumber = 1;
-    this.isLoading = true;
-    return this.timeLineService.getTimeline(pageNumber, 5).pipe(
-      tap((arr) => {
-        this.isLoading = false;
-        arr.length ? null : (this.isEnd = true);
-      }),
-      map((arr) => {
-        return arr.reduce((acc, cur) => {
-          const id = cur.id;
-          const data = cur;
-          return { ...acc, [id]: data };
-        }, {});
-      })
-    );
-  }
-
-
-  
   nextPage() {
-    if (!this.isEnd) this.pageOffset.next(this.pageOffset.value + 1);
-  }
-
-  trackByIdx(i) {
-    return i;
+    this.store.updatePage()
   }
 }

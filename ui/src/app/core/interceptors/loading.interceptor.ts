@@ -10,6 +10,7 @@ import { LoadingService } from '@core/services/concrete/loading.service';
 import { props, Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
 import { setHttpLoading } from '@store/actions/http-loading.actions';
+import { tapResponse } from '@ngrx/component-store';
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
@@ -19,14 +20,19 @@ export class LoadingInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    // this.loadingService.setLoading(true);
-        this.store.dispatch(setHttpLoading({httpLoading:true}))
+    this.loadingService.setLoading(true);
+        // this.store.dispatch(setHttpLoading({httpLoading:true}))
     console.warn("loading...")
     return next.handle(request).pipe(
-      tap((_) => {
-        // this.loadingService.setLoading(false);
-        this.store.dispatch(setHttpLoading({httpLoading:false}))
-      })
+      tapResponse((_) => {
+        this.loadingService.setLoading(false);
+        // this.store.dispatch(setHttpLoading({httpLoading:false}))
+      },
+      err=>{
+        this.loadingService.setLoading(false);
+      }
+       
+      )
     );
   }
 }

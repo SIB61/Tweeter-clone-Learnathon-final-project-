@@ -24,7 +24,7 @@ export const AccountRoutes: Routes = [
   {
     path: 'forget-password',
     loadComponent: () =>
-      import('@ui/layouts/forget-password/forget-password.component').then(
+      import('@ui/auth/forget-password/forget-password.component').then(
         (m) => m.ForgetPasswordComponent
       ),
   },

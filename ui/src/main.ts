@@ -34,7 +34,7 @@ if (environment.production) {
 bootstrapApplication(BootstrapComponent, {
   providers: [
     importProvidersFrom(
-      RouterModule.forRoot(ApplicationRoutes),
+      RouterModule.forRoot(ApplicationRoutes,{useHash:true}),
       BrowserAnimationsModule,
       HttpClientModule,
       MaterialModule,
@@ -43,8 +43,7 @@ bootstrapApplication(BootstrapComponent, {
       StoreModule.forRoot(Reducers),
       RouterModule
     ),
-    ThousandPipe,
-    LoadingService,
+    // LoadingService,
     BreakPointService,
     {
       provide: AbsLocalUserInfoService,

@@ -26,9 +26,8 @@ export class LoginComponent  implements OnInit  {
     private  formBuilder: FormBuilder,
     private loginComponentStore:LoginComponentStore
   ) {}
-  pending$=this.loginComponentStore.pending$
+  loading$=this.loginComponentStore.loading$
   ngOnInit(): void {
-  this.pending$.subscribe(v=>console.log(v, "login state"))
     this.form = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],

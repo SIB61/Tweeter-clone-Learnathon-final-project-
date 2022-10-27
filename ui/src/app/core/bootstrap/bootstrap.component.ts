@@ -15,19 +15,19 @@ import { HttpLoadingState } from '@store/selectors/http-loading.selector';
   imports: [CommonModule, RouterModule, MatProgressBarModule],
   templateUrl: './bootstrap.component.html',
   styleUrls: ['./bootstrap.component.scss'],
-  providers: [LoadingService],
-  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class BootstrapComponent implements OnInit {
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>,private loadingService:LoadingService) {}
   loading$:Observable<boolean> 
   isLoading=false;
   ngOnInit(): void {
-    this.store.select('httpLoadingState').
-      subscribe(v=>{
-        console.error(v)
-        this.isLoading=v.loading
-      })
+    // this.store.select('httpLoadingState').
+    //   subscribe(v=>{
+    //     console.error(v)
+    //     this.isLoading=v.loading
+    //   })
     // this.loading$.subscribe(v=>console.error(v))
+    this.loading$ = this.loadingService.loading$
   }
+
 }

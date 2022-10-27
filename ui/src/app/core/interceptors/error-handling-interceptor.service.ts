@@ -8,13 +8,14 @@ import {
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { LoadingService } from '@core/services/concrete/loading.service';
 import { catchError, Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorHandlingInterceptorService implements HttpInterceptor {
-  constructor(private _snackBar: MatSnackBar) {}
+  constructor(private _snackBar: MatSnackBar,private loadingService:LoadingService) {}
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -66,7 +67,7 @@ export class ErrorHandlingInterceptorService implements HttpInterceptor {
               break;
           }
         }
-        return of(err) ;
+        throw(err) ;
       })
     );
   }
