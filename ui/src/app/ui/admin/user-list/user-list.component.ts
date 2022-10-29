@@ -26,10 +26,13 @@ export class UserListComponent implements OnInit {
   blockIcon = faBan
   updateIcon = faPenToSquare
   deleteIcon = faTrash
+
   constructor(private userListComponentStore:UserListComponentStore,private dialog:MatDialog) { }
+
   users:UserModel[]
   users$ = this.userListComponentStore.users$
   pageFromApi$ = this.userListComponentStore.pageFromApi$
+
   ngOnInit(): void {
     this.selected='All'
   }

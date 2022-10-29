@@ -1,20 +1,39 @@
 <div class="home-container">
-  <mat-toolbar class="appbar"> Comments </mat-toolbar>
-  <cdk-virtual-scroll-viewport itemSize="120" class="home-content" #scroller>
-    <div class="h-16"></div>
+
+  <div class="absolute border-b border-b-gray-300 w-full top-16 md:top-0 z-50">
+    <mat-toolbar class="glass"><span><button mat-icon-button (click)="back()"><mat-icon>arrow_back</mat-icon></button></span> Comments </mat-toolbar>
+  </div>
+  <div
+    class="h-screen overflow-scroll"
+    infiniteScroll
+    [infiniteScrollDistance]="0.4"
+    [infiniteScrollThrottle]="200"
+    [scrollWindow]="false"
+    (scrolled)="onScroll()"
+  >
+    <div class="h-32 md:h-16"></div>
     <app-comment-view
-      *cdkVirtualFor="let comment of comments$ | async"
+      *ngFor="let comment of comments$ | async"
       [comment]="comment"
     ></app-comment-view>
-    <div class="flex justify-center align-middle" *ngIf="isLoading">
-    <mat-progress-spinner diameter="40" mode="indeterminate"></mat-progress-spinner>
+    <div class="flex justify-center align-middle" *ngIf="loading$ | async">
+      <mat-progress-spinner
+        diameter="40"
+        mode="indeterminate"
+      ></mat-progress-spinner>
     </div>
     <div class="h-16"></div>
-  </cdk-virtual-scroll-viewport>
+  </div>
   <div class="absolute bottom-0 w-full bg-white">
     <mat-form-field appearance="outline" class="w-full -mb-5">
       <mat-label>comment</mat-label>
-      <input type="text" matInput placeholder="write your comments" name="commentText" [(ngModel)]="commentText" />
+      <input
+        type="text"
+        matInput
+        placeholder="write your comments"
+        name="commentText"
+        [(ngModel)]="commentText"
+      />
       <button mat-icon-button matSuffix color="primary" (click)="sendComment()">
         <mat-icon>send</mat-icon>
       </button>
