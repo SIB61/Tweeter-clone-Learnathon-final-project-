@@ -5,11 +5,10 @@ import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.s
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
 import { PageResponse } from '@shared/models/structures/response.model';
 import { UserModel } from '@shared/models/user.model';
-import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 import { AbsUserService } from '@shared/services/abstract/user/abs-user.service';
 import { distinctUntilChanged, map, Observable, of, take, tap } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class UserService implements AbsUserService {
   user:UserModel;
   constructor(
@@ -48,6 +47,6 @@ export class UserService implements AbsUserService {
     return of();
   }
   public updateUser(user: UserModel): Observable<any> {
-    return of();
+    return this.httpService.put(ApiEndpoints.USERS,{fullName:user.fullName,dateOfBirth:user.dateOfBirth});
   }
 }

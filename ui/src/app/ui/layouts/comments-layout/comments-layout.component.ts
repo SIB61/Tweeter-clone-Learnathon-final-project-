@@ -44,7 +44,8 @@ import { CommentsLayoutComponentStore } from './comments-layout.component.store'
   ],
   templateUrl: './comments-layout.component.html',
   styleUrls: ['./comments-layout.component.scss'],
-  providers: [{ provide: AbsTweetActionService, useClass: TweetActionService },
+  providers: [
+    // { provide: AbsTweetActionService, useClass: TweetActionService },
   CommentsLayoutComponentStore 
   ],
 })

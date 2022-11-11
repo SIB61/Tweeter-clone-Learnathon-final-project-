@@ -3,13 +3,12 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
+import { Response } from '@shared/models/structures/response.model';
 import { TweetModel } from '@shared/models/tweet.model';
 import { AbsTweetService } from '@shared/services/abstract/tweet/abs-tweet.service';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, take, tap } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class TweetService implements AbsTweetService {
   constructor(
     private httpService: AbsHttpService,
@@ -25,9 +24,9 @@ export class TweetService implements AbsTweetService {
     );
   }
 
-  public getUserTweets(userId: string): Observable<TweetModel[]> {
+  public getUserTweets(userId: string,pageNumber:number,pageSize:number): Observable<TweetModel[]> {
     return this.httpService
-      .get(ApiEndpoints.TWEET, new HttpParams().append('userId', userId))
+      .get(ApiEndpoints.TWEET+"/tweets/"+userId,new HttpParams().append('pageNumber',pageNumber).append('pageSize',pageSize))
       .pipe(
         map((response) => {
           console.warn(response);
@@ -41,5 +40,8 @@ export class TweetService implements AbsTweetService {
     .pipe(map(response=>response.data))
   }
 
+  public delete(tweetId: string): Observable<Response<any>> {
+return  this.httpService.delete(ApiEndpoints.TWEETID(tweetId)).pipe(take(1)) 
+  }
 
 }

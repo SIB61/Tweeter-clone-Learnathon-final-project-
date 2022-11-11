@@ -38,7 +38,7 @@ import { TimeLineService } from '@shared/services/concrete/tweet/timeline.servic
 import { TweetModel } from '@shared/models/tweet.model';
 import { slideInRightAnimation } from 'angular-animations';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { TweetFeedComponentStore } from './tweet-feed.component.store';
+import { TwitFeedComponentStore } from './twit-feed.component.store';
 
 @Component({
   selector: 'app-twit-feed',
@@ -63,7 +63,7 @@ import { TweetFeedComponentStore } from './tweet-feed.component.store';
       provide: AbsTimelineService,
       useClass: TimeLineService,
     },
-    TweetFeedComponentStore,
+    TwitFeedComponentStore,
   ],
   animations: [slideInRightAnimation()],
 })
@@ -71,8 +71,9 @@ export class TwitFeedComponent    {
   tweetModels$ = this.store.tweets$;
   isLoading$ = this.store.loading$;
   constructor(
-    private store: TweetFeedComponentStore
-  ) {}
+    private store: TwitFeedComponentStore
+  ) {
+  }
 
   nextPage() {
     this.store.updatePage()

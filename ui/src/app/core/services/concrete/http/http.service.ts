@@ -4,34 +4,30 @@ import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class HttpService extends AbsHttpService {
-  constructor(private httpClient: HttpClient) {
-    super();
-  }
+@Injectable()
+export class HttpService implements AbsHttpService {
+  constructor(private httpClient: HttpClient) {}
 
   get(url: string, params?: HttpParams): Observable<any> {
-    return this.httpClient.get(environment.base_url + url, { params: params });
+    return this.httpClient.get( url, { params: params });
   }
   post(url: string, body: any, params?: HttpParams): Observable<any> {
-    return this.httpClient.post(environment.base_url + url, body, {
+    return this.httpClient.post( url, body, {
       params: params,
     });
   }
   put(url: string, body: any, params?: HttpParams): Observable<any> {
-    return this.httpClient.put(environment.base_url + url, body, {
+    return this.httpClient.put( url, body, {
       params: params,
     });
   }
   patch(url: string, body: any, params?: HttpParams): Observable<any> {
-    return this.httpClient.patch(environment.base_url + url, body, {
+    return this.httpClient.patch( url, body, {
       params: params,
     });
   }
   delete(url: string, params?: HttpParams): Observable<any> {
-    return this.httpClient.delete(environment.base_url + url, {
+    return this.httpClient.delete(url, {
       params: params,
     });
   }

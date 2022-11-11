@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UserModel } from '@shared/models/user.model';
+import { UserService } from '@shared/services/concrete/user/user.service';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn:'root',useClass:UserService})
 export abstract class AbsUserService {
   public abstract getAllUser(): Observable<UserModel[]>;
   public abstract getUser(id: string): Observable<UserModel>;

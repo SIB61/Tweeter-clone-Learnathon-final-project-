@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { UserModel } from '@shared/models/user.model';
 import { RouterModule } from '@angular/router';
 import { FollowService } from '@shared/services/concrete/user/follow.service';
-import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 
 @Component({
@@ -15,7 +14,7 @@ import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.s
   imports: [RouterModule, CommonModule, UserPreviewCartComponent],
   templateUrl: './following-layout.component.html',
   styleUrls: ['./following-layout.component.scss'],
-  providers: [{ provide: AbsFollowService, useClass: FollowService }],
+  // providers: [{ provide: AbsFollowService, useClass: FollowService }],
 })
 export class FollowingLayoutComponent implements OnInit {
   constructor(

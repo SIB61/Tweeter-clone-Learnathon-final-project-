@@ -17,15 +17,15 @@ import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.s
 import { StorageService } from '@core/services/concrete/storage/storage.service';
 import { AbsHttpErrorHandlerService } from '@core/services/abstract/error-handling/abs-http-error-handler.service';
 import { HttpErrorHandlerService } from '@core/services/concrete/error-handling/http-error-handler.service';
-import { LocalUserInfoService } from '@shared/services/concrete/user/local-user-info.service';
-import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
-import { LoadingService } from '@core/services/concrete/loading.service';
 import { LoadingInterceptor } from '@core/interceptors/loading.interceptor';
 import { TimeagoClock, TimeagoModule } from 'ngx-timeago';
 import { MyClock } from '@core/services/concrete/time-ago-clock';
 import { StoreModule } from '@ngrx/store';
 import { Reducers } from '@store/app.state';
 import { ThousandPipe } from '@shared/pipes/thousand.pipe';
+import { HttpCatchingInterceptor } from '@core/interceptors/http-caching.interceptor';
+import { AbsAuthService } from '@shared/services/abstract/auth/abs-auth.service';
+import { AuthService } from '@shared/services/concrete/auth/auth.service';
 
 if (environment.production) {
   enableProdMode();
@@ -43,24 +43,23 @@ bootstrapApplication(BootstrapComponent, {
       StoreModule.forRoot(Reducers),
       RouterModule
     ),
-    // LoadingService,
-    BreakPointService,
-    {
-      provide: AbsLocalUserInfoService,
-      useClass: LocalUserInfoService,
-    },
-    {
-      provide: AbsHttpService,
-      useClass: HttpService,
-    },
-    {
-      provide: AbsStorageService,
-      useClass: StorageService,
-    },
-    {
-      provide: AbsHttpErrorHandlerService,
-      useClass: HttpErrorHandlerService,
-    },
+    // BreakPointService,
+    // {
+    //   provide: AbsHttpService,
+    //   useClass: HttpService,
+    // },
+    // {
+    //   provide: AbsStorageService,
+    //   useClass: StorageService,
+    // },
+    // {
+    //   provide: AbsHttpErrorHandlerService,
+    //   useClass: HttpErrorHandlerService,
+    // },
+    // {
+    //   provide:AbsAuthService,
+    //   useClass:AuthService
+    // },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
@@ -76,5 +75,10 @@ bootstrapApplication(BootstrapComponent, {
       useClass: ErrorHandlingInterceptorService,
       multi: true,
     },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:HttpCatchingInterceptor,
+      multi:true
+    }
   ],
 }).catch((err) => console.error(err));

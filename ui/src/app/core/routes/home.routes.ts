@@ -41,7 +41,7 @@ export const HomeRoutes: Routes = [
     data: { title: 'Search' },
   },
   {
-    path: 'profile',
+    path: 'profile/:id',
     loadComponent: () =>
       import('@ui/layouts/profile-layout/profile-layout.component').then(
         (m) => m.ProfileLayoutComponent
@@ -49,7 +49,7 @@ export const HomeRoutes: Routes = [
     data: { title: 'profile' },
   },
   {
-    path: ':id/comments',
+    path: 'tweet/:id',
     loadComponent: () =>
       import('@ui/layouts/comments-layout/comments-layout.component').then(
         (m) => m.CommentsLayoutComponent

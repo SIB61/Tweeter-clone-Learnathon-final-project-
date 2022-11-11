@@ -6,11 +6,12 @@ import { AbsFollowService } from '@shared/services/abstract/user/abs-follow.serv
 import { FollowService } from '@shared/services/concrete/user/follow.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user-preview-cart',
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule,RouterModule],
   templateUrl: './user-preview-cart.component.html',
   styleUrls: ['./user-preview-cart.component.scss'],
   providers: [{ provide: AbsFollowService, useClass: FollowService }],

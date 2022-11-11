@@ -1,8 +1,8 @@
 <div class="home-container">
   <div class="absolute border-b border-b-gray-300 w-full top-16  md:top-0 z-50" >
   <mat-toolbar class="glass">
-    <mat-toolbar-row class="border-b border-b-gray-300"> Network/{{ activeLink.label }} </mat-toolbar-row>
-    <mat-toolbar-row class="tabbarrow">
+    <mat-toolbar-row class="border-b border-b-gray-300"> Network </mat-toolbar-row>
+    <!-- <mat-toolbar-row class="tabbarrow">
       <nav
         mat-tab-nav-bar
         mat-stretch-tabs
@@ -15,16 +15,27 @@
           *ngFor="let link of links"
           [routerLink]="link.route"
           (click)="activeLink = link"
-          [active]="activeLink == link"
+          [active]="activeLink === link"
         >
           {{ link.label }}
         </a>
       </nav>
       <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-    </mat-toolbar-row>
+    </mat-toolbar-row> -->
   </mat-toolbar>
   </div>
-  <div class="home-content pt-48 lg:pt-32 md:pt-32"  >
-    <router-outlet></router-outlet>
+  <div class="home-content pt-32 md:pt-16"  >
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Followers"> 
+         <app-follower-layout></app-follower-layout>    
+       </mat-tab>
+       <mat-tab label="Followings"> 
+        <app-following-layout></app-following-layout>   
+       </mat-tab>
+       <mat-tab label="Blocked"> 
+        <app-block-list></app-block-list>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>
+

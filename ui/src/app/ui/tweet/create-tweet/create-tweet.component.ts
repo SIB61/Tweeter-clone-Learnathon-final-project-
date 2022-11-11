@@ -9,8 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { TweetModel } from '@shared/models/tweet.model';
 import { AbsTweetService } from '@shared/services/abstract/tweet/abs-tweet.service';
 import { TweetService } from '@shared/services/concrete/tweet/tweet.service';
-import { LocalUserInfoService } from '@shared/services/concrete/user/local-user-info.service';
-import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { UserModel } from '@shared/models/user.model';
 @Component({
@@ -19,13 +17,6 @@ import { UserModel } from '@shared/models/user.model';
   imports: [CommonModule, MaterialModule, AutoResizeDirective, FormsModule],
   templateUrl: './create-tweet.component.html',
   styleUrls: ['./create-tweet.component.scss'],
-  providers: [
-    { provide: AbsTweetService, useClass: TweetService },
-    {
-      provide: AbsLocalUserInfoService,
-      useClass: LocalUserInfoService,
-    },
-  ],
 })
 export class CreateTweetComponent implements OnInit {
   constructor(

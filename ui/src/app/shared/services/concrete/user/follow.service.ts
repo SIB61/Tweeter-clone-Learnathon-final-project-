@@ -7,9 +7,7 @@ import { UserModel } from '@shared/models/user.model';
 import { AbsFollowService } from '@shared/services/abstract/user/abs-follow.service';
 import { map, Observable, of, take, tap } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class FollowService implements AbsFollowService {
   constructor(
     private httpService: AbsHttpService,

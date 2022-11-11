@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CommentModel } from '@shared/models/tweet/comment.model';
+import { TweetActionService } from '@shared/services/concrete/tweet/tweet-action.service';
 import { Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'root',useClass:TweetActionService })
 export abstract class AbsTweetActionService {
   abstract like(tweetId: string): Observable<any>;
   abstract unlike(tweetId: string): Observable<any>;

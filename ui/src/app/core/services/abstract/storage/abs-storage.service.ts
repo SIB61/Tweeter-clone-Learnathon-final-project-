@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
+import { StorageService } from "@core/services/concrete/storage/storage.service";
 
-@Injectable({providedIn:'root'})
+@Injectable({providedIn:'root',useClass:StorageService})
 export abstract class AbsStorageService{
-  USER='user'
-  TOKEN='token'
+  USER:string
+  TOKEN:string
   abstract get(key:string):string|null; 
   abstract set(key:string,value:string):void;
   abstract getObject<T>(key:string):T|null

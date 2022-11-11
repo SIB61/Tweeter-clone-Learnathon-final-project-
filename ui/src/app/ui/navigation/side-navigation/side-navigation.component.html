@@ -1,4 +1,4 @@
-<div class="w-full h-16 lg:h-full md:h-full flex justify-center">
+<div class="w-full h-16  lg:h-full md:h-full flex justify-center">
   <div
     class="flex justify-evenly w-full md:flex-col md:items-start md:justify-start md:w-max"
   >
@@ -6,14 +6,14 @@
       class="overflow-hidden icon hidden md:flex justify-start items-center"
       color="primary"
     >
-      <img src="assets/twitter48.svg" style="height: 100%" />
-      <div class="text-2xl">Tweeter</div>
+      <img src="assets/twitter48.svg" style="height: 90%"/>
+      <div class="text-3xl font-bold font-[Playball]">Tweeter</div>
     </button>
     <button
-      *ngFor="let navOption of navList"
       matRipple
-      class="rounded-full hover:bg-aliceblue duration-300 transition-all ease-in-out p-4 md:py-3 md:px-6 md:text-lg md:m-1 flex justify-start items-center"
+      class="rounded-full hover:bg-aliceblue duration-300 transition-all ease-in-out p-4 md:py-3 md:px-6 md:text-lg md:m-1 flex justify-center items-center"
       [routerLink]="navOption.route"
+      *ngFor="let navOption of navList"
       [class.selected]="isSelected(navOption.route)"
     >
       <fa-icon [icon]="navOption.icon" class="text-xl"></fa-icon>
@@ -21,32 +21,24 @@
         {{ navOption.title }}
       </span>
     </button>
-    <div class="md:m-1 md:mt-3 flex justify-center items-center">
-      <div
+    <div class="md:pb-4 flex flex-col justify-center md:justify-end items-center md:flex-1 ">
+      <a
         matRipple
-        class="cursor-pointer h-max w-max bg-primary shadow-xl shadow-blue-400 p-1 md:p-2 rounded-full justify-center items-center flex"
-        routerLink="/home/profile"
+        class="cursor-pointer h-max w-full bg-primary p-1 md:p-2 rounded-full justify-center items-center flex"
+        [routerLink]="'/home/profile/'+user.id"
       >
         <div class="avatar w-12 h-min cursor-pointer">
           <div class="font-bold text-lg">
             {{ user.fullName[0] }}
           </div>
         </div>
-        <div class="pr-6 hidden md:block ml-4">
+        <div class="hidden md:block mx-2">
           <div class="font-bold text-lg text-white line-clamp-1">
             {{ user.fullName }}
           </div>
           <div class="text-white">@{{ user.userName }}</div>
         </div>
-      </div>
+      </a>
     </div>
-
-    <button
-      color="primary"
-      class="my-button hidden lg:block"
-      style="color: white; width: 100%; justify-content: center"
-    >
-      Tweet
-    </button>
   </div>
 </div>

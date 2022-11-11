@@ -6,7 +6,7 @@ import { TweetModel } from '@shared/models/tweet.model';
 import { AbsTimelineService } from '@shared/services/abstract/tweet/abs-timeline.service';
 import { map, Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class TimeLineService implements AbsTimelineService {
   constructor(private httpService: AbsHttpService) {}
 

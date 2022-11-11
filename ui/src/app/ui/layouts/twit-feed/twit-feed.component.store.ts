@@ -9,15 +9,16 @@ import { exhaustMap, map, mergeMap, Observable, switchMap, tap, throttleTime } f
 
 interface TweetFeedComponentState {
   pageNumber: number;
+  pageSize:number;
   tweets: TweetModel[];
   loading: boolean;
   end:boolean
 }
 
 @Injectable()
-export class TweetFeedComponentStore extends ComponentStore<TweetFeedComponentState> {
+export class TwitFeedComponentStore extends ComponentStore<TweetFeedComponentState> {
   constructor(private timelineService: AbsTimelineService) {
-    super({ pageNumber: 1, tweets: [], loading: false ,end:false});
+    super({ pageNumber: 1,pageSize:Math.floor(window.innerHeight/200), tweets: [], loading: false ,end:false});
     this.loadTimeline(this.pageNumber$);
   }
 
@@ -25,6 +26,8 @@ export class TweetFeedComponentStore extends ComponentStore<TweetFeedComponentSt
   pageNumber$ = this.select((state) => state.pageNumber);
   tweets$ = this.select((state) => state.tweets);
   loading$ = this.select((state) => state.loading);
+
+  pageSize = () => Math.floor(window.innerHeight/100)
 
   updateEnd = this.updater((state)=>({...state,end:!state.end}))
   updatePage = this.updater((state) => ({
@@ -37,20 +40,18 @@ export class TweetFeedComponentStore extends ComponentStore<TweetFeedComponentSt
   }));
   updateTweets = this.updater((state, tweets: TweetModel[]) => {
     let updatedTweets = [...state.tweets,...tweets]
-        console.warn(updatedTweets)
     return {
     ...state,
     tweets: updatedTweets,
   }})
-  
 
   loadTimeline = this.effect((pageNumber$: Observable<number>) => {
     return pageNumber$.pipe(
       throttleTime(200), 
       mergeMap((pageNumber) => {
         this.updateLoading(true);
-        return this.timelineService.getTimeline(pageNumber, 10).pipe(
-          tap(newTweets=>{if(newTweets.length<10) this.updateEnd()
+        return this.timelineService.getTimeline(pageNumber,this.pageSize()).pipe(
+          tap(newTweets=>{if(newTweets.length<this.pageSize()) this.updateEnd()
                 this.updateTweets(newTweets);
                 this.updateLoading(false);
         }),

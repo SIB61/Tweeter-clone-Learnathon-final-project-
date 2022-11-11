@@ -1,11 +1,11 @@
-<mat-card class="mat-elevation-z0">
+<mat-card class="mat-elevation-z0" style="cursor: pointer;"  >
   <mat-card-header class="flex justify-between">
-    <div class="avatar" matCardAvatar>
+    <div class="avatar" matCardAvatar  [routerLink]="'/home/profile/'+user.id">
       <div class="font-bold text-2xl">{{ user.fullName[0] }}</div>
     </div>
       
-    <mat-card-title>{{ user.fullName }}</mat-card-title>
-    <mat-card-subtitle>@{{ user.userName }}</mat-card-subtitle>
+    <mat-card-title  [routerLink]="'/home/profile/'+user.id">{{ user.fullName }}</mat-card-title>
+    <mat-card-subtitle [routerLink]="'/home/profile/'+user.id">@{{ user.userName }}</mat-card-subtitle>
     <mat-card-actions>
       <button mat-flat-button color="primary" (click)="onAction()" class="flex">
         <div class="flex justify-evenly align-middle w-full">

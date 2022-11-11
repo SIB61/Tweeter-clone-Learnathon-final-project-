@@ -1,14 +1,22 @@
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { UserModel } from '@shared/models/user.model';
 import { AbsUserService } from '@shared/services/abstract/user/abs-user.service';
-import { Observable } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 import { UserService } from '@shared/services/concrete/user/user.service';
 import { UserProfileCardComponentStore } from './user-profile-card.component.store';
 import { ThousandPipe } from '@shared/pipes/thousand.pipe';
-import { faCalendar, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faEdit, faEnvelope, faLongArrowAltUp, faPen } from '@fortawesome/free-solid-svg-icons';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
+import { StorageService } from '@core/services/concrete/storage/storage.service';
+import { } from '@fortawesome/free-solid-svg-icons';
+import { MatDialog } from '@angular/material/dialog';
+import { UserUpdateComponent } from '@ui/dump/user-update/user-update.component';
+import { Router } from '@angular/router';
+import { PermissionComponent } from '@ui/dump/permission/permission.component';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-user-profile-card',
@@ -16,18 +24,71 @@ import { faCalendar, faEnvelope } from '@fortawesome/free-solid-svg-icons';
   imports: [CommonModule, MaterialModule,ThousandPipe],
   templateUrl: './user-profile-card.component.html',
   styleUrls: ['./user-profile-card.component.scss'],
-  providers: [{ provide: AbsUserService, useClass: UserService },UserProfileCardComponentStore,ThousandPipe],
+  providers: [UserProfileCardComponentStore],
 })
-export class UserProfileCardComponent implements OnInit {
+export class UserProfileCardComponent implements OnInit , OnChanges {
   @Input() userId: string;
- 
-
+  faEdit = faPen
+  myId = this.storageService.getObject<UserModel>(this.storageService.USER).id
   faEmail = faEnvelope
   faDate = faCalendar
   user$: Observable<UserModel>;
-  constructor(private userProfileComponentStore:UserProfileCardComponentStore) {}
-  ngOnInit(): void {
-    this.userProfileComponentStore.updateId(this.userId)
-    this.user$ = this.userProfileComponentStore.user$
+  constructor(private dialog: MatDialog,private userProfileComponentStore:UserProfileCardComponentStore,private storageService:AbsStorageService,private router:Router) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['userId']){
+    this.userProfileComponentStore.updateId(changes['userId'].currentValue)
+    }
   }
+  ngOnInit(): void {
+    this.user$ = this.userProfileComponentStore.user$
+    this.userProfileComponentStore.updateId(this.userId)
+    this.userProfileComponentStore.loadUser(this.userProfileComponentStore.id$)
+  }
+  update(user:UserModel){
+    this.dialog.open(UserUpdateComponent,{data:user}).afterClosed().subscribe(result => {
+      if(result){
+      user.dateOfBirth = result.dateOfBirth
+      user.fullName = result.fullName
+      this.userProfileComponentStore.updateUser(user)
+      }
+    });
+  }
+  logout(){
+    this.dialog.open(PermissionComponent,{data:"Do you want to log out?"}).afterClosed().subscribe(res=>{
+      if(res==="ok"){
+      this.storageService.clear()
+      this.router.navigateByUrl("/account/sign-in")  
+      }
+    })
+  }
+  delete(){
+    this.dialog.open(PermissionComponent,{data:"Do you really want to delete your account?"}).afterClosed().subscribe(res=>{
+      if(res==="ok"){
+      }
+    })
+  }
+
+
+
+  follow(userId:string){
+    this.userProfileComponentStore.updateUserState({ isFollow: true });
+    this.userProfileComponentStore.follow(userId)
+  }
+  unfollow(userId:string){
+    this.userProfileComponentStore.updateUserState({ isFollow: false });
+    this.userProfileComponentStore.unfollow(userId)
+  }
+
+  block(userId:string){
+    this.dialog.open(PermissionComponent,{data:"Are you sure to block ?"}).afterClosed().pipe(
+      take(1),
+      tap(res=>{
+        if(res==='ok'){
+          this.userProfileComponentStore.block(userId)
+
+        }
+      })
+    ).subscribe()
+  }
+
 }

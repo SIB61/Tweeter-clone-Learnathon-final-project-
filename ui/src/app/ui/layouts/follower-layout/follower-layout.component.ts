@@ -5,7 +5,6 @@ import { AbsFollowService } from '@shared/services/abstract/user/abs-follow.serv
 import { Observable } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { FollowService } from '@shared/services/concrete/user/follow.service';
-import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { UserModel } from '@shared/models/user.model';
 
@@ -15,7 +14,7 @@ import { UserModel } from '@shared/models/user.model';
   imports: [RouterModule, CommonModule, UserPreviewCartComponent],
   templateUrl: './follower-layout.component.html',
   styleUrls: ['./follower-layout.component.scss'],
-  providers: [{ provide: AbsFollowService, useClass: FollowService }],
+  // providers: [{ provide: AbsFollowService, useClass: FollowService }],
 })
 export class FollowerLayoutComponent implements OnInit {
   constructor(

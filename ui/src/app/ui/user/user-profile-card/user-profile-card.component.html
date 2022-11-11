@@ -1,13 +1,62 @@
 <div class="profile" *ngIf="user$ | async as user">
-  <div class="avatar w-32 my-10 shadow-2xl ">
-    <div class="font-bold text-5xl">{{ user.fullName[0] }}</div>
+  <div class="avatar w-32 my-10 shadow-xl shadow-blue-200">
+    <div class="font-bold text-5xl text-primary">{{ user.fullName[0] }}</div>
   </div>
-  <div class="text-3xl font-mono font-bold text-primary">{{ user.fullName }}</div>
-  <div class="text-xl font-semibold font-mono opacity-80">@{{ user.userName }}</div>
+  <div class="flex flex-col w-full justify-center items-center relative">
+    <div class="text-3xl font-mono font-bold text-primary">
+      {{ user.fullName }}
+    </div>
+
+    <div class="text-xl font-semibold font-mono">
+      <span class="opacity-80"> @{{ user.userName }} </span>
+      <button
+        *ngIf="userId === myId"
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon>settings</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="update(user)">
+          <mat-icon>edit</mat-icon>
+          <span>Edit profile</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Log out</span>
+        </button>
+        <button mat-menu-item (click)="delete()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete Profile</span>
+        </button>
+      </mat-menu>
+    </div>
+
+    <div class="flex justify-center w-full" *ngIf="userId != myId">
+      <button
+        mat-flat-button
+        color="primary"
+        style="border-radius: 99999px; padding: 0px 40px"
+        (click)="user.isFollow? unfollow(user.id):follow(user.id)"
+      >
+        {{ user.isFollow ? "Unfollow" : "Follow" }}
+      </button>
+      <div class="w-10"></div>
+      <button
+        mat-flat-button
+        color="primary"
+        style="border-radius: 99999px; padding: 0px 40px"
+        (click)=" block(user.id)"
+      >
+        Block
+      </button>
+    </div>
+  </div>
   <div class="horizontal-divider"></div>
   <div class="text-lg font-bold opacity-80 flex justify-center items-center">
-    <fa-icon [icon]="faEmail" class="mr-2" ></fa-icon>
-    <div >{{ user.email }}</div>
+    <fa-icon [icon]="faEmail" class="mr-2"></fa-icon>
+    <div>{{ user.email }}</div>
   </div>
   <div class="flex">
     <div class="text-base font-mono opacity-80">
@@ -18,21 +67,21 @@
   <div class="flex justify-evenly w-full">
     <div>
       <div class="font-bold text-2xl text-center text-primary">
-        {{ user.totalFollowers|thousand }}
+        {{ user.totalFollowers | thousand }}
       </div>
       <div class="font-medium text-lg opacity-80">Followers</div>
     </div>
     <div>
-        <div class="font-bold text-2xl text-center text-primary">
-          {{ 1200|thousand }}
-        </div>
-        <div class="font-medium text-lg opacity-80">Followings</div>
+      <div class="font-bold text-2xl text-center text-primary">
+        {{ user.totalFollowings | thousand }}
+      </div>
+      <div class="font-medium text-lg opacity-80">Followings</div>
     </div>
     <div>
-        <div class="font-bold text-2xl text-center text-primary">
-          {{ 1200|thousand }}
-        </div>
-        <div class="font-medium text-lg opacity-80">Tweets</div>
+      <div class="font-bold text-2xl text-center text-primary">
+        {{ user.totalTweets | thousand }}
+      </div>
+      <div class="font-medium text-lg opacity-80">Tweets</div>
     </div>
   </div>
   <div class="horizontal-divider"></div>

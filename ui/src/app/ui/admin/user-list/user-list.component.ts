@@ -22,6 +22,7 @@ import { PermissionComponent } from '@ui/dump/permission/permission.component';
 export class UserListComponent implements OnInit {
  displayedColumns: string[] = ['user_name', 'full_name', 'birth_date','total_followers','total_followings','total_posts', 'actions'];
 
+
   selected:string 
   blockIcon = faBan
   updateIcon = faPenToSquare

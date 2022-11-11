@@ -9,7 +9,7 @@ import { AbsSearchService } from "@shared/services/abstract/search/abs-search.se
 import { Observable, take } from "rxjs";
 
 
-@Injectable({providedIn:'root'})
+@Injectable()
 export class SearchService implements AbsSearchService{
   constructor(private httpService: AbsHttpService){}
   searchTweet(hashTag: string, pageNumber: number, pageSize: number): Observable<PageResponse<TweetModel[]>> {

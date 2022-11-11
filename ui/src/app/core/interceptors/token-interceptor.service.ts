@@ -8,7 +8,6 @@ import {
 import { Injectable } from '@angular/core';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { TokenModel } from '@shared/models/token.model';
-import { AbsLocalUserInfoService } from '@shared/services/abstract/user/abs-local-user-info.service';
 import { Observable } from 'rxjs';
 
 @Injectable({

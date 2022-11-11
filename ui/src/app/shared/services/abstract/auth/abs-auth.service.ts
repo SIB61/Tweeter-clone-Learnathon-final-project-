@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
+import { TokenModel } from '@shared/models/token.model';
+import { AuthService } from '@shared/services/concrete/auth/auth.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+  useClass: AuthService
 })
 export abstract class AbsAuthService {
   constructor() { }

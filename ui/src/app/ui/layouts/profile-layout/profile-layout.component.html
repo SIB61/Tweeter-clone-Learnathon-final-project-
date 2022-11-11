@@ -1,9 +1,24 @@
-<div class="home-container">
-  <div class="absolute top-16  md:top-0 w-full h-full">
-    <app-user-profile-card [userId]="user.id"></app-user-profile-card>
-    <div>All Tweets</div>
-    <div>
-      <app-tweet-view></app-tweet-view>
+<div class="h-full w-full relative">
+  <div class="absolute top-16  md:top-0 w-full h-full overflow-y-scroll"
+    infiniteScroll
+    [infiniteScrollDistance]=".4"
+    [infiniteScrollThrottle]="300"
+    (scrolled)="nextPage()"
+    [scrollWindow]="false"
+    class="h-screen overflow-scroll"
+    itemSize="250"
+    #scroller
+  >
+    <app-user-profile-card [userId]="userId$ | async"></app-user-profile-card>
+    <app-create-tweet *ngIf="(userId$|async) == myId"></app-create-tweet> 
+    <div class="p-4 font-bold text-2xl text-gray-700">All Tweets</div>
+    <div class=" flex items-center flex-col w-full">
+      <app-tweet-view *ngFor="let tweet of tweets$|async" [tweetModel]="tweet" class="w-full" (deleted)="deleted(tweet)"></app-tweet-view>
+      <mat-progress-spinner
+        diameter="40"
+        mode="indeterminate"
+        *ngIf="loading$|async"
+      ></mat-progress-spinner>
     </div>
   </div>
 </div>
