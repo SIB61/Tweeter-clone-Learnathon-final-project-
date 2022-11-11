@@ -9,10 +9,11 @@ import {
   Response,
 } from '@shared/models/structures/response.model';
 import { HttpParams } from '@angular/common/http';
+import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
 
 @Injectable()
 export class AdminService implements AbsAdminService {
-  constructor(private httpService: HttpService) {}
+  constructor(private httpService: AbsHttpService) {}
   block(userId: string): Observable<Response<any>> {
     return this.httpService
       .post(ApiEndpoints.ADMIN_BLOCK(userId), {})

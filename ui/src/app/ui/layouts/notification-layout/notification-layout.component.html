@@ -7,25 +7,24 @@
     </mat-toolbar>
   </div>
 
-<div class="h-screen overflow-scroll pt-32 lg:pt-16 md:pt-16" *ngIf="notificationService.showNotification">
-      <div
+<div class="h-screen overflow-scroll pt-32 lg:pt-16 md:pt-16" *ngIf="notifications$|async as notifications"
+    infiniteScroll
+    [infiniteScrollDistance]=".4"
+    [infiniteScrollThrottle]="300"
+    (scrolled)="nextPage()"
+    [scrollWindow]="false"
+  >
+      <app-notification-view
         *ngFor="
-          let notification of notificationService.notificationThread$ | async
-        "
-        class=""
-      >
-        <mat-card class="mat-elevation-z0">
-          <mat-card-title-group>
-            <mat-card-title>{{ notification.fullName }}</mat-card-title>
-            <mat-card-subtitle>{{
-              notification.createdAt | timeago
-            }}</mat-card-subtitle>
-          </mat-card-title-group>
-          <mat-card-content>
-            {{ notification.type }}
-            <span *ngIf="notification.postId"> On Post </span>
-          </mat-card-content>
-        </mat-card>
+          let notification of notifications"
+        [notification]="notification"></app-notification-view>
+
+    <div class="flex justify-center align-middle" *ngIf="loading$ | async">
+      <mat-progress-spinner
+        diameter="40"
+        mode="indeterminate"
+      ></mat-progress-spinner>
+    </div>
+    
       </div>
   </div>
-</div>

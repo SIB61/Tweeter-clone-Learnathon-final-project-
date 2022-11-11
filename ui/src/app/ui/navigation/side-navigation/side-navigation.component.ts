@@ -6,7 +6,6 @@ import { Breakpoints } from '@angular/cdk/layout';
 import { BreakPointService } from '@core/services/concrete/break-point/break-point.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {faUser, faHashtag, faHome, faPerson, faUserGroup,faBell } from '@fortawesome/free-solid-svg-icons';
-import { NotificationService } from '@shared/services/concrete/notification/-notification.service';
 import { StorageService } from '@core/services/concrete/storage/storage.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { UserModel } from '@shared/models/user.model';

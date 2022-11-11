@@ -93,8 +93,8 @@ export class TweetViewComponent implements OnInit {
      this.dialog.open(PermissionComponent,{data:"Are you sure to delete?"}).afterClosed().pipe(tap(res=>{
       if(res==="ok"){
         console.log("deleted")
-        this.deleted.emit()
         this.store.delete(tweet.id)
+        this.deleted.emit()
       }
     })).subscribe()
   }

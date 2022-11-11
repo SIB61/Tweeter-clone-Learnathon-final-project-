@@ -5,11 +5,7 @@
 
 export const environment = {
   production: false,
-  user_base_url: 'https://localhost:7228/',
-  tweeter_base_url: 'https://localhost:7228/',
-  admin_base_url: 'https://localhost:7228/',
-  search_base_url: 'https://localhost:7228/',
-  account_base_url: 'https://localhost:7009/'
+  base_url: 'https://localhost:7228/',
 };
 
 /*

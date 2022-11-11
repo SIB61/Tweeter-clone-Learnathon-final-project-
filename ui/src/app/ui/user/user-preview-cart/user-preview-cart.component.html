@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z0" style="cursor: pointer;"  >
+<!-- <mat-card class="mat-elevation-z0" style="cursor: pointer;"  >
   <mat-card-header class="flex justify-between">
     <div class="avatar" matCardAvatar  [routerLink]="'/home/profile/'+user.id">
       <div class="font-bold text-2xl">{{ user.fullName[0] }}</div>
@@ -24,10 +24,18 @@
       </button>
     </mat-card-actions>
   </mat-card-header>
-</mat-card>
+</mat-card> -->
 
-<!-- <mat-toolbar> -->
-<!--   <mat-toolbar-row> -->
-<!--    <div class="font-bold text-2xl">{{ user.fullName[0] }}</div> -->
-<!--   </mat-toolbar-row>  -->
-<!-- </mat-toolbar> -->
+<div class="flex w-full h-max p-4 justify-between">
+  <div class="flex cursor-pointer" [routerLink]="'/home/profile/'+user.id">
+  <div class="avatar w-12 mr-4">
+    <div class="text-lg">{{user.fullName[0]}}</div>
+  </div>
+    <div class="flex flex-col">
+    <div class="text-lg">{{user.fullName}}</div>
+    <div class="text-gray-700">@{{user.userName}}</div>
+  </div>
+  </div>
+  <button mat-button color="primary" *ngIf="buttonText$|async as buttonText" (click)="onAction(buttonText)" >{{buttonText}}</button>
+</div>
+<mat-divider></mat-divider>

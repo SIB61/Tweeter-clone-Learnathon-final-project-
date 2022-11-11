@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
-import { NotificationService } from '@shared/services/concrete/notification/-notification.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
-import { PNotification } from '@shared/models/notification.model';
+import { NotificationModel } from '@shared/models/notification.model';
 import { PageEvent } from '@angular/material/paginator';
 import { TimeagoModule } from 'ngx-timeago';
+import { AbsNotificationService } from '@shared/services/abstract/notification/abs-notification.service';
+import { NotificationLayoutComponentStore } from './notification-layout.component.store';
+import { Observable } from 'rxjs';
+import { NotificationViewComponent } from '@ui/notification/notification-view/notification-view.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 export interface UserModel {
@@ -29,49 +33,24 @@ export interface UserModel {
 @Component({
   selector: 'app-notification-layout',
   standalone: true,
-  imports: [CommonModule, MaterialModule, TimeagoModule],
+  imports: [CommonModule, MaterialModule, TimeagoModule, NotificationViewComponent, InfiniteScrollModule],
   templateUrl: './notification-layout.component.html',
-  styleUrls: ['./notification-layout.component.scss']
+  styleUrls: ['./notification-layout.component.scss'],
+  providers:[NotificationLayoutComponentStore]
 })
 
 
 
 export class NotificationLayoutComponent implements OnInit {
+  notifications$:Observable<NotificationModel[]>
+  loading$:Observable<boolean>
 
-  PNotification : PNotification;
- 
-  constructor(public notificationService: NotificationService, private storageService: AbsStorageService) {}
-
+  constructor(private storageService: AbsStorageService,private store:NotificationLayoutComponentStore) {}
   ngOnInit(): void {
-    
-    const user: UserModel = JSON.parse(localStorage.getItem('user'));
-
-    this.notificationService.loadNotification(1,5).subscribe(res => {
-      this.PNotification = res;
-      this.notificationService.notificationThreadSource.next(this.PNotification.data);
-      if(this.PNotification.data.length > 0){
-        this.notificationService.showNotification = true;
-      }
-    });
-    console.log(user.id);
-    this.notificationService.createHubConnection(user.id);
-    
+   this.notifications$ = this.store.notifications$ 
+    this.loading$ = this.store.loading$
   }
-
-
-
-
-  loadNotification(pageNumber: number, pageSize: number)
-  {
-    this.notificationService.loadNotification(pageNumber, pageSize).subscribe(res => {
-      this.notificationService.notificationThreadSource.next(res.data);
-    })
-  }
-
-   // used to build a slice of papers relevant at any given time
-   public getPaginatorData(event: PageEvent): PageEvent {
-    console.log(event);
-    this.loadNotification(event.pageIndex+1,event.pageSize);
-    return event;
+  nextPage(){
+    this.store.updatePageNumber()
   }
 }

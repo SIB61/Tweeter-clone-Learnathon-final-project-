@@ -62,7 +62,7 @@ export class TweetViewComponentStore extends ComponentStore<State>{
 
   delete=this.effect((id$:Observable<string>)=>{
     return id$.pipe(mergeMap(id=>{
-      
+      console.warn(id)
       return this.tweetService.delete(id) 
     }))
   })

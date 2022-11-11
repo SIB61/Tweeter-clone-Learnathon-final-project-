@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { NotificationModel } from '@shared/models/notification.model';
+import { NotificationService } from '@shared/services/concrete/notification/notification.service';
 import { Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'root',useClass:NotificationService })
 export abstract class AbsNotificationService {
-  abstract getNotifications(): Observable<NotificationModel[]>;
+  newNotification$ : Observable<NotificationModel>
+  abstract getNotifications(pageNumber:number,pageSize:number): Observable<NotificationModel[]>;
+  abstract createConnection(): void
+  abstract stopConnecton(): void
 }

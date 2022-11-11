@@ -6,7 +6,7 @@ import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
 import { Response } from '@shared/models/structures/response.model';
 import { TweetModel } from '@shared/models/tweet.model';
 import { AbsTweetService } from '@shared/services/abstract/tweet/abs-tweet.service';
-import { map, Observable, take, tap } from 'rxjs';
+import { map, Observable, take, takeLast, tap } from 'rxjs';
 
 @Injectable()
 export class TweetService implements AbsTweetService {
@@ -41,7 +41,8 @@ export class TweetService implements AbsTweetService {
   }
 
   public delete(tweetId: string): Observable<Response<any>> {
-return  this.httpService.delete(ApiEndpoints.TWEETID(tweetId)).pipe(take(1)) 
+    console.error(tweetId)
+return  this.httpService.delete(ApiEndpoints.TWEETID(tweetId)).pipe(take(1),tap(u=>console.log(u))) 
   }
 
 }

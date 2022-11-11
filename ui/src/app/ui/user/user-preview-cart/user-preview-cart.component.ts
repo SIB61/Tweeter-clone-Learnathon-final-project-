@@ -7,6 +7,9 @@ import { FollowService } from '@shared/services/concrete/user/follow.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { tap } from 'rxjs';
 import { RouterModule } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { UserPreviewComponentStore } from './user-preview-cart.component.store';
+import { PermissionComponent } from '@ui/dump/permission/permission.component';
 
 @Component({
   selector: 'app-user-preview-cart',
@@ -14,43 +17,36 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, MaterialModule,RouterModule],
   templateUrl: './user-preview-cart.component.html',
   styleUrls: ['./user-preview-cart.component.scss'],
-  providers: [{ provide: AbsFollowService, useClass: FollowService }],
+  providers: [UserPreviewComponentStore],
 })
 export class UserPreviewCartComponent implements OnInit {
   constructor(
-    private followService: AbsFollowService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog,
+    private store: UserPreviewComponentStore
   ) {}
+  
   @Input() user: UserModel;
-  buttonText: string;
+  @Input() isBlockedUser: boolean = false
+  buttonText$ = this.store.buttonText$;
   loading = false;
   ngOnInit(): void {
-    console.log(this.user);
-    this.buttonText = this.user.isFollow ? 'Unfollow' : 'Follow';
+    if(this.isBlockedUser) this.store.updateButtonText('Unblock')
+    else if(this.user.isFollow) this.store.updateButtonText('Unfollow')
+    else if(!this.user.isFollow) this.store.updateButtonText('Follow')
   }
 
-  onAction() {
-    this.loading = true;
-    if (this.buttonText == 'Unfollow') {
-      this.followService
-        .unfollow(this.user.id)
-        .pipe(
-          tap((_) => {
-            this.buttonText = 'Follow';
-            this.loading = false;
-          })
-        )
-        .subscribe();
-    } else {
-      this.followService
-        .follow(this.user.id)
-        .pipe(
-          tap((_) => {
-            this.buttonText = 'Unfollow';
-            this.loading = false;
-          })
-        )
-        .subscribe();
-    }
+  onAction(event:string) {
+    if(event==='Unblock') this.unblock()
+    else if(event==='Follow') this.store.follow(this.user.id)
+    else if(event==='Unfollow') this.store.unfollow(this.user.id)
+  }
+  unblock(){
+    this.dialog.open(PermissionComponent,{data:'Unblock '+this.user.userName+'?'})
+    .afterClosed().pipe(tap(
+        res=>{
+          if(res==='ok') this.store.unBlock(this.user.id)
+        }
+      )).subscribe()
   }
 }
