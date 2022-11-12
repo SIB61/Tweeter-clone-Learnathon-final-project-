@@ -17,6 +17,7 @@ export class UserPreviewComponentStore extends ComponentStore<State>{
 
   unBlock=this.effect((userId$:Observable<string>)=>{
     return userId$.pipe(mergeMap(userId=>{
+     this.updateButtonText('Follow')  
       return this.blockService.unblock(userId)
     }))
   })

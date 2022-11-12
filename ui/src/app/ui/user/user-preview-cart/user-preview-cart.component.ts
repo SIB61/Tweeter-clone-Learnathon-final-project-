@@ -48,7 +48,6 @@ export class UserPreviewCartComponent implements OnInit {
         res=>{
           if(res==='ok') {
             this.store.unBlock(this.user.id)
-            this.unblocked.emit()
           }
         }
       )).subscribe()
