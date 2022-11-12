@@ -5,7 +5,8 @@
 
 export const environment = {
   production: false,
-  base_url: 'https://localhost:7228/',
+  base_url: 'http://look_at_baby.learnathon.net/api3/',
+  // base_url: 'https://localhost:7228/',
 };
 
 /*

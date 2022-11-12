@@ -1,5 +1,11 @@
-
- <div class="h-full w-full">
+ <div class="h-full w-full"
+    infiniteScroll
+    [infiniteScrollDistance]=".4"
+    [infiniteScrollThrottle]="300"
+    (scrolled)="nextPage()"
+    [scrollWindow]="false"
+    class="h-full overflow-scroll"
+ >
     <app-user-preview-cart *ngFor="let user of blockList$|async" [user]="user" [isBlockedUser]="true"></app-user-preview-cart>
  </div>
 

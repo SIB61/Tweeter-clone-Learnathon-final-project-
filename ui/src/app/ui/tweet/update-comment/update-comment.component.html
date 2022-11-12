@@ -1,0 +1,16 @@
+  <mat-card style="width: 100%;height: 100%;">
+    <mat-card-content>
+
+<form>
+  <mat-form-field style="width: 100%;">
+    <input matInput style="width: 100%;" [(ngModel)]="comment" name="comment">
+  </mat-form-field>
+</form>
+    </mat-card-content>
+  <mat-dialog-actions class="" style="display: flex; justify-content: flex-end;">
+    <button mat-flat-button mat-dialog-close>cancel</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="comment">update</button>
+  </mat-dialog-actions>
+
+  </mat-card>
+

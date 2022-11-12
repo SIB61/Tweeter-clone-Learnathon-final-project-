@@ -7,11 +7,12 @@ import { RouterModule } from '@angular/router';
 import { FollowService } from '@shared/services/concrete/user/follow.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { UserModel } from '@shared/models/user.model';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-follower-layout',
   standalone: true,
-  imports: [RouterModule, CommonModule, UserPreviewCartComponent],
+  imports: [RouterModule, CommonModule, UserPreviewCartComponent, InfiniteScrollModule],
   templateUrl: './follower-layout.component.html',
   styleUrls: ['./follower-layout.component.scss'],
   // providers: [{ provide: AbsFollowService, useClass: FollowService }],

@@ -1,5 +1,3 @@
-import { keyframes, stagger, state, trigger } from "@angular/animations";
-import { supportsScrollBehavior } from "@angular/cdk/platform";
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { TweetModel } from "@shared/models/tweet.model";
@@ -29,6 +27,8 @@ export class SearchLayoutComponentStore extends ComponentStore<SearchLayoutCompo
   isTweetSearch$ = this.select(state=>state.isTweetSearch)
   private pageNumber$ = this.select(state=>state.pageNumber,{debounce:true})
   private searchKey$ = this.select(state=>state.searchKey,{debounce:true})
+  private userPageSize = () => Math.floor(window.innerHeight/20)
+  private tweetPageSize = () => Math.floor(window.innerHeight/50)
   searchFilter$ = this.select(
     this.pageNumber$,this.searchKey$,
     (pageNumber,searchKey)=>({pageNumber,searchKey})
@@ -61,7 +61,7 @@ export class SearchLayoutComponentStore extends ComponentStore<SearchLayoutCompo
   })
 
   private searchUser(name:string,pageNumber:number){
-    return this.searchService.searchUser(name,pageNumber,20)
+    return this.searchService.searchUser(name,pageNumber,this.userPageSize())
     .pipe(
         map(res=>res.data),
         scan((acc,curr)=>([...acc,...curr]),[]),
@@ -69,7 +69,7 @@ export class SearchLayoutComponentStore extends ComponentStore<SearchLayoutCompo
       )
   }
   private searchTweet(tag:string,pageNumber:number){
-    return this.searchService.searchTweet(tag,pageNumber,20)
+    return this.searchService.searchTweet(tag,pageNumber,this.tweetPageSize())
     .pipe(
         map(res=>res.data),
         scan((acc,curr)=>([...acc,...curr]),[]),

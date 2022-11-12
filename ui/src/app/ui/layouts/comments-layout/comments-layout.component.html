@@ -1,5 +1,4 @@
 <div class="home-container">
-
   <div class="absolute border-b border-b-gray-300 w-full top-16 md:top-0 z-50">
     <mat-toolbar class="glass"><span><button mat-icon-button (click)="back()"><mat-icon>arrow_back</mat-icon></button></span> Comments </mat-toolbar>
   </div>
@@ -12,9 +11,11 @@
     (scrolled)="onScroll()"
   >
     <div class="h-32 md:h-16"></div>
+    <app-tweet-view [tweetModel]="tweet$|async" [fullView]="true"></app-tweet-view>
     <app-comment-view
       *ngFor="let comment of comments$ | async"
       [comment]="comment"
+      (deleted)="deleted(comment)"
     ></app-comment-view>
     <div class="flex justify-center align-middle" *ngIf="loading$ | async">
       <mat-progress-spinner
@@ -39,4 +40,5 @@
       </button>
     </mat-form-field>
   </div>
+
 </div>

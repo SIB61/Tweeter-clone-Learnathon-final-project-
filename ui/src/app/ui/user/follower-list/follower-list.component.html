@@ -1,1 +1,15 @@
-<p>follower-list works!</p>
+<div
+    infiniteScroll
+    [infiniteScrollDistance]=".4"
+    [infiniteScrollThrottle]="300"
+    (scrolled)="nextPage()"
+    [scrollWindow]="false"
+    class="h-full overflow-scroll"
+>
+
+<app-user-preview-cart
+  *ngFor="let user of followers$ | async"
+  [user]="user"
+></app-user-preview-cart>
+
+</div>

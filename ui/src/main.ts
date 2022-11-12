@@ -26,6 +26,7 @@ import { ThousandPipe } from '@shared/pipes/thousand.pipe';
 import { HttpCatchingInterceptor } from '@core/interceptors/http-caching.interceptor';
 import { AbsAuthService } from '@shared/services/abstract/auth/abs-auth.service';
 import { AuthService } from '@shared/services/concrete/auth/auth.service';
+import { TimeoutInterceptor } from '@core/interceptors/timeout.interceptor';
 
 if (environment.production) {
   enableProdMode();
@@ -43,23 +44,6 @@ bootstrapApplication(BootstrapComponent, {
       StoreModule.forRoot(Reducers),
       RouterModule
     ),
-    // BreakPointService,
-    // {
-    //   provide: AbsHttpService,
-    //   useClass: HttpService,
-    // },
-    // {
-    //   provide: AbsStorageService,
-    //   useClass: StorageService,
-    // },
-    // {
-    //   provide: AbsHttpErrorHandlerService,
-    //   useClass: HttpErrorHandlerService,
-    // },
-    // {
-    //   provide:AbsAuthService,
-    //   useClass:AuthService
-    // },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
@@ -71,14 +55,19 @@ bootstrapApplication(BootstrapComponent, {
       multi: true,
     },
     {
+      provide:HTTP_INTERCEPTORS,
+      useClass:HttpCatchingInterceptor,
+      multi:true
+    },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:TimeoutInterceptor,
+      multi:true
+    },
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlingInterceptorService,
       multi: true,
     },
-    {
-      provide:HTTP_INTERCEPTORS,
-      useClass:HttpCatchingInterceptor,
-      multi:true
-    }
   ],
 }).catch((err) => console.error(err));

@@ -1,0 +1,38 @@
+<div class="p-4" style="border-bottom: 1px solid #eee">
+  <div class="flex justify-start w-full h-max">
+    <textarea
+      appAutoResize
+      class="text"
+      placeholder="What's happening..."
+      [(ngModel)]="content"
+    ></textarea>
+  </div>
+    <div class="mt-2">
+      <mat-chip-list class="chip-list" #tagList>
+        <mat-chip
+          style="background-color: aliceblue"
+          *ngFor="let tag of tags"
+          (removed)="remove(tag)"
+        >
+          #{{ tag }}
+        </mat-chip>
+      </mat-chip-list>
+      <div class="flex justify-start align-middle w-full">
+        <mat-icon color="primary" class="self-center">tag</mat-icon>
+        <input
+          placeholder="tag"
+          [matChipInputFor]="tagList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)"
+        />
+        <button
+          mat-flat-button
+          [disabled]="content == ''"
+          color="primary"
+          [mat-dialog-close]="returnData()"
+        >
+ Update
+        </button>
+      </div>
+    </div>
+</div>

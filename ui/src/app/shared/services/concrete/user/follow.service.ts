@@ -25,12 +25,19 @@ export class FollowService implements AbsFollowService {
     pageNumber?: number,
     pageSize?: number
   ): Observable<UserModel[]> {
-    return this.httpService.get(ApiEndpoints.FOLLOWER(userId)).pipe(
-      map((response) => {
-        console.warn(response);
-        return response.data;
-      })
-    );
+    return this.httpService
+      .get(
+        ApiEndpoints.FOLLOWER(userId),
+        new HttpParams()
+          .append('PageNumber', pageNumber)
+          .append('PageSize', pageSize)
+      )
+      .pipe(
+        map((response) => {
+          console.warn(response);
+          return response.data;
+        })
+      );
   }
   getFollowings(
     userId: string,
@@ -40,7 +47,9 @@ export class FollowService implements AbsFollowService {
     return this.httpService
       .get(
         ApiEndpoints.FOLLOWING(userId),
-        new HttpParams().append('PageNumber', 1).append('PageSize', 10)
+        new HttpParams()
+          .append('PageNumber', pageNumber)
+          .append('PageSize', pageSize)
       )
       .pipe(
         map((response) => {

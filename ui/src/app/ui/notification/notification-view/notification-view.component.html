@@ -1,6 +1,8 @@
-  <div class="p-4 flex items-center text-lg" *ngIf="notification.fullName">
+  <div class="p-4 flex items-center text-lg cursor-pointer" *ngIf="notification.fullName"
+  [routerLink]="routerLink()" 
+  >
         <span class="avatar w-12 mr-2"><span class="text-xl">{{notification?.fullName[0]}}</span></span>
-        <span class="m-1 font-bold">{{notification?.fullName}}</span>
+        <span class="m-1 font-semibold">{{notification?.fullName}}</span>
         <span class="m-1">{{notification?.type | lowercase}}ed</span>
         <span class="m-1">{{notification?.type==="FOLLOW"?'you':'on your post'}}</span>
   </div>

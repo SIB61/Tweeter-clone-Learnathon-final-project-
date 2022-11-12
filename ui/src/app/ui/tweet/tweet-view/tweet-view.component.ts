@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { RouterModule } from '@angular/router';
@@ -18,6 +18,7 @@ import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.s
 import { UserModel } from '@shared/models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { PermissionComponent } from '@ui/dump/permission/permission.component';
+import { UpdateTweetComponent } from '../update-tweet/update-tweet.component';
 @Component({
   selector: 'app-tweet-view',
   standalone: true,
@@ -33,14 +34,27 @@ import { PermissionComponent } from '@ui/dump/permission/permission.component';
   providers: [TweetViewComponentStore],
   animations: [slideInRightAnimation()],
 })
-export class TweetViewComponent implements OnInit {
+export class TweetViewComponent implements OnInit,OnChanges {
   constructor(
     private store: TweetViewComponentStore,
     public tweetActionService: AbsTweetActionService,
-    private tweetService: AbsTweetService,
     private storageService:AbsStorageService,
     private dialog:MatDialog
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    let tw=changes['tweetModel'].currentValue
+    if(!tw.fullName) tw.fullName = "dsk"
+    if (tw.isRetweet) {
+      this.store.updateParentTweet(tw.parentTweet);
+      this.store.updateTweet(tw);
+    } else {
+      this.store.updateParentTweet(tw);
+      this.store.updateTweet(tw);
+    }
+
+  }
+
+  @Input() public fullView:boolean = false
   myProfile = this.storageService.getObject<UserModel>(this.storageService.USER)
   live = false;
   faHeart = faHeart;
@@ -59,7 +73,11 @@ export class TweetViewComponent implements OnInit {
       this.store.updateParentTweet(this.tweetModel);
       this.store.updateTweet(this.tweetModel);
     }
+       console.error(this.tweetModel) 
   }
+
+  
+
   tweet$ = this.store.tweet$;
   parentTweet$ = this.store.parentTweet$;
   like(tweet: TweetModel) {
@@ -86,8 +104,15 @@ export class TweetViewComponent implements OnInit {
   }
 
 
-  edit(){
-   
+  edit(tweet:TweetModel){
+    this.dialog.open(UpdateTweetComponent,{data:tweet}).afterClosed().pipe(tap(
+      updatedTweet=> {
+        if(tweet!=updatedTweet) {
+          this.store.update(updatedTweet)
+        }
+      }
+    )).subscribe()  
+
   }
   delete(tweet:TweetModel){
      this.dialog.open(PermissionComponent,{data:"Are you sure to delete?"}).afterClosed().pipe(tap(res=>{

@@ -6,10 +6,10 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CommonModule,Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { AbsTweetActionService } from '@shared/services/abstract/tweet/abs-tweet-action.service';
 import { TweetActionService } from '@shared/services/concrete/tweet/tweet-action.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {
   BehaviorSubject,
   filter,
@@ -30,6 +30,8 @@ import { FormsModule } from '@angular/forms';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CommentsLayoutComponentStore } from './comments-layout.component.store';
+import { TweetViewComponent } from '@ui/tweet/tweet-view/tweet-view.component';
+import { TweetModel } from '@shared/models/tweet.model';
 
 @Component({
   selector: 'app-comments-layout',
@@ -40,56 +42,70 @@ import { CommentsLayoutComponentStore } from './comments-layout.component.store'
     CommonModule,
     RouterModule,
     FormsModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    TweetViewComponent,
   ],
   templateUrl: './comments-layout.component.html',
   styleUrls: ['./comments-layout.component.scss'],
   providers: [
     // { provide: AbsTweetActionService, useClass: TweetActionService },
-  CommentsLayoutComponentStore 
+    CommentsLayoutComponentStore,
   ],
 })
-export class CommentsLayoutComponent implements OnInit,OnDestroy {
+export class CommentsLayoutComponent implements OnInit, OnDestroy {
   commentText: string;
   constructor(
     private route: ActivatedRoute,
-    private ngZone: NgZone,
-    private store:CommentsLayoutComponentStore,
-    private location:Location
-  ) { }
+    private store: CommentsLayoutComponentStore,
+    private location: Location,
+    private router: Router
+  ) {
+    this.tweet = router.getCurrentNavigation().extras.state;
+  }
+  tweet: TweetModel;
 
   ngOnInit(): void {
+    let id: string;
     this.route.params
       .pipe(
         take(1),
-        tap((params) =>{
-          this.store.updateId(params['id'])
-          this.store.loadComments(this.store.pageNumber$)
-      })
+        tap((params) => {
+          id = params['id'];
+          this.store.updateId(id);
+          this.store.loadComments(this.store.pageNumber$);
+        })
       )
       .subscribe();
-  }
-  ngOnDestroy(): void {
-    
+    if (!this.tweet) {
+      this.store.loadTweet(id);
+    } else this.store.updateTweet(this.tweet);
+    console.warn(this.tweet);
   }
 
-  loading$ = this.store.loading$
-  comments$ = this.store.comments$
+  deleted(comment:CommentModel){
+    this.store.removeComment(comment)
+  }
+
+  ngOnDestroy(): void {}
+
+  loading$ = this.store.loading$;
+  comments$ = this.store.comments$;
+  tweet$ = this.store.tweet$;
 
   sendComment() {
     let comment = this.commentText;
     this.commentText = '';
     if (comment != '') {
-      this.store.sendComment(comment) 
+      this.store.sendComment(comment);
     }
   }
 
-  onScroll(){
-     console.error("scrolling")
-     this.store.updatePageNumber(true)
+  onScroll() {
+    console.error('scrolling');
+    this.store.updatePageNumber(true);
   }
 
-  back(){
-    this.location.back()
+  back() {
+    this.location.back();
   }
 }

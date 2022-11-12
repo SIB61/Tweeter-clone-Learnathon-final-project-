@@ -66,4 +66,11 @@ export class TweetViewComponentStore extends ComponentStore<State>{
       return this.tweetService.delete(id) 
     }))
   })
+
+  update = this.effect((tweet$:Observable<TweetModel>)=>{
+     return tweet$.pipe(mergeMap(tweet=>{
+      this.updateParentTweet(tweet)
+      return this.tweetService.update(tweet.id,tweet)
+    }))
+  })
 }

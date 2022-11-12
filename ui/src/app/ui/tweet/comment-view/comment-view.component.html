@@ -19,10 +19,23 @@
   </div>
     <div class="p-2 w-full">
   <div class="flex flex-col border border-gray-100 rounded">
-      <div class="bg-[aliceblue] p-2 ">{{comment.fullName}} 
-     <span class="opacity-70 text-xs">
+      <div class="bg-[aliceblue] px-2">{{comment.fullName}} 
+         <span class="opacity-70 text-xs">
           @{{comment.userName}} . {{comment.createdAt | timeago}}
-        </span>   
+        </span>
+          <button mat-icon-button *ngIf="comment.userId == myUser.id" [matMenuTriggerFor]="menu">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="update()">
+              <mat-icon>edit</mat-icon>
+              <span>Update</span>
+            </button>
+            <button mat-menu-item (click)="delete()">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
       </div>
     <div class="p-3">{{comment.content}}</div>
   </div>

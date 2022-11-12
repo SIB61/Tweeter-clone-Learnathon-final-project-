@@ -13,4 +13,5 @@ export abstract class AbsTweetService {
   public abstract getUserTweets(userId: string,pageNumber:number,pageSize:number): Observable<TweetModel[]>;
   public abstract getTweet(tweetId:string): Observable<TweetModel>;
   public abstract delete(tweetId:string):Observable<Response<any>>
+  public abstract update(id:string,tweet:TweetModel):Observable<any>
 }

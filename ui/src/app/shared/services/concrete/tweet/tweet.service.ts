@@ -10,6 +10,9 @@ import { map, Observable, take, takeLast, tap } from 'rxjs';
 
 @Injectable()
 export class TweetService implements AbsTweetService {
+
+
+
   constructor(
     private httpService: AbsHttpService,
     private snackbar: MatSnackBar
@@ -45,4 +48,8 @@ export class TweetService implements AbsTweetService {
 return  this.httpService.delete(ApiEndpoints.TWEETID(tweetId)).pipe(take(1),tap(u=>console.log(u))) 
   }
 
+
+  public update(id: string, tweet: TweetModel): Observable<any> {
+     return this.httpService.put(ApiEndpoints.TWEETID(id),tweet).pipe(take(1))
+  }
 }

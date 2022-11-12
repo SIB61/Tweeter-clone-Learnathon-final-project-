@@ -21,4 +21,8 @@ export class BlockListComponent implements OnInit {
 
   }
 
+  nextPage(){
+    this.store.updatePageNumber()
+  }
+
 }

@@ -22,25 +22,21 @@ export class BlockListComponentStore extends ComponentStore<State> {
   }
   pageNumber$ = this.select((state) => state.pageNumber);
 
+
   pageSize = () => Math.floor(window.innerHeight / 100);
   blockList$ = this.select((state) => state.blockList);
   updateBlockList = this.updater((state, value: UserModel[]) => {
     let newList = [...state.blockList,...value]
     return { ...state, blockList: newList };
   });
-  updateTweets = this.updater((state, value: UserModel[]) => {
-    let updatedTweets = [...state.blockList,...value]
-    return {
-    ...state,
-    blockList: updatedTweets,
-  }})
+  updatePageNumber = this.updater((state)=>({...state,pageNumber:state.pageNumber+1}))
 
   loadBlockList = this.effect((pageNumber$: Observable<number>) => {
     return pageNumber$.pipe(
       mergeMap((pageNumber) => {
         return this.blockService.getBlockList(pageNumber, this.pageSize()).pipe(
           tap((value) => {
-            this.updateTweets(value);
+            this.updateBlockList(value);
           })
         );
       })

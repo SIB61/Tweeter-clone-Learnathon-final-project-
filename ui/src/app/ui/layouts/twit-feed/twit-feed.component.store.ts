@@ -51,9 +51,13 @@ export class TwitFeedComponentStore extends ComponentStore<TweetFeedComponentSta
       mergeMap((pageNumber) => {
         this.updateLoading(true);
         return this.timelineService.getTimeline(pageNumber,this.pageSize()).pipe(
-          tap(newTweets=>{if(newTweets.length<this.pageSize()) this.updateEnd()
+          tapResponse(newTweets=>{if(newTweets.length<this.pageSize()) this.updateEnd()
                 this.updateTweets(newTweets);
                 this.updateLoading(false);
+        },
+        err=>{
+              console.error("err","dslk")
+            this.updateLoading(false)
         }),
         );
       })

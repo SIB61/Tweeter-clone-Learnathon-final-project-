@@ -15,4 +15,5 @@ export abstract class AbsTweetActionService {
     pageSize?: number
   ): Observable<CommentModel[]>;
   abstract deleteComment(commentId: string): Observable<any>;
+  abstract updateComment(id:string,content:string):Observable<any>
 }

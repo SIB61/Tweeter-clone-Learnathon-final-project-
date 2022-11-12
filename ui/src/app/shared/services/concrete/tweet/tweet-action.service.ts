@@ -11,6 +11,10 @@ import { map, Observable, take, tap } from 'rxjs';
 export class TweetActionService implements AbsTweetActionService {
   constructor(private httpService: AbsHttpService) {}
 
+  updateComment(id: string, content: string): Observable<any> {
+  return  this.httpService.put(ApiEndpoints.COMMENT+'/update',{commentId:id,content:content})
+  }
+
   like(tweetId: string): Observable<any> {
     return this.httpService.post(ApiEndpoints.LIKE(tweetId), {}).pipe(take(1));
   }

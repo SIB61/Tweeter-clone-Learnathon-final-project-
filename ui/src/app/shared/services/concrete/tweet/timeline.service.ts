@@ -4,7 +4,7 @@ import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
 import { TweetModel } from '@shared/models/tweet.model';
 import { AbsTimelineService } from '@shared/services/abstract/tweet/abs-timeline.service';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 
 @Injectable()
 export class TimeLineService implements AbsTimelineService {
@@ -18,11 +18,10 @@ export class TimeLineService implements AbsTimelineService {
       )
       .pipe(
         map((value) => {
-          console.warn(value);
           return value.data.map((val: any) => {
             return val;
           });
-        })
+        }),
       );
   }
 }
