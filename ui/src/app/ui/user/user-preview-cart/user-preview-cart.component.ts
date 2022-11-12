@@ -28,6 +28,7 @@ export class UserPreviewCartComponent implements OnInit {
   
   @Input() user: UserModel;
   @Input() isBlockedUser: boolean = false
+  @Output() unblocked = new EventEmitter()
   buttonText$ = this.store.buttonText$;
   loading = false;
   ngOnInit(): void {
@@ -45,7 +46,10 @@ export class UserPreviewCartComponent implements OnInit {
     this.dialog.open(PermissionComponent,{data:'Unblock '+this.user.userName+'?'})
     .afterClosed().pipe(tap(
         res=>{
-          if(res==='ok') this.store.unBlock(this.user.id)
+          if(res==='ok') {
+            this.store.unBlock(this.user.id)
+            this.unblocked.emit()
+          }
         }
       )).subscribe()
   }

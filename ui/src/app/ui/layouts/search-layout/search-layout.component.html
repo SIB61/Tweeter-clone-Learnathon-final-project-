@@ -16,23 +16,14 @@
     </div>
   </mat-toolbar>
   </div>
-  <div *ngIf="isTweetSearch$|async; then tweet; else user"></div>
+    <div class="pt-32 md:pt-16">
+  <div *ngIf="tweetSearch; then tweet; else user" class="pt-16"></div>
+  </div>
 </div>
 
 <ng-template #tweet>
-  <div class="h-screen pt-32 md:pt-16" *ngIf="tweetModels$ | async as tweetModels">
-    <app-tweet-view
-      *ngFor="let tweetModel of tweetModels"
-      [tweetModel]="tweetModel"
-    ></app-tweet-view>
-  </div>
+  <app-tweet-search [searchKey]="searchKey"></app-tweet-search>
 </ng-template>
 <ng-template #user>
-  <div class="h-screen pt-32 md:pt-16" *ngIf="userModels$ | async as userModels">
-    <app-user-preview-cart
-      *ngFor="let user of userModels"
-      [user]="user"
-    ></app-user-preview-cart>
-  </div>
+  <app-user-search [searchKey]="searchKey" class="pt-16"></app-user-search>
 </ng-template>
-<!-- class="bg-[aliceblue] w-full rounded-3xl py-2 px-4 active:outline-none active:border-none" -->

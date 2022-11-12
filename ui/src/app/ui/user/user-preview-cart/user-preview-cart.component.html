@@ -27,7 +27,7 @@
 </mat-card> -->
 
 <div class="flex w-full h-max p-4 justify-between">
-  <div class="flex cursor-pointer" [routerLink]="'/home/profile/'+user.id">
+  <div class="flex cursor-pointer" [routerLink]="!isBlockedUser?'/home/profile/'+user.id:'/#'">
   <div class="avatar w-12 mr-4">
     <div class="text-lg">{{user.fullName[0]}}</div>
   </div>

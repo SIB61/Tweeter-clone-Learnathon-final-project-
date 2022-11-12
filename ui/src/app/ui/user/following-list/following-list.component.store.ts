@@ -5,7 +5,7 @@ import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.s
 import { ComponentStore } from '@ngrx/component-store';
 import { UserModel } from '@shared/models/user.model';
 import { AbsFollowService } from '@shared/services/abstract/user/abs-follow.service';
-import { mergeMap, Observable } from 'rxjs';
+import { mergeMap, Observable, tap } from 'rxjs';
 
 @Injectable()
 export class FollowingListComponentStore extends ComponentStore<{
@@ -33,6 +33,7 @@ export class FollowingListComponentStore extends ComponentStore<{
 
 
   updatePage = this.updater((state)=>({...state,pageNumber:state.pageNumber+1}))
+  updateFollowings = this.updater((state,followings:UserModel[])=>({...state,followings:[...state.followings,...followings]}))
 
   loadFollowings = this.effect((pageNumber$:Observable<number>) => {
     return pageNumber$.pipe(
@@ -41,7 +42,9 @@ export class FollowingListComponentStore extends ComponentStore<{
           this.user.id,
           pageNumber,
           this.pageSize()
-        );
+        ).pipe(tap(followings=>{
+            this.updateFollowings(followings)  
+          }));
       })
     );
   });

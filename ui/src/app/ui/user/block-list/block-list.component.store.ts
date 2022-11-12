@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { Statement } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
@@ -30,6 +31,11 @@ export class BlockListComponentStore extends ComponentStore<State> {
     return { ...state, blockList: newList };
   });
   updatePageNumber = this.updater((state)=>({...state,pageNumber:state.pageNumber+1}))
+  removeUser = this.updater((state,user:UserModel)=>{
+   let updatedState = state
+  updatedState.blockList = updatedState.blockList.filter(b=>b.id!=user.id)
+    return updatedState
+  })
 
   loadBlockList = this.effect((pageNumber$: Observable<number>) => {
     return pageNumber$.pipe(

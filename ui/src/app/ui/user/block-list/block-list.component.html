@@ -6,7 +6,7 @@
     [scrollWindow]="false"
     class="h-full overflow-scroll"
  >
-    <app-user-preview-cart *ngFor="let user of blockList$|async" [user]="user" [isBlockedUser]="true"></app-user-preview-cart>
+    <app-user-preview-cart *ngFor="let user of blockList$|async" [user]="user" [isBlockedUser]="true" (unblocked)="unblock(user)"></app-user-preview-cart>
  </div>
 
 

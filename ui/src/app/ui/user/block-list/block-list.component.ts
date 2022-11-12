@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { UserPreviewCartComponent } from '../user-preview-cart/user-preview-cart.component';
 import { BlockListComponentStore } from './block-list.component.store';
+import { UserModel } from '@shared/models/user.model';
 
 @Component({
   selector: 'app-block-list',
@@ -23,6 +24,10 @@ export class BlockListComponent implements OnInit {
 
   nextPage(){
     this.store.updatePageNumber()
+  }
+
+  unblock(user:UserModel){
+    this.store.removeUser(user)
   }
 
 }
