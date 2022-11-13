@@ -16,10 +16,15 @@
       *ngFor="let navOption of navList"
       [class.selected]="isSelected(navOption.route)"
     >
+      <div
+      [matBadge]="notificationService.notificationAlartCount$|async"
+      [matBadgeHidden]="navOption.title!='Notification'"
+      >
       <fa-icon [icon]="navOption.icon" class="text-xl"></fa-icon>
       <span class="h-min ml-3 hidden lg:inline-block md:inline-block">
         {{ navOption.title }}
       </span>
+      </div>
     </button>
     <div class="md:pb-4 flex flex-col justify-center md:justify-end items-center md:flex-1 ">
       <a

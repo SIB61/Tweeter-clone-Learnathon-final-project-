@@ -1,6 +1,7 @@
 
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AbsHttpCacheService } from '@core/services/abstract/http/abs-http-cache.service';
 import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
 import { Response } from '@shared/models/structures/response.model';

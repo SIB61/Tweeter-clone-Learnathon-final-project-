@@ -9,6 +9,7 @@ import {faUser, faHashtag, faHome, faPerson, faUserGroup,faBell } from '@fortawe
 import { StorageService } from '@core/services/concrete/storage/storage.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { UserModel } from '@shared/models/user.model';
+import { AbsNotificationService } from '@shared/services/abstract/notification/abs-notification.service';
 
 @Component({
   selector: 'app-side-navigation',
@@ -23,7 +24,8 @@ export class SideNavigationComponent implements OnInit {
   constructor(
     private router: Router,
     public breakpointService: BreakPointService,
-    private storageService: AbsStorageService
+    private storageService: AbsStorageService,
+    public notificationService:AbsNotificationService
   ) {
     console.warn(router.url);
   }

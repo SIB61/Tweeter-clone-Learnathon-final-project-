@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AbsHttpCacheService } from '@core/services/abstract/http/abs-http-cache.service';
 import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
@@ -15,13 +16,21 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export class NotificationService implements AbsNotificationService {
 
+  notificationAlartCount = new BehaviorSubject(0)
+
+  resetNotificationAlartCount(): void {
+     this.notificationAlartCount.next(0) 
+  }
+
+  notificationAlartCount$: Observable<number> = this.notificationAlartCount.asObservable();
+
   newNotification = new BehaviorSubject<NotificationModel>({})
 
   newNotification$: Observable<NotificationModel> = this.newNotification.asObservable();
 
   myProfile=this.storageService.getObject<UserModel>(this.storageService.USER)
 
-  constructor(private storageService:AbsStorageService,private httpService:AbsHttpService){
+  constructor(private httpCacheService: AbsHttpCacheService,private storageService:AbsStorageService,private httpService:AbsHttpService){
     this.createConnection()
   }
 
@@ -53,8 +62,9 @@ export class NotificationService implements AbsNotificationService {
       .catch(error => console.log(error))
 
     this.hubConnection.on('NewMessage', message => {
-      console.log(message+ "new")
       this.newNotification.next(message)
+      this.notificationAlartCount.next(this.notificationAlartCount.value+1)
+      this.httpCacheService.clear()
     })
   }
 

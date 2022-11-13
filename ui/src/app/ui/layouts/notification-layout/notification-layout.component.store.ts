@@ -13,6 +13,7 @@ interface State{
 export class NotificationLayoutComponentStore extends ComponentStore<State>{
   constructor(private notificationService:AbsNotificationService){
     super({notifications:[],loading:false,pageNumber:1})
+    notificationService.resetNotificationAlartCount()
     this.loadNotifications(this.pageNumber$)
   }
   notifications$ = this.select(state=>state.notifications)

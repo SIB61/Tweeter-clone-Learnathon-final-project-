@@ -25,10 +25,12 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { MatSelectModule } from '@angular/material/select';
+import { MatBadgeModule } from '@angular/material/badge';
 const matModules = [
   MatFormFieldModule,
   MatPaginatorModule,
   MatExpansionModule,
+  MatBadgeModule,
   MatMenuModule,
   ExperimentalScrollingModule,
   MatToolbarModule,

@@ -22,6 +22,7 @@ export class FollowerLayoutComponent implements OnInit {
     private followService: AbsFollowService,
     private storageService: AbsStorageService
   ) {}
+  
   followers$: Observable<any>;
   ngOnInit(): void {
     this.followers$ = this.followService.getFollowers(
