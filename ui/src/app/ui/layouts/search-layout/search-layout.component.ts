@@ -6,10 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TweetViewComponent } from '@ui/tweet/tweet-view/tweet-view.component';
 import { UserPreviewCartComponent } from '@ui/user/user-preview-cart/user-preview-cart.component';
-import { AbsFollowService } from '@shared/services/abstract/user/abs-follow.service';
-import { FollowService } from '@shared/services/concrete/user/follow.service';
-import { AbsSearchService } from '@shared/services/abstract/search/abs-search.service';
-import { SearchService } from '@shared/services/concrete/search/search.service';
 import { UserSearchComponent } from '@ui/search/user-search/user-search.component';
 import { TweetSearchComponent } from '@ui/search/tweet-search/tweet-search.component';
 
@@ -47,7 +43,7 @@ export class SearchLayoutComponent implements OnInit {
   search(){
     if(this.searchText.length>=0)
     if(this.searchText[0]==='#'){
-       this.searchKey = this.searchText
+      this.searchKey = this.searchText
       this.tweetSearch = true
     }
     else{

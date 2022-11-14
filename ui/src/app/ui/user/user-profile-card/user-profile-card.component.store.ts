@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
+import { LoadingService } from '@core/services/concrete/loading.service';
 import { faL } from '@fortawesome/free-solid-svg-icons';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { TweetModel } from '@shared/models/tweet.model';
@@ -26,7 +27,8 @@ export class UserProfileCardComponentStore extends ComponentStore<UserProfileCar
 
     private followService: AbsFollowService,
     private blockService: AbsBlockService,
-    private location: Location
+    private location: Location,
+    private loadingService:LoadingService
   ) {
     super({ user: { fullName: '', userName: '',isFollow:true,isBlock:false }, id: '' });
     // super()
@@ -43,12 +45,16 @@ export class UserProfileCardComponentStore extends ComponentStore<UserProfileCar
 
   loadUser = this.effect((id$: Observable<string>) => {
     return id$.pipe(
-      mergeMap((id) =>
-        this.userService.getUser(id).pipe(
+      mergeMap((id) =>{
+        this.loadingService.setLoading(true)
+       return this.userService.getUser(id).pipe(
           tap((user) => {
+            this.loadingService.setLoading(false)
+            if(id===this.storageService.getObject<UserModel>(this.storageService.USER).id)
+            this.storageService.setObject(this.storageService.USER,user)
             this.updateUserState(user);
           })
-        )
+        )}
       )
     );
   });
@@ -56,11 +62,13 @@ export class UserProfileCardComponentStore extends ComponentStore<UserProfileCar
   updateUser = this.effect((user$: Observable<UserModel>) => {
     return user$.pipe(
       mergeMap((user) => {
+      this.loadingService.setLoading(true)
         this.updateUserState(user);
         return this.userService.updateUser(user).pipe(
           tap((_) => {
+           this.loadingService.setLoading(false)
             this.snackbar.open('updated successfully', 'ok', {
-              duration: 3000,
+              duration: 2000,
             });
           })
         );
@@ -68,15 +76,28 @@ export class UserProfileCardComponentStore extends ComponentStore<UserProfileCar
     );
   });
 
+  updatePassword = this.effect((credentials$: Observable<{currentPassword,newPassword}>) => {
+    return credentials$.pipe(
+      mergeMap((credentials) => {
+      this.loadingService.setLoading(true)
+        return this.userService.changePassword(credentials.currentPassword,credentials.newPassword).pipe(
+          tap((_) => {
+           this.loadingService.setLoading(false)
+            this.snackbar.open('password updated successfully', 'ok', {
+              duration: 2000,
+            });
+          })
+        );
+      })
+    );
+  });
   follow = this.effect((userId$: Observable<string>) => {
     return userId$.pipe(
       mergeMap((userId) => {
-        return this.followService.follow(userId).pipe(
-          catchError((err) => {
-            this.updateUserState({ isFollow: false });
-            return err;
-          })
-        );
+      this.loadingService.setLoading(true)
+        return this.followService.follow(userId).pipe(tap(
+          _=>this.loadingService.setLoading(false)
+        ));
       })
     );
   });
@@ -84,12 +105,10 @@ export class UserProfileCardComponentStore extends ComponentStore<UserProfileCar
   unfollow = this.effect((userId$: Observable<string>) => {
     return userId$.pipe(
       mergeMap((userId) => {
-        return this.followService.unfollow(userId).pipe(
-          catchError((err) => {
-            this.updateUserState({ isFollow: true });
-            return err;
-          })
-        );
+      this.loadingService.setLoading(true)
+        return this.followService.unfollow(userId).pipe(tap(
+          _=>this.loadingService.setLoading(false)
+        ));
       })
     );
   });
@@ -97,8 +116,12 @@ export class UserProfileCardComponentStore extends ComponentStore<UserProfileCar
   block = this.effect((userId$: Observable<string>) => {
     return userId$.pipe(
       mergeMap((userId) => {
-        this.location.back()
-        return this.blockService.block(userId);
+        this.loadingService.setLoading(true)
+        return this.blockService.block(userId).pipe(tap(_=>
+          {
+            this.loadingService.setLoading(false)
+            this.location.back()
+          }));
       })
     );
   });

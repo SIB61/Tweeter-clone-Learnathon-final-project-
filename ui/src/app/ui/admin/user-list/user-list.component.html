@@ -10,7 +10,11 @@
     <mat-option value="Unblock">Unblocked</mat-option>
   </mat-select>
 </mat-form-field>
-
+<!-- <mat-form-field appearance="fill" style="margin-left: 4px;" > -->
+<!---->
+<!--       <input type="text" matInput placeholder="Search by name"> -->
+<!--       <button matSuffix mat-icon-button><mat-icon>search</mat-icon></button> -->
+<!-- </mat-form-field> -->
 <mat-paginator
     *ngIf="pageFromApi$|async as page"
     [length]="page.length"

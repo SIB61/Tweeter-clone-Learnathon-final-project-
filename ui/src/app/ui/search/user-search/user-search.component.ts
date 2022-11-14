@@ -6,6 +6,7 @@ import { UserPreviewCartComponent } from '@ui/user/user-preview-cart/user-previe
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { UserSearchComponentStore } from './user-search.component.store';
 import { MaterialModule } from '@shared/material/material.module';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 
 @Component({
   selector: 'app-user-search',
@@ -17,6 +18,7 @@ import { MaterialModule } from '@shared/material/material.module';
 })
 export class UserSearchComponent implements OnInit ,OnChanges{
   @Input() searchKey:string
+
 
   constructor(private store:UserSearchComponentStore) { }
 

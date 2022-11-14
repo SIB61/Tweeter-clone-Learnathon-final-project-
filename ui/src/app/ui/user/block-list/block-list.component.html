@@ -1,12 +1,16 @@
+<ng-container *ngIf="(blockList$|async) as blockList">
  <div class="h-full w-full"
     infiniteScroll
     [infiniteScrollDistance]=".4"
     [infiniteScrollThrottle]="300"
     (scrolled)="nextPage()"
     [scrollWindow]="false"
-    class="h-full overflow-scroll"
+    class="h-full w-full overflow-y-scroll"
  >
-    <app-user-preview-cart *ngFor="let user of blockList$|async" [user]="user" [isBlockedUser]="true" (unblocked)="unblock(user)"></app-user-preview-cart>
+    <app-user-preview-cart *ngFor="let user of blockList" [user]="user" [isBlockedUser]="true" (unblocked)="unblock(user)"></app-user-preview-cart>
+    <div class="w-full  h-full p-20" *ngIf="blockList.length<=0">
+  <img src="assets/no_data.svg"  alt="">
+    </div>
  </div>
 
 

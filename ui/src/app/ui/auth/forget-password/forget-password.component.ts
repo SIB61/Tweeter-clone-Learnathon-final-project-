@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { matchPassword, strongPassword } from '@shared/validators/custom.validator';
@@ -31,11 +31,13 @@ export class ForgetPasswordComponent implements OnInit {
   code:string 
   password:string
 
-  loading$ = this.store.loading$;
 
-  constructor(private router:Router,private snackbar:MatSnackBar,private formBuilder: FormBuilder,private authService: AbsAuthService,
+  constructor(private router:Router,private location:Location,private snackbar:MatSnackBar,private formBuilder: FormBuilder,private authService: AbsAuthService,
     private store : ForgetPasswordComponentStore 
     ) {}
+  back(){
+   this.location.back()
+  }
 
   ngOnInit(): void {
     this.emailForm = this.formBuilder.group({

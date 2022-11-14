@@ -4,7 +4,8 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { ComponentStore } from "@ngrx/component-store";
 import { UserModel } from "@shared/models/user.model";
 import { AbsAdminService } from "@shared/services/abstract/admin/abs-admin.service";
-import { debounce, exhaustMap, filter, mergeMap, Observable, take, tap } from "rxjs";
+import { AbsSearchService } from "@shared/services/abstract/search/abs-search.service";
+import { debounce, exhaustMap, filter, mergeMap, Observable, switchMap, take, tap } from "rxjs";
 
 export interface UserListState {
   users: UserModel[]
@@ -35,7 +36,7 @@ export class UserListComponentStore extends ComponentStore<UserListState>{
     (page, filter) => ({ page, filter })
   )
 
-  constructor(private adminService: AbsAdminService, private snackbar: MatSnackBar) {
+  constructor(private adminService: AbsAdminService, private snackbar: MatSnackBar,private searchService:AbsSearchService) {
     super(initialState)
     this.load(this.loadUserData$)
   }
@@ -90,5 +91,12 @@ export class UserListComponentStore extends ComponentStore<UserListState>{
       })
     )
   })
+ 
+  // search = this.effect((key$:Observable<string>)=>{
+  //   return key$.pipe(switchMap(key=>{
+  //     return this.searchService.searchUser(key)
+  //   }))
+  // })
+
 }
 

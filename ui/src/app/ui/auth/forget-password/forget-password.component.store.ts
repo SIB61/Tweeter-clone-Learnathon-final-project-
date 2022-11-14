@@ -2,13 +2,13 @@ import { state } from '@angular/animations';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoadingService } from '@core/services/concrete/loading.service';
 import { ComponentStore } from '@ngrx/component-store';
 import { AbsAuthService } from '@shared/services/abstract/auth/abs-auth.service';
 import { map, Observable, switchMap, tap } from 'rxjs';
 
 interface ForgetPasswordComponentState {
   pageIndex: number;
-  loading: boolean;
   page:any
 }
 
@@ -37,16 +37,15 @@ export class ForgetPasswordComponentStore extends ComponentStore<ForgetPasswordC
   ]
 
 
-  constructor(private authService: AbsAuthService,private router:Router)
+  constructor(private authService: AbsAuthService,private router:Router,private loadinService:LoadingService)
   {
-    super({loading:false,page:{},pageIndex:1});
+    super({page:{},pageIndex:1});
     this.setPage(this.pageIndex$)
   }
 
 
   private  pageIndex$ = this.select((state) => state.pageIndex);
   page$ = this.select((state)=>state.page)
-  loading$ = this.select((state) => state.loading);
 
   updatePageIndex = this.updater((state,value:number) =>({...state,pageIndex:value}))
 
@@ -63,18 +62,14 @@ export class ForgetPasswordComponentStore extends ComponentStore<ForgetPasswordC
     ...state,
     code: value,
   }));
-  updateLoading = this.updater((state, value: boolean) => ({
-    ...state,
-    loading: value,
-  }));
 
   sendCode = this.effect((email$:Observable<string>) => {
     return email$.pipe(
       switchMap((email) => {
-      this.updateLoading(true);
+        this.loadinService.setLoading(true)
         return this.authService.sendCode(email).pipe(
           tap((_) => {
-            this.updateLoading(false);
+            this.loadinService.setLoading(false)
             this.updatePageIndex(2);
           })
         );
@@ -85,10 +80,10 @@ export class ForgetPasswordComponentStore extends ComponentStore<ForgetPasswordC
   varifyCode = this.effect((credential$:Observable<{email:string,code:string}>) => {
     return credential$.pipe(
         switchMap((credential) => {
-    this.updateLoading(true)
+        this.loadinService.setLoading(true)
             return this.authService.varifyCode(credential.email,credential.code).pipe(
                 tap((_) => {
-                    this.updateLoading(false)
+            this.loadinService.setLoading(false)
                     this.updatePageIndex(3)
                 })
             )
@@ -99,10 +94,10 @@ export class ForgetPasswordComponentStore extends ComponentStore<ForgetPasswordC
   changePassword = this.effect((credential$:Observable<{email:string,code:string,password:string}>)=>{
     return credential$.pipe(
       switchMap(credential=>{
-      this.updateLoading(true)
+        this.loadinService.setLoading(true)
         return this.authService.changeForgottenPassword(credential.email,credential.code,credential.password)
         .pipe(tap(()=>{
-          this.updateLoading(false)
+            this.loadinService.setLoading(false)
           this.router.navigateByUrl('/account/sign-in') 
         }))
       })

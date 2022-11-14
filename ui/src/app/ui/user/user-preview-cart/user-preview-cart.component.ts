@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { UserModel } from '@shared/models/user.model';
 import { AbsFollowService } from '@shared/services/abstract/user/abs-follow.service';
@@ -28,7 +28,6 @@ export class UserPreviewCartComponent implements OnInit {
   
   @Input() user: UserModel;
   @Input() isBlockedUser: boolean = false
-  @Output() unblocked = new EventEmitter()
   buttonText$ = this.store.buttonText$;
   loading = false;
   ngOnInit(): void {

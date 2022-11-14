@@ -83,7 +83,7 @@ export class CommentsLayoutComponent implements OnInit, OnDestroy {
   }
 
   deleted(comment:CommentModel){
-    this.store.removeComment(comment)
+    this.store.delete(comment)
   }
 
   ngOnDestroy(): void {}

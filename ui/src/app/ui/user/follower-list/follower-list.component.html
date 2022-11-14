@@ -1,15 +1,20 @@
+<ng-container *ngIf="(followers$|async) as followers">
+
 <div
     infiniteScroll
     [infiniteScrollDistance]=".4"
     [infiniteScrollThrottle]="300"
     (scrolled)="nextPage()"
     [scrollWindow]="false"
-    class="h-full overflow-scroll"
+    class="h-full w-full overflow-y-scroll"
 >
 
 <app-user-preview-cart
-  *ngFor="let user of followers$ | async"
+  *ngFor="let user of followers"
   [user]="user"
 ></app-user-preview-cart>
 
+    <div class="w-full  h-full p-20" *ngIf="followers.length<=0">
+  <img src="assets/no_data.svg"  alt="">
+    </div>
 </div>

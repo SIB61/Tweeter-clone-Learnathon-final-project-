@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
+import { LoadingService } from "@core/services/concrete/loading.service";
 import { ComponentStore } from "@ngrx/component-store";
 import { TweetModel } from "@shared/models/tweet.model";
 import { UserModel } from "@shared/models/user.model";
 import { AbsSearchService } from "@shared/services/abstract/search/abs-search.service";
+import { AbsTweetService } from "@shared/services/abstract/tweet/abs-tweet.service";
 import { map, mergeMap, Observable, of, scan, tap } from "rxjs";
 
 interface SearchLayoutComponentState {
@@ -16,7 +18,7 @@ interface SearchLayoutComponentState {
 @Injectable()
 export class TweetSearchComponentStore extends ComponentStore<SearchLayoutComponentState>{
   endPage = false;
-  constructor(private searchService: AbsSearchService) {
+  constructor(private searchService: AbsSearchService,private tweetService:AbsTweetService,private loadingService:LoadingService) {
     super({ pageNumber: 1, tweets: [], searchKey: '', loading: false, end: false })
     this.search(this.searchFilter$)
   }
@@ -73,5 +75,19 @@ export class TweetSearchComponentStore extends ComponentStore<SearchLayoutCompon
         )
       )
   }
+
+
+  removeTweet = this.updater((state,id:string)=>{
+     return {...state,tweets:state.tweets.filter(t=>t.id!=id)} 
+  })
+  delete=this.effect((id$:Observable<string>)=>{
+    return id$.pipe(mergeMap(id=>{
+      this.loadingService.setLoading(true)
+      return this.tweetService.delete(id).pipe(tap(()=>{
+        this.removeTweet(id)
+        this.loadingService.setLoading(false)
+      })) 
+    }))
+  })
 
 }

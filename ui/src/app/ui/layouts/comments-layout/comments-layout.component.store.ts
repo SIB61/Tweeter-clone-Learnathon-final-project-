@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LoadingService } from '@core/services/concrete/loading.service';
 import { ComponentStore } from '@ngrx/component-store';
 import { TweetModel } from '@shared/models/tweet.model';
 import { CommentModel } from '@shared/models/tweet/comment.model';
@@ -19,7 +20,8 @@ interface State {
 export class CommentsLayoutComponentStore extends ComponentStore<State> {
   constructor(
     private tweetActionService: AbsTweetActionService,
-    private tweetService: AbsTweetService
+    private tweetService: AbsTweetService,
+    private loadingService: LoadingService
   ) {
     super({
       loading: false,
@@ -103,4 +105,14 @@ export class CommentsLayoutComponentStore extends ComponentStore<State> {
       })
     );
   });
+
+  delete = this.effect((comment$:Observable<CommentModel>)=>{
+    return comment$.pipe(mergeMap(comment=>{
+      this.loadingService.setLoading(true)
+    return this.tweetActionService.deleteComment(comment.id).pipe(tap(()=>{
+        this.loadingService.setLoading(false)
+        this.removeComment(comment)
+      }))
+    }))
+  })
 }

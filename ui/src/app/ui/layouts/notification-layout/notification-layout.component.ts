@@ -38,14 +38,10 @@ export interface UserModel {
   styleUrls: ['./notification-layout.component.scss'],
   providers:[NotificationLayoutComponentStore]
 })
-
-
-
 export class NotificationLayoutComponent implements OnInit {
   notifications$:Observable<NotificationModel[]>
   loading$:Observable<boolean>
-
-  constructor(private storageService: AbsStorageService,private store:NotificationLayoutComponentStore) {}
+  constructor(private store:NotificationLayoutComponentStore) {}
   ngOnInit(): void {
    this.notifications$ = this.store.notifications$ 
     this.loading$ = this.store.loading$

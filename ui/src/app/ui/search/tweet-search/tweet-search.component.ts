@@ -37,4 +37,8 @@ export class TweetSearchComponent implements OnInit , OnChanges{
   nextPage(){
     this.store.nextPage()
   }
+
+  deleted(tweet:TweetModel){
+    this.store.delete(tweet.id)
+  }
 }

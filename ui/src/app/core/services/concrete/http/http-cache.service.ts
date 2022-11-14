@@ -11,12 +11,12 @@ export class HttpCacheService implements AbsHttpCacheService {
   }
   put(url: string, res: HttpResponse<any>): void {
     this.cache.set(url, res);
-    // timer(10000).pipe(
-    //   take(1),
-    //   tap((_) => {
-    //     this.delete(url)
-    //   })
-    // ).subscribe();
+    timer(10000).pipe(
+      take(1),
+      tap((_) => {
+        this.delete(url)
+      })
+    ).subscribe();
   }
   delete(url: string): void {
     this.cache.delete(url)

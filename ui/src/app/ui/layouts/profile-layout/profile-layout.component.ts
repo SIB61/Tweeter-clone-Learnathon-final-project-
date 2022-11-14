@@ -44,6 +44,6 @@ export class ProfileLayoutComponent implements OnInit {
    this.store.updatePageNumber()
   }
   deleted(tweet:TweetModel){
-    this.store.deleteTweets(tweet.id)
+    this.store.delete(tweet.id)
   }
 }

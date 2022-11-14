@@ -1,3 +1,4 @@
+<div mat-dialog-title>Update Profile</div>
 <div class="" mat-dialog-content>
 <form action="" class="flex flex-col" [formGroup]="form">
       <mat-form-field>
@@ -25,5 +26,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="form.value" [disabled]="form.invalid">Update</button>
+  <button mat-button [mat-dialog-close]="form.value" [disabled]="form.invalid" color="primary" >Update</button>
 </div>

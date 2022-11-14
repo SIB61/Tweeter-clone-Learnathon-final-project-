@@ -14,4 +14,5 @@ export abstract class AbsUserService {
   public abstract updateUser(user: UserModel): Observable<any>;
   public abstract deleteUser(id: string): Observable<any>;
   public abstract createUser(user: UserModel): Observable<any>;
+  public abstract changePassword(oldPassword: string, newPassword: string): Observable<any>;
 }

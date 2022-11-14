@@ -10,22 +10,11 @@ import { TokenInterceptorService } from '@core/interceptors/token-interceptor.se
 import { ErrorHandlingInterceptorService } from '@core/interceptors/error-handling-interceptor.service';
 import { MaterialModule } from '@shared/material/material.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { BreakPointService } from '@core/services/concrete/break-point/break-point.service';
-import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
-import { HttpService } from '@core/services/concrete/http/http.service';
-import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
-import { StorageService } from '@core/services/concrete/storage/storage.service';
-import { AbsHttpErrorHandlerService } from '@core/services/abstract/error-handling/abs-http-error-handler.service';
-import { HttpErrorHandlerService } from '@core/services/concrete/error-handling/http-error-handler.service';
-import { LoadingInterceptor } from '@core/interceptors/loading.interceptor';
 import { TimeagoClock, TimeagoModule } from 'ngx-timeago';
 import { MyClock } from '@core/services/concrete/time-ago-clock';
 import { StoreModule } from '@ngrx/store';
 import { Reducers } from '@store/app.state';
-import { ThousandPipe } from '@shared/pipes/thousand.pipe';
 import { HttpCatchingInterceptor } from '@core/interceptors/http-caching.interceptor';
-import { AbsAuthService } from '@shared/services/abstract/auth/abs-auth.service';
-import { AuthService } from '@shared/services/concrete/auth/auth.service';
 import { TimeoutInterceptor } from '@core/interceptors/timeout.interceptor';
 
 if (environment.production) {
@@ -44,11 +33,6 @@ bootstrapApplication(BootstrapComponent, {
       StoreModule.forRoot(Reducers),
       RouterModule
     ),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingInterceptor,
-      multi: true,
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

@@ -78,4 +78,7 @@ export class TwitFeedComponent    {
   nextPage() {
     this.store.updatePage()
   }
+  delete(tweet:TweetModel){
+    this.store.delete(tweet.id)
+  }
 }

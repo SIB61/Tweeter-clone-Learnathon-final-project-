@@ -22,13 +22,13 @@
           <mat-icon>edit</mat-icon>
           <span>Edit profile</span>
         </button>
+        <button mat-menu-item (click)="changePassword(user)">
+          <mat-icon>lock</mat-icon>
+          <span>Change password</span>
+        </button>
         <button mat-menu-item (click)="logout()">
           <mat-icon>logout</mat-icon>
           <span>Log out</span>
-        </button>
-        <button mat-menu-item (click)="delete()">
-          <mat-icon>delete</mat-icon>
-          <span>Delete Profile</span>
         </button>
       </mat-menu>
     </div>

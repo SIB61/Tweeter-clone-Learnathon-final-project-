@@ -24,16 +24,16 @@
     </mat-toolbar-row> -->
   </mat-toolbar>
   </div>
-  <div class="home-content pt-32 md:pt-16"  >
+  <div class="h-screen overflow-hidden pt-32 md:pt-16">
     <mat-tab-group mat-align-tabs="center">
       <mat-tab label="Followers"> 
-         <app-follower-list></app-follower-list>    
+         <app-follower-list class="h-full overflow-y-scroll"></app-follower-list>    
        </mat-tab>
        <mat-tab label="Followings"> 
-        <app-following-list></app-following-list>   
+        <app-following-list class="h-full overflow-y-scroll"></app-following-list>   
        </mat-tab>
        <mat-tab label="Blocked"> 
-        <app-block-list></app-block-list>
+        <app-block-list class="h-full overflow-y-scroll"></app-block-list>
       </mat-tab>
     </mat-tab-group>
   </div>

@@ -1,5 +1,6 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Injectable } from '@angular/core';
+import { LoadingService } from '@core/services/concrete/loading.service';
 import { faL } from '@fortawesome/free-solid-svg-icons';
 import { ComponentStore } from '@ngrx/component-store';
 import { State } from '@ngrx/store';
@@ -21,7 +22,8 @@ interface ProfileLayoutState {
 @Injectable()
 export class ProfileLayoutStore extends ComponentStore<ProfileLayoutState> {
   constructor(
-    private tweetService: AbsTweetService
+    private tweetService: AbsTweetService,
+    private loadingService:LoadingService
   ) {
     super({
       userId:'',
@@ -50,9 +52,17 @@ export class ProfileLayoutStore extends ComponentStore<ProfileLayoutState> {
   updateTweets = this.updater((state,value:TweetModel[])=>{
      return {...state, tweets: [...state.tweets, ...value]}
   })
-  deleteTweets = this.updater((state,tweetId:string)=>{
-    let updatedTweets = state.tweets.filter(tweet=>tweet.id!=tweetId)
-    return {...state,tweets:updatedTweets}
+  removeTweet = this.updater((state,id:string)=>{
+     return {...state,tweets:state.tweets.filter(t=>t.id!=id)} 
+  })
+  delete=this.effect((id$:Observable<string>)=>{
+    return id$.pipe(mergeMap(id=>{
+      this.loadingService.setLoading(true)
+      return this.tweetService.delete(id).pipe(tap(()=>{
+        this.removeTweet(id)
+        this.loadingService.setLoading(false)
+      })) 
+    }))
   })
   updateUserId = this.updater((state,value:string)=>({...state,userId:value}))
   updateEnd = this.updater(state=>({...state,end : !state.end}))

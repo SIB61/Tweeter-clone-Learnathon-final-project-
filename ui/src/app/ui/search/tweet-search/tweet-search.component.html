@@ -6,7 +6,7 @@
     [scrollWindow]="false"
     class="h-screen overflow-scroll"
 >
-  <app-tweet-view *ngFor="let tweetModel of tweetModels" [tweetModel]="tweetModel"></app-tweet-view>
+  <app-tweet-view *ngFor="let tweetModel of tweetModels" (deleted)="deleted(tweetModel)" [tweetModel]="tweetModel"></app-tweet-view>
     <div class="flex justify-center align-middle" *ngIf="isLoading$ | async">
       <mat-progress-spinner
         diameter="40"

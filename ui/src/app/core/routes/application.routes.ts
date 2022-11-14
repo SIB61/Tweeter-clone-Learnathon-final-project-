@@ -1,3 +1,4 @@
+import { importProvidersFrom } from '@angular/core';
 import { Routes } from '@angular/router';
 import { AdminGuard } from '@core/guards/admin.guard';
 import { AuthGuard } from '@core/guards/auth.guard';
@@ -36,7 +37,17 @@ export const ApplicationRoutes: Routes = [
     canActivate: [AdminGuard,AuthGuard],
     loadComponent: () => import('@ui/layouts/admin-layout/admin-layout.component').then(m=>m.AdminLayoutComponent),
     children:AdminRoutes
+  },
+  {
+
+    path:"**",
+    redirectTo:'404'
+  },
+  {
+    path:'404',
+    loadComponent:() => import('@ui/layouts/not-found/not-found.component').then(m=>m.NotFoundComponent)
   }
+
 ];
 
 function getAppRediraction():string{

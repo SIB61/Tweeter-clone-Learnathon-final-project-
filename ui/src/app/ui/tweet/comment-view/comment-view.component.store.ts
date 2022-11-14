@@ -22,8 +22,8 @@ export class CommentViewComponentStore extends ComponentStore<State>{
       mergeMap(
         comment =>
       {
-    return this.tweetActionService.updateComment(comment.id,comment.content)
-        }
+        return this.tweetActionService.updateComment(comment.id,comment.content)
+      }
       )
     )
   })

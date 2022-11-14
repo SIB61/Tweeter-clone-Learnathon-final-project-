@@ -15,9 +15,7 @@ import {
   validAge,
 } from 'src/app/shared/validators/custom.validator';
 import { MaterialModule } from '@shared/material/material.module';
-import { UserModel } from '@shared/models/user.model';
-import { AbsUserService } from '@shared/services/abstract/user/abs-user.service';
-import { UserService } from '@shared/services/concrete/user/user.service';
+import { RegisterComponentStore } from './register.component.store';
 
 @Component({
   selector: 'app-register',
@@ -26,10 +24,7 @@ import { UserService } from '@shared/services/concrete/user/user.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   providers: [
-    {
-      provide: AbsUserService,
-      useClass: UserService,
-    },
+    RegisterComponentStore
   ],
 })
 export class RegisterComponent implements OnInit {
@@ -39,10 +34,9 @@ export class RegisterComponent implements OnInit {
   rHidden = true;
 
   constructor(formBuilder: FormBuilder,
-       private router: Router, 
-       private userService: AbsUserService) {
+  private store: RegisterComponentStore) {
     this.form = formBuilder.group({
-      fullName: ['', [Validators.required,Validators.minLength(4)]],
+      fullName: ['', [Validators.required,Validators.minLength(3)]],
       username: ['', [Validators.required,Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       birthDate: ['', [Validators.required, validAge]],
@@ -62,7 +56,7 @@ export class RegisterComponent implements OnInit {
     if (control?.hasError('required')) return '*required';
     switch (control) {
       case this.form.get('fullName'):
-        if (control?.hasError('minlength')) return '*minimum length is 4';
+        if (control?.hasError('minlength')) return '*minimum length is 3';
         break;
       case this.form.get('username'):
         if (control?.hasError('minlength')) return '*minimum length is 3';
@@ -86,19 +80,13 @@ export class RegisterComponent implements OnInit {
 
   submit() {
     let user = this.form.value;
-    console.warn('from register method');
-    this.userService
-      .createUser({
+    this.store
+      .register({
         fullName: user.fullName as string,
         userName: user.username as string,
         email: user.email as string,
         dateOfBirth: user.birthDate as string,
         password: user.password as string,
       })
-      .subscribe({
-        next: () => {
-          this.router.navigateByUrl('/home');
-        },
-      });
   }
 }

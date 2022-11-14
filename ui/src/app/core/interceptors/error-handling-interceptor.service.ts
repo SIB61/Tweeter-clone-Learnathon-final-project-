@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbsHttpErrorHandlerService } from '@core/services/abstract/error-handling/abs-http-error-handler.service';
+import { LoadingService } from '@core/services/concrete/loading.service';
 import {
   catchError,
   retry,
@@ -15,13 +16,14 @@ import {
   take,
   merge,
   map,
+  tap,
 } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorHandlingInterceptorService implements HttpInterceptor {
-  constructor(private errorHandler: AbsHttpErrorHandlerService) {}
+  constructor(private errorHandler: AbsHttpErrorHandlerService,private loadinService:LoadingService) {}
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -29,6 +31,7 @@ export class ErrorHandlingInterceptorService implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((err) => {
         retry(2);
+        this.loadinService.setLoading(false)
         return this.errorHandler.handleError(req, next, err);
       })
     );

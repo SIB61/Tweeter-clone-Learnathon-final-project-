@@ -21,12 +21,6 @@ export class BootstrapComponent implements OnInit {
   loading$:Observable<boolean> 
   isLoading=false;
   ngOnInit(): void {
-    // this.store.select('httpLoadingState').
-    //   subscribe(v=>{
-    //     console.error(v)
-    //     this.isLoading=v.loading
-    //   })
-    // this.loading$.subscribe(v=>console.error(v))
     this.loading$ = this.loadingService.loading$
   }
 

@@ -1,9 +1,9 @@
 <mat-progress-bar
   *ngIf="loading$|async"
   mode="indeterminate"
-  class="fixed top-0 left-0 z-50"
+  class="fixed top-0 left-0 z-50 w-full"
 ></mat-progress-bar>
-<!-- <div>{{loading$|async|json}}</div> -->
-<router-outlet></router-outlet>
+<div class="fixed top-0 left-0 h-screen w-screen">
+<router-outlet ></router-outlet>
+</div>
 
-  <!-- *ngIf="loadingService.loading$ | async" -->

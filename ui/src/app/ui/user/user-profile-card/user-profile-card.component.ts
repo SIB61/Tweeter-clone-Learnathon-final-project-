@@ -17,6 +17,7 @@ import { UserUpdateComponent } from '@ui/dump/user-update/user-update.component'
 import { Router } from '@angular/router';
 import { PermissionComponent } from '@ui/dump/permission/permission.component';
 import { Store } from '@ngrx/store';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 
 @Component({
   selector: 'app-user-profile-card',
@@ -47,9 +48,11 @@ export class UserProfileCardComponent implements OnInit , OnChanges {
   update(user:UserModel){
     this.dialog.open(UserUpdateComponent,{data:user}).afterClosed().subscribe(result => {
       if(result){
-      user.dateOfBirth = result.dateOfBirth
-      user.fullName = result.fullName
-      this.userProfileComponentStore.updateUser(user)
+      let updatedUser = user
+      updatedUser.dateOfBirth = result.dateOfBirth
+      updatedUser.fullName = result.fullName
+        if(updatedUser!=user)
+       this.userProfileComponentStore.updateUser(updatedUser)
       }
     });
   }
@@ -61,12 +64,15 @@ export class UserProfileCardComponent implements OnInit , OnChanges {
       }
     })
   }
-  delete(){
-    this.dialog.open(PermissionComponent,{data:"Do you really want to delete your account?"}).afterClosed().subscribe(res=>{
-      if(res==="ok"){
+ 
+  changePassword(user:UserModel){
+    this.dialog.open(ChangePasswordComponent).afterClosed().subscribe(res=>{
+      if(res){
+        this.userProfileComponentStore.updatePassword(res)
       }
     })
   }
+
 
 
 

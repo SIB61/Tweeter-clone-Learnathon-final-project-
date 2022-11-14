@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { AbsStorageService } from "@core/services/abstract/storage/abs-storage.service";
 import { ComponentStore } from "@ngrx/component-store";
 import { UserModel } from "@shared/models/user.model";
 import { AbsSearchService } from "@shared/services/abstract/search/abs-search.service";
@@ -15,10 +16,11 @@ interface SearchLayoutComponentState {
 @Injectable()
 export class UserSearchComponentStore extends ComponentStore<SearchLayoutComponentState>{
   endPage = false;
-  constructor(private searchService: AbsSearchService) {
+  constructor(private searchService: AbsSearchService,private storageService:AbsStorageService) {
     super({ pageNumber: 1, users: [], searchKey: '', loading: false, end: false })
     this.search(this.searchFilter$)
   }
+  profile =this.storageService.getObject<UserModel>(this.storageService.USER)
   users$ = this.select(state => state.users)
   private pageNumber$ = this.select(state => state.pageNumber, { debounce: true })
   private searchKey$ = this.select(state => state.searchKey, { debounce: true })
@@ -65,6 +67,7 @@ export class UserSearchComponentStore extends ComponentStore<SearchLayoutCompone
         map(res => res.data),
         tap(updatedValue => {
           this.updateLoading()
+          updatedValue = updatedValue.filter(u=>u.id!=this.profile.id)
           this.updateUsers(updatedValue)
         })
       )

@@ -9,6 +9,7 @@ import { tap } from 'rxjs';
 import { CommentViewComponentStore } from './comment-view.component.store';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { UserModel } from '@shared/models/user.model';
+import { PermissionComponent } from '@ui/dump/permission/permission.component';
 
 @Component({
   selector: 'app-comment-view',
@@ -24,15 +25,18 @@ export class CommentViewComponent implements OnInit {
   myUser = this.storageService.getObject<UserModel>(this.storageService.USER)
 
   @Input() comment: CommentModel = {};
-  @Output() deleted = new EventEmitter()
+  @Output() deleted = new EventEmitter<string>()
   ngOnInit(): void {
     console.warn(this.comment)
   }
   delete(){
-   this.store.delete(this.comment.id)
-    this.deleted.emit()
-
+    this.dialog.open(PermissionComponent,{data:"Delete this comment?"}).afterClosed().subscribe(v=>{
+      if(v==='ok'){
+        this.deleted.emit()
+      }
+    })
   }
+  
   update(){
     this.dialog.open(UpdateCommentComponent,{data:this.comment.content,width:'50vw',minWidth:'300px'}).afterClosed().pipe(
       tap(res=>{

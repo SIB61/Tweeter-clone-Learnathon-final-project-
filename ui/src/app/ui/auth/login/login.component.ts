@@ -11,6 +11,7 @@ import { MaterialModule } from '@shared/material/material.module';
 import { AbsAuthService } from '@shared/services/abstract/auth/abs-auth.service';
 import { AuthService } from '@shared/services/concrete/auth/auth.service';
 import { LoginComponentStore, LoginState } from './login.component.store';
+import { LoadingService } from '@core/services/concrete/loading.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -23,10 +24,10 @@ export class LoginComponent  implements OnInit  {
   form: FormGroup;
   hidden = true;
   constructor(
+    public loadingService: LoadingService,
     private  formBuilder: FormBuilder,
     private loginComponentStore:LoginComponentStore
   ) {}
-  loading$=this.loginComponentStore.loading$
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       username: ['', [Validators.required]],

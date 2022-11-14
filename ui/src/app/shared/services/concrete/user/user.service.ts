@@ -30,7 +30,9 @@ export class UserService implements AbsUserService {
   public deleteUser(id: string): Observable<any> {
     return this.httpService.delete(ApiEndpoints.USERS + '/' + id);
   }
-
+public changePassword(oldPassword: string, newPassword: string): Observable<any> {
+  return this.httpService.post(ApiEndpoints.CHANGE_PASSWORD,{oldPassword,newPassword}) 
+}
   public getAllUser(): Observable<UserModel[]> {
     return of();
   }
