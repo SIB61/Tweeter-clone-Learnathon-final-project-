@@ -26,14 +26,21 @@ export class HttpErrorHandlerService implements AbsHttpErrorHandlerService {
           this.snackbar.open("Email already exists","ok",{duration:2000})
       break
       case 400 : 
-        console.warn(err.error)
-        if(err.error==='admin_block'){
-         this.authService.logout()
-         this.snackbar.open("Blocked By Admin","ok",{duration:2000}) 
-        }
-        else
-        this.snackbar.open("Invalid data","ok",{duration:2000}) 
+        // console.warn(err.error)
+        // if(err.error==='admin_block'){
+        //  this.authService.logout()
+        //  this.snackbar.open("Blocked By Admin","ok",{duration:2000}) 
+        // }
+        // else
+        // this.snackbar.open("Invalid data","ok",{duration:2000}) 
       break
+      case 403 :
+       console.log(err.error)
+       if(err.error==='admin_block'){
+         this.snackbar.open("Blocked By Admin","ok",{duration:2000}) 
+         this.authService.logout()
+        }
+      break;
       default:
       this.snackbar.open("Something went wrong","ok",{duration: 2000})
       console.log(err)
