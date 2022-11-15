@@ -41,6 +41,14 @@ export class UserProfileCardComponentStore extends ComponentStore<UserProfileCar
     ...state,
     user: { ...state.user, ...user },
   }));
+
+  changeFollowerCount = this.updater((state,increase:boolean)=>{
+    let newCount = increase? state.user.totalFollowers + 1 : state.user.totalFollowers-1
+    let user = state.user
+    user.totalFollowers=newCount
+    return {...state,user:user}
+  })
+
   updateId = this.updater((state, id: string) => ({ ...state, id: id }));
 
   loadUser = this.effect((id$: Observable<string>) => {
@@ -96,7 +104,10 @@ export class UserProfileCardComponentStore extends ComponentStore<UserProfileCar
       mergeMap((userId) => {
       this.loadingService.setLoading(true)
         return this.followService.follow(userId).pipe(tap(
-          _=>this.loadingService.setLoading(false)
+          _=>{
+            this.changeFollowerCount(true)
+            this.loadingService.setLoading(false)
+          }
         ));
       })
     );
@@ -107,7 +118,10 @@ export class UserProfileCardComponentStore extends ComponentStore<UserProfileCar
       mergeMap((userId) => {
       this.loadingService.setLoading(true)
         return this.followService.unfollow(userId).pipe(tap(
-          _=>this.loadingService.setLoading(false)
+          _=>{
+            this.changeFollowerCount(false)
+            this.loadingService.setLoading(false)
+          }
         ));
       })
     );

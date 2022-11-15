@@ -25,6 +25,8 @@ export class UserPreviewCartComponent implements OnInit {
     private dialog: MatDialog,
     private store: UserPreviewComponentStore
   ) {}
+
+  @Input() showAction=true
   
   @Input() user: UserModel;
   @Input() isBlockedUser: boolean = false

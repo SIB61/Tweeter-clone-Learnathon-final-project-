@@ -3,20 +3,16 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { UserModel } from '@shared/models/user.model';
-import { AbsUserService } from '@shared/services/abstract/user/abs-user.service';
 import { Observable, take, tap } from 'rxjs';
-import { UserService } from '@shared/services/concrete/user/user.service';
 import { UserProfileCardComponentStore } from './user-profile-card.component.store';
 import { ThousandPipe } from '@shared/pipes/thousand.pipe';
 import { faCalendar, faEdit, faEnvelope, faLongArrowAltUp, faPen } from '@fortawesome/free-solid-svg-icons';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
-import { StorageService } from '@core/services/concrete/storage/storage.service';
 import { } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog } from '@angular/material/dialog';
 import { UserUpdateComponent } from '@ui/dump/user-update/user-update.component';
 import { Router } from '@angular/router';
 import { PermissionComponent } from '@ui/dump/permission/permission.component';
-import { Store } from '@ngrx/store';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 
 @Component({
@@ -46,7 +42,7 @@ export class UserProfileCardComponent implements OnInit , OnChanges {
     this.userProfileComponentStore.loadUser(this.userProfileComponentStore.id$)
   }
   update(user:UserModel){
-    this.dialog.open(UserUpdateComponent,{data:user}).afterClosed().subscribe(result => {
+    this.dialog.open(UserUpdateComponent,{data:user,disableClose:true}).afterClosed().subscribe(result => {
       if(result){
       let updatedUser = user
       updatedUser.dateOfBirth = result.dateOfBirth
@@ -91,7 +87,6 @@ export class UserProfileCardComponent implements OnInit , OnChanges {
       tap(res=>{
         if(res==='ok'){
           this.userProfileComponentStore.block(userId)
-
         }
       })
     ).subscribe()

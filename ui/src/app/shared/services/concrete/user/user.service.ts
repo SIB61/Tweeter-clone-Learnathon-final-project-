@@ -1,9 +1,7 @@
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { ApiEndpoints } from '@shared/enums/api-endpoint.enum';
-import { PageResponse } from '@shared/models/structures/response.model';
 import { UserModel } from '@shared/models/user.model';
 import { AbsUserService } from '@shared/services/abstract/user/abs-user.service';
 import { distinctUntilChanged, map, Observable, of, take, tap } from 'rxjs';

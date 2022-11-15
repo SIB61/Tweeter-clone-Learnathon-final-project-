@@ -1,0 +1,13 @@
+<div *ngIf="users$|async as users" class="flex flex-col w-full justify-center items-center h-screen overflow-y-scroll">
+  <div class="font-bold text-xl font-[Alkalami]">You may know</div>
+  <div class="flex flex-col w-max">
+  <div *ngFor="let user of users" >
+  <div class="p-1 pr-3 flex border m-2 rounded-full cursor-pointer" matRipple [routerLink]="'/home/profile/' + user.id" [state]="user" >
+    <div class="avatar w-12 mx-1"><div class="text-lg text-gray-600">{{user.fullName[0]}}</div></div>
+      <div class="flex flex-col">
+        <div class="text-lg">{{ user.fullName.length < 14 ? user.fullName : user.fullName.slice(0,14)+ '...'}}</div>
+        <div class="text-gray-500">@{{user.userName}} . <span>{{user.totalFollowers|thousand}} follwers</span></div>
+    </div>
+  </div>  
+  </div>
+</div>

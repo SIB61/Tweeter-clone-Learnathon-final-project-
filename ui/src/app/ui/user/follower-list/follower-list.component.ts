@@ -17,6 +17,7 @@ export class FollowerListComponent implements OnInit {
 
   constructor(private store:FollowerListComponentStore) { }
   followers$ = this.store.followers$
+  loading$ = this.store.loading$
 
   ngOnInit(): void {
     this.store.loadFollowers(this.store.pageNumber$)

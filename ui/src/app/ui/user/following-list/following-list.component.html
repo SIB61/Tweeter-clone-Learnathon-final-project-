@@ -5,15 +5,21 @@
     [infiniteScrollThrottle]="300"
     (scrolled)="nextPage()"
     [scrollWindow]="false"
-    class="h-full w-full overflow-y-scroll"
+    class="h-[calc(100vh-128px)] md:h-[calc(100vh-64px)] w-full overflow-y-scroll"
 >
-
+    <!-- <div class=""></div> -->
 <app-user-preview-cart
   *ngFor="let user of followings$ | async"
   [user]="user"
 ></app-user-preview-cart>
-
-    <div class="w-full  h-full p-20" *ngIf="followings.length<=0">
-  <img src="assets/no_data.svg"  alt="">
+    <div class="flex justify-center align-middle" *ngIf="loading$ | async">
+      <mat-progress-spinner
+        diameter="40"
+        mode="indeterminate"
+      ></mat-progress-spinner>
     </div>
+    <div class="w-full  h-full p-20" *ngIf="followings.length<=0 && !(loading$|async)">
+  <img src="assets/no_data.svg"  alt="">
+</div>
+<div class="h-16"></div>
 </div>

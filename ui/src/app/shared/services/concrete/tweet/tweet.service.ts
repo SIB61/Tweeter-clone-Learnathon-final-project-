@@ -19,12 +19,7 @@ export class TweetService implements AbsTweetService {
   ) {}
 
   public tweet(tweet: TweetModel): Observable<any> {
-    return this.httpService.post(ApiEndpoints.TWEET, tweet).pipe(
-      tap((value) => {
-        this.snackbar.open('Tweeted', 'ok');
-        console.warn(value);
-      })
-    );
+    return this.httpService.post(ApiEndpoints.TWEET, tweet);
   }
 
   public getUserTweets(userId: string,pageNumber:number,pageSize:number): Observable<TweetModel[]> {

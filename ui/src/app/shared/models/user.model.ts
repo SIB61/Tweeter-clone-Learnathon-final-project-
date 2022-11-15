@@ -14,4 +14,5 @@ export interface UserModel {
   repeatedPassword?: string;
   isFollow?: boolean;
   isBlock?:boolean;
+  gender?:number
 }

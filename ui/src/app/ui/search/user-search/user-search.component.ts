@@ -24,13 +24,18 @@ export class UserSearchComponent implements OnInit ,OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['searchKey']){
+      this.store.resetUser()
+      this.store.updateSearchKey('')
+      this.store.resetPage()
       this.store.updateSearchKey(changes['searchKey'].currentValue)
+      this.store.resetPageToOne()
     }
   }
   isLoading$ = this.store.loading$
 
   userModels$ : Observable<UserModel[]>  = this.store.users$
   ngOnInit(): void {
+    this.store.updateSearchKey(this.searchKey)
   }
   nextPage(){
    this.store.nextPage()

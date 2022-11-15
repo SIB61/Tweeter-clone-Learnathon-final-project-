@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AbsHttpCacheService } from '@core/services/abstract/http/abs-http-cache.service';
 import { AbsHttpService } from '@core/services/abstract/http/abs-http.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
@@ -10,6 +11,7 @@ import { PageResponse } from '@shared/models/structures/response.model';
 import { TokenModel } from '@shared/models/token.model';
 import { UserModel } from '@shared/models/user.model';
 import { AbsNotificationService } from '@shared/services/abstract/notification/abs-notification.service';
+import { rubberBandAnimation } from 'angular-animations';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -30,9 +32,10 @@ export class NotificationService implements AbsNotificationService {
 
   myProfile=this.storageService.getObject<UserModel>(this.storageService.USER)
 
-  constructor(private httpCacheService: AbsHttpCacheService,private storageService:AbsStorageService,private httpService:AbsHttpService){
+  constructor(private router:Router,private httpCacheService: AbsHttpCacheService,private storageService:AbsStorageService,private httpService:AbsHttpService){
     this.createConnection()
   }
+
 
   private hubConnection:HubConnection
 
@@ -61,9 +64,13 @@ export class NotificationService implements AbsNotificationService {
       .start()
       .catch(error => console.log(error))
 
-    this.hubConnection.on('NewMessage', message => {
-      this.newNotification.next(message)
+    this.hubConnection.on('NewMessage', (message:NotificationModel) => {
+
+      if(this.router.url != '/home/notification')
       this.notificationAlartCount.next(this.notificationAlartCount.value+1)
+      if(this.myProfile.id!=message.from)
+      this.newNotification.next(message)
+
       this.httpCacheService.clear()
     })
   }

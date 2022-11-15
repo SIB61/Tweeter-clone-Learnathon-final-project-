@@ -1,14 +1,10 @@
-import { ThisReceiver } from '@angular/compiler';
+import { state } from '@angular/animations';
 import { Injectable } from '@angular/core';
 import { LoadingService } from '@core/services/concrete/loading.service';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 import { ComponentStore } from '@ngrx/component-store';
-import { State } from '@ngrx/store';
 import { TweetModel } from '@shared/models/tweet.model';
 import { UserModel } from '@shared/models/user.model';
-import { ThousandPipe } from '@shared/pipes/thousand.pipe';
 import { AbsTweetService } from '@shared/services/abstract/tweet/abs-tweet.service';
-import { AbsUserService } from '@shared/services/abstract/user/abs-user.service';
 import { mergeMap, Observable, tap } from 'rxjs';
 
 interface ProfileLayoutState {
@@ -47,6 +43,10 @@ export class ProfileLayoutStore extends ComponentStore<ProfileLayoutState> {
   pageSize = () => Math.floor(window.innerHeight/200)
 
   updatePageNumber = this.updater((state)=>({...state,pageNumber:this.get(state=>state.end)?state.pageNumber : state.pageNumber+1}))
+
+  setPage = this.updater((state,pageNumber:number)=>({...state,pageNumber:pageNumber}))
+  setTweets = this.updater((state,tweets:TweetModel[])=>({...state,tweets:tweets}))
+
   resetPageNumber = this.updater((state)=>({...state,pageNumber:1}))
   updateLoading = this.updater(state=>({...state,loading:!state.loading}))
   updateTweets = this.updater((state,value:TweetModel[])=>{

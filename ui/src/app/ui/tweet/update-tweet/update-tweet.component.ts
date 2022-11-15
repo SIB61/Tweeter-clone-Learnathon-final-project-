@@ -21,18 +21,19 @@ export class UpdateTweetComponent implements OnInit {
   tags = [] 
    
   hashTag():string{
-    let tag : string
+    let tag : string = ''
     this.tags.forEach(
-      t=>tag+=" "+t
+      t=>tag+=t+' '
     )
+    tag = tag.trim()
     return tag
   }
 
 
   returnData():TweetModel
   {
-   let updatedData =    this.data
-   updatedData = {...updatedData,content:this.content,hashTag:this.hashTag()}
+    let updatedData =    this.data
+    updatedData = {...updatedData,content:this.content,hashTag:this.hashTag()}
     return updatedData
   }
 
@@ -40,9 +41,6 @@ export class UpdateTweetComponent implements OnInit {
   ngOnInit(): void {
     this.tags = this.data.hashTag.split(' ')
   }
-
-
-
 
   remove(tag: string): void {
     const index = this.tags.indexOf(tag);
@@ -53,7 +51,7 @@ export class UpdateTweetComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
+    const value = (event.value)?.trim();
 
     if (value) {
       this.tags.push(value);

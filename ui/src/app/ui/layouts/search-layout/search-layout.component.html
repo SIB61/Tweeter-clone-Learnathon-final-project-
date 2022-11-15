@@ -1,6 +1,5 @@
-<div class="home-container">
-  <div class="w-full border-b border-b-gray-300 absolute top-16  md:top-0 z-50">
-
+<div class="w-full h-full relative">
+  <div class="w-full border-b border-b-gray-300 absolute  top-0 z-50">
   <mat-toolbar class="glass">
     <div class="searchbox">
       <input type="text" placeholder="Search" [(ngModel)]="searchText" />
@@ -16,10 +15,7 @@
     </div>
   </mat-toolbar>
   </div>
-    <div class="pt-32 md:pt-16">
-  <div *ngIf="tweetSearch; then tweet; else user" class="pt-16"></div>
-  </div>
-
+  <div *ngIf="tweetSearch; then tweet; else user"></div>
     <div class="w-full absolute top-20 h-max mt-20  flex-col flex justify-center items-center" *ngIf="searchKey===''">
        <div class="font-[Playball] text-2xl md:text-3xl font-extrabold text-gray-600">Search</div> 
        <div class="font-[Playball] text-3xl md:text-4xl font-extrabold text-primary">Users and #Tweets</div> 
@@ -31,10 +27,9 @@
     </div>
     </div>
 </div>
-
 <ng-template #tweet>
   <app-tweet-search [searchKey]="searchKey"></app-tweet-search>
 </ng-template>
 <ng-template #user>
-  <app-user-search [searchKey]="searchKey" class="pt-16"></app-user-search>
+  <app-user-search [searchKey]="searchKey"></app-user-search>
 </ng-template>

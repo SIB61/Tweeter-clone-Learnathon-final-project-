@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { LoadingService } from '@core/services/concrete/loading.service';
 import { ComponentStore } from '@ngrx/component-store';
 import { TweetModel } from '@shared/models/tweet.model';
 import { CommentModel } from '@shared/models/tweet/comment.model';
+import { UserModel } from '@shared/models/user.model';
 import { AbsTweetActionService } from '@shared/services/abstract/tweet/abs-tweet-action.service';
 import { AbsTweetService } from '@shared/services/abstract/tweet/abs-tweet.service';
 import { mergeMap, Observable, tap, throttleTime } from 'rxjs';
@@ -11,7 +13,6 @@ interface State {
   loading: boolean;
   comments: CommentModel[];
   pageNumber: number;
-  end: boolean;
   tweet: TweetModel;
   tweetId: string;
 }
@@ -21,22 +22,26 @@ export class CommentsLayoutComponentStore extends ComponentStore<State> {
   constructor(
     private tweetActionService: AbsTweetActionService,
     private tweetService: AbsTweetService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private storageService: AbsStorageService
   ) {
     super({
       loading: false,
       comments: [],
-      end: false,
       pageNumber: 1,
       tweet: {},
       tweetId: '',
     });
   }
+  profile = this.storageService.getObject<UserModel>(this.storageService.USER)
   loading$ = this.select((state) => state.loading);
   pageNumber$ = this.select((state) => state.pageNumber);
   comments$ = this.select((state) => state.comments);
   tweetId$ = this.select((state) => state.tweetId);
   tweet$ = this.select((state) => state.tweet);
+  end = false
+
+
 
   updateTweet = this.updater((state, tweet: TweetModel) => ({
     ...state,
@@ -48,6 +53,10 @@ export class CommentsLayoutComponentStore extends ComponentStore<State> {
     comments: [...state.comments, ...comments],
   }));
 
+  appendComment = this.updater((state, comments: CommentModel[]) => ({
+    ...state,
+    comments: [...comments,...state.comments],
+  }));
   removeComment = 
   this
   .updater((state,comment:CommentModel)=>{
@@ -58,10 +67,9 @@ export class CommentsLayoutComponentStore extends ComponentStore<State> {
     ...state,
     loading: !state.loading,
   }));
-  updateEnd = this.updater((state) => ({ ...state, end: !state.end }));
-  updatePageNumber = this.updater((state, next: boolean) => ({
+  updatePageNumber = this.updater((state) => ({
     ...state,
-    pageNumber: next ? state.pageNumber + 1 : state.pageNumber,
+    pageNumber: this.end ? state.pageNumber : state.pageNumber=1,
   }));
   updateId = this.updater((state, id: string) => ({ ...state, tweetId: id }));
 
@@ -74,7 +82,7 @@ export class CommentsLayoutComponentStore extends ComponentStore<State> {
           .loadComments(this.get().tweetId, pageNumber, 10)
           .pipe(
             tap((newComments) => {
-              if (newComments.length < 10) this.updateEnd();
+              if (newComments.length < 10) this.end == false;
               this.updateComments(newComments);
               this.updateLoading();
             })
@@ -85,10 +93,16 @@ export class CommentsLayoutComponentStore extends ComponentStore<State> {
 
   sendComment = this.effect((comment$: Observable<string>) => {
     return comment$.pipe(
+
       mergeMap((comment) => {
+        this.loadingService.setLoading(true)
         return this.tweetActionService
           .comment({ tweetId: this.get().tweetId, content: comment })
-          .pipe();
+          .pipe(tap(_=>{
+            this.loadingService.setLoading(false)
+            let newComment:CommentModel = {content:comment,userId:this.profile.id,tweetId:'',userName:this.profile.userName,fullName:this.profile.fullName,createdAt:Date.now().toString() }
+            this.appendComment([newComment])
+          }));
       })
     );
   });

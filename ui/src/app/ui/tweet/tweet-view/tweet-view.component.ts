@@ -5,15 +5,12 @@ import { RouterModule } from '@angular/router';
 import { TweetModel } from '@shared/models/tweet.model';
 import { AbsTweetActionService } from '@shared/services/abstract/tweet/abs-tweet-action.service';
 import { BehaviorSubject, mergeMap, Observable, tap } from 'rxjs';
-import { TweetActionService } from '@shared/services/concrete/tweet/tweet-action.service';
 import { FormsModule } from '@angular/forms';
 import { slideInRightAnimation, slideInUpAnimation } from 'angular-animations';
 import { TimeagoModule } from 'ngx-timeago';
-import { AbsTweetService } from '@shared/services/abstract/tweet/abs-tweet.service';
 import { faHeart, faComment } from '@fortawesome/free-regular-svg-icons';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { TweetViewComponentStore } from './tweet-view.component.store';
-import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { UserModel } from '@shared/models/user.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -43,7 +40,7 @@ export class TweetViewComponent implements OnInit,OnChanges {
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     let tw=changes['tweetModel'].currentValue
-    if(!tw.fullName) tw.fullName = "dsk"
+    if(!tw.fullName) tw.fullName = "unknown"
     if (tw.isRetweet) {
       this.store.updateParentTweet(tw.parentTweet);
       this.store.updateTweet(tw);

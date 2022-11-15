@@ -16,6 +16,7 @@ import { StoreModule } from '@ngrx/store';
 import { Reducers } from '@store/app.state';
 import { HttpCatchingInterceptor } from '@core/interceptors/http-caching.interceptor';
 import { TimeoutInterceptor } from '@core/interceptors/timeout.interceptor';
+import { APP_BASE_HREF } from '@angular/common';
 
 if (environment.production) {
   enableProdMode();

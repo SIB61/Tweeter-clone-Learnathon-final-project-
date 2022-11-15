@@ -58,7 +58,7 @@ export class CommentsLayoutComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private store: CommentsLayoutComponentStore,
     private location: Location,
-    private router: Router
+    router: Router
   ) {
     this.tweet = router.getCurrentNavigation().extras.state;
   }
@@ -79,7 +79,6 @@ export class CommentsLayoutComponent implements OnInit, OnDestroy {
     if (!this.tweet) {
       this.store.loadTweet(id);
     } else this.store.updateTweet(this.tweet);
-    console.warn(this.tweet);
   }
 
   deleted(comment:CommentModel){
@@ -102,7 +101,7 @@ export class CommentsLayoutComponent implements OnInit, OnDestroy {
 
   onScroll() {
     console.error('scrolling');
-    this.store.updatePageNumber(true);
+    this.store.updatePageNumber();
   }
 
   back() {

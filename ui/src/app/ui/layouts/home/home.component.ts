@@ -9,6 +9,7 @@ import { BreakPointService } from '@core/services/concrete/break-point/break-poi
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { UserModel } from '@shared/models/user.model';
 import {DragDropModule} from '@angular/cdk/drag-drop'
+import { SideUserComponent } from '@ui/user/side-user/side-user.component';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop'
     MaterialModule,
     SideNavigationComponent,
     DragDropModule,
+    SideUserComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],

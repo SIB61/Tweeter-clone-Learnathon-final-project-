@@ -16,6 +16,7 @@ import { MaterialModule } from '@shared/material/material.module';
 export class FollowingListComponent implements OnInit {
   constructor(private store:FollowingListComponentStore) { }
   followings$ = this.store.followings$
+  loading$ = this.store.loading$
 
   ngOnInit(): void {
     this.store.loadFollowings(this.store.pageNumber$)

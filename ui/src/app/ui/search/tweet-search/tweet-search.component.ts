@@ -2,11 +2,9 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { TweetViewComponent } from '@ui/tweet/tweet-view/tweet-view.component';
 import { Observable } from 'rxjs';
-import { UserModel } from '@shared/models/user.model';
 import { TweetModel } from '@shared/models/tweet.model';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TweetSearchComponentStore } from './tweet-search.component.store';
-import { UserSearchComponentStore } from '../user-search/user-search.component.store';
 import { MaterialModule } from '@shared/material/material.module';
 
 @Component({
@@ -26,7 +24,11 @@ export class TweetSearchComponent implements OnInit , OnChanges{
   }
   ngOnChanges(changes: SimpleChanges): void {
    if(changes['searchKey']){
-         this.store.updateSearchKey(changes['searchKey'].currentValue)
+      this.store.resetTweet()
+      this.store.updateSearchKey('')
+      this.store.resetPage()
+      this.store.updateSearchKey(changes['searchKey'].currentValue)
+      this.store.resetPageToOne()
     } 
   }
   isLoading$ = this.store.loading$

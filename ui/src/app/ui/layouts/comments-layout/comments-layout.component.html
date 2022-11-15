@@ -1,16 +1,16 @@
-<div class="home-container">
-  <div class="absolute border-b border-b-gray-300 w-full top-16 md:top-0 z-50">
+<div class="w-full h-full relative overflow-hidden">
+  <div class="absolute border-b border-b-gray-300 w-full top-0 z-50">
     <mat-toolbar class="glass"><span><button mat-icon-button (click)="back()"><mat-icon>arrow_back</mat-icon></button></span> Comments </mat-toolbar>
   </div>
   <div
-    class="h-screen overflow-scroll"
+    class="h-[calc(100vh-64px)] md:h-screen w-full overflow-y-scroll"
     infiniteScroll
     [infiniteScrollDistance]="0.4"
     [infiniteScrollThrottle]="200"
     [scrollWindow]="false"
     (scrolled)="onScroll()"
   >
-    <div class="h-32 md:h-16"></div>
+    <div class="h-16"></div>
     <app-tweet-view [tweetModel]="tweet$|async" [fullView]="true"></app-tweet-view>
     <app-comment-view
       *ngFor="let comment of comments$ | async"
@@ -40,5 +40,4 @@
       </button>
     </mat-form-field>
   </div>
-
 </div>

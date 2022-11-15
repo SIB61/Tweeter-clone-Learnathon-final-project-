@@ -1,18 +1,16 @@
 <ng-container *ngIf="(tweets$|async) as tweets">
 
 <div class="h-full w-full relative">
-  <div class="absolute top-16  md:top-0 w-full h-full overflow-y-scroll"
+  <div 
     infiniteScroll
     [infiniteScrollDistance]=".4"
     [infiniteScrollThrottle]="300"
     (scrolled)="nextPage()"
     [scrollWindow]="false"
-    class="h-screen overflow-scroll"
-    itemSize="250"
-    #scroller
+    class="h-[calc(100vh-64px)] md:h-screen w-full overflow-y-scroll"
   >
     <app-user-profile-card [userId]="userId$ | async"></app-user-profile-card>
-    <app-create-tweet *ngIf="(userId$|async) == myId"></app-create-tweet> 
+    <app-create-tweet (submit)="tweeted($event)" *ngIf="(userId$|async) == myId"></app-create-tweet> 
     <div class="p-4 font-bold w-full flex justify-center items-center text-2xl text-gray-700">All Tweets</div>
     <div class=" flex items-center flex-col w-full">
       <app-tweet-view *ngFor="let tweet of tweets" [tweetModel]="tweet" class="w-full" (deleted)="deleted(tweet)"></app-tweet-view>

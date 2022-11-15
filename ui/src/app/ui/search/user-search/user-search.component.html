@@ -1,19 +1,16 @@
-  <div class="h-screen pt-32 md:pt-16" *ngIf="userModels$ | async as userModels"
-
+<div class="h-screen pt-32 md:pt-16" *ngIf="userModels$ | async as userModels"
     infiniteScroll
     [infiniteScrollDistance]=".4"
     [infiniteScrollThrottle]="300"
     (scrolled)="nextPage()"
     [scrollWindow]="false"
-    class="h-screen overflow-scroll"
-
-
+    class="h-[calc(100vh-64px)] md:h-screen w-full overflow-y-scroll"
 >
+    <div class="h-16"></div>
     <app-user-preview-cart
       *ngFor="let user of userModels"
       [user]="user"
     ></app-user-preview-cart>
-
     <div class="flex justify-center align-middle" *ngIf="isLoading$ | async">
       <mat-progress-spinner
         diameter="40"

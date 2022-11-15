@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
-import { Observable, retry } from 'rxjs';
+import { Observable, retry, tap } from 'rxjs';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { AutoResizeDirective } from '@shared/directives/auto-resize.directive';
@@ -11,6 +11,8 @@ import { AbsTweetService } from '@shared/services/abstract/tweet/abs-tweet.servi
 import { TweetService } from '@shared/services/concrete/tweet/tweet.service';
 import { AbsStorageService } from '@core/services/abstract/storage/abs-storage.service';
 import { UserModel } from '@shared/models/user.model';
+import { LoadingService } from '@core/services/concrete/loading.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-create-tweet',
   standalone: true,
@@ -21,7 +23,9 @@ import { UserModel } from '@shared/models/user.model';
 export class CreateTweetComponent implements OnInit {
   constructor(
     private tweetService: AbsTweetService,
-    private storageService: AbsStorageService
+    private storageService: AbsStorageService,
+    private loadingService:LoadingService,
+    private snackbar: MatSnackBar
   ) {}
 
   isOpen = false;
@@ -34,7 +38,7 @@ export class CreateTweetComponent implements OnInit {
   showProgress = false;
   showTweet = false;
   @Input() content: string = '';
-  @Output() submit = new EventEmitter<string>();
+  @Output() submit = new EventEmitter<TweetModel>();
   localUser = this.storageService.getObject<UserModel>('user');
 
   add(event: MatChipInputEvent): void {
@@ -49,31 +53,29 @@ export class CreateTweetComponent implements OnInit {
 
   remove(tag: string): void {
     const index = this.tags.indexOf(tag);
-
     if (index >= 0) {
       this.tags.splice(index, 1);
     }
   }
 
   tweet() {
-    this.showProgress = true;
+    this.loadingService.setLoading(true)
     let hashTag: string = '';
     for (let i in this.tags) hashTag += this.tags[i] + ' ';
     hashTag = hashTag.trim();
     this.tweetService
       .tweet({ content: this.content, hashTag: hashTag })
-      .subscribe({
-        next: (_) => {
-          this.showProgress = false;
-          (this.content = ''), (this.tags = []);
-        },
-        error: (_) => {
-          this.showProgress = false;
-        },
-      });
+      .pipe(tap(_=>{
+          this.submit.emit({content:this.content,hashTag:hashTag,fullName:this.localUser.fullName,userName:this.localUser.userName,totalComments:0,totalLikes:0,totalRetweets:0,userId:this.localUser.id})
+          this.loadingService.setLoading(false)
+          this.content = ''
+          this.tags = [];
+          this.snackbar.open("Tweeted","ok",{duration:2000})
+      }))
+      .subscribe();
   }
 
   onSubmit() {
-    this.submit.emit(this.content);
   }
+
 }

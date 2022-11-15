@@ -1,19 +1,22 @@
 <div class="home-container">
   <div
-    class="absolute border-b border-b-gray-300 w-full top-16 lg:top-0 md:top-0 z-50"
+    class="absolute border-b border-b-gray-300 w-full top-0 z-50"
   >
     <mat-toolbar class="glass">
       <mat-toolbar-row> Notification </mat-toolbar-row>
     </mat-toolbar>
   </div>
 
-<div class="h-screen overflow-scroll pt-32 lg:pt-16 md:pt-16" *ngIf="notifications$|async as notifications"
+<div 
+    class="h-[calc(100vh-64px)] md:h-screen w-full overflow-y-scroll"
+    *ngIf="notifications$|async as notifications"
     infiniteScroll
     [infiniteScrollDistance]=".4"
     [infiniteScrollThrottle]="300"
     (scrolled)="nextPage()"
     [scrollWindow]="false"
   >
+    <div class="h-16"></div>
       <app-notification-view
         *ngFor="
           let notification of notifications"
