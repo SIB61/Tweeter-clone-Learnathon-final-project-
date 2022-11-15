@@ -25,7 +25,7 @@ export class SideUserComponent implements OnInit {
          
   }
 
-  users$ = this.httpService.get(ApiEndpoints.USERS+"/get-users",new HttpParams().append('PageSize',8)).pipe(map((res:PageResponse<UserModel[]>)=>res.data))
+  users$ = this.httpService.get(ApiEndpoints.USERS+"/get-users",new HttpParams().append('PageSize',Math.floor(window.innerHeight/128)+2)).pipe(map((res:PageResponse<UserModel[]>)=>res.data))
   
 
   ngOnInit(): void {
