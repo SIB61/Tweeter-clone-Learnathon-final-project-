@@ -29,6 +29,7 @@ import { SideUserComponent } from '@ui/user/side-user/side-user.component';
 export class HomeComponent implements OnInit {
   breakpoints = Breakpoints;
   user:UserModel
+  innerHeight = window.innerHeight
   constructor(public breakPoint: BreakPointService, public router: Router,private storageService:AbsStorageService) {
     this.user = storageService.getObject<UserModel>('user')
   }

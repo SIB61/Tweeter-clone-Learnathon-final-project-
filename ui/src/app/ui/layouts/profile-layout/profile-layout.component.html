@@ -19,6 +19,7 @@
         mode="indeterminate"
         *ngIf="loading$|async"
       ></mat-progress-spinner>
+    <div class="h-16 md:h-0"></div>
     </div>
 
     <div class="w-full  h-full p-20" *ngIf="tweets.length<=0 && !(loading$|async)">
