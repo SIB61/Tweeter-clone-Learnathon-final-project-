@@ -1,7 +1,7 @@
-<ng-container *ngIf="parentTweet$ | async as tweet">
-  <ng-container *ngIf="tweet$ | async as tweetModel">
-    <div *ngIf="tweet.id">
-      <div *ngIf="tweetModel.isRetweet" class="text-xs text-gray-500 pt-3 pl-4 capitalize font-bold flex items-center">
+
+<div *ngIf="(tweet$|async) as tweetModel">
+  <div *ngIf="tweetModel.isRetweet">
+      <div  class="text-xs text-gray-500 pt-3 pl-4 capitalize font-bold flex items-center">
         <span>
           <fa-icon [icon]="faRetweet" class="mx-2"></fa-icon>
           {{ tweetModel.fullName }} retweeted
@@ -18,10 +18,22 @@
           </mat-menu>
         </span>
       </div>
-      <mat-card class="mat-elevation-z0" *ngIf="
-          !tweetModel.isRetweet || tweetModel.parentTweet != null;
-          else unavailable
-        " [@slideInRight]>
+  </div>
+</div>
+
+<div *ngIf="(parentTweet$|async)==null" >
+        <div class="w-full p-4 border-b border-b-gray-300">
+          <div class="bg-aliceblue rounded-lg w-full px-8 py-6">
+            <span class="font-mono font-semibold text-gray-600">
+              unavailable
+            </span>
+          </div>
+        </div>
+</div>
+
+
+<div *ngIf="(parentTweet$|async) as tweet">
+      <mat-card class="mat-elevation-z0" [@slideInRight]>
         <mat-card-header>
           <div class="avatar cursor-pointer" matCardAvatar [routerLink]="'/home/profile/' + tweet.userId">
             <div class="font-bold text-2xl text-gray-500 cursor-pointer">
@@ -101,16 +113,8 @@
           </mat-expansion-panel>
         </mat-card-footer>
       </mat-card>
+</div>
 
-      <ng-template #unavailable>
-        <div class="w-full p-4 border-b border-b-gray-300">
-          <div class="bg-aliceblue rounded-lg w-full px-8 py-6">
-            <span class="font-mono font-semibold text-gray-600">
-              unavailable
-            </span>
-          </div>
-        </div>
-      </ng-template>
-    </div>
-  </ng-container>
-</ng-container>
+
+
+

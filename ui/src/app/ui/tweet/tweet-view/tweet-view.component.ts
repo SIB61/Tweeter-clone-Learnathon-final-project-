@@ -42,6 +42,10 @@ export class TweetViewComponent implements OnInit,OnChanges {
     let tw=changes['tweetModel'].currentValue
     if(!tw.fullName) tw.fullName = "unknown"
     if (tw.isRetweet) {
+      // if(tw.parentTweet==null){
+      // this.store.updateParentTweet({});
+      // }
+      // else
       this.store.updateParentTweet(tw.parentTweet);
       this.store.updateTweet(tw);
     } else {

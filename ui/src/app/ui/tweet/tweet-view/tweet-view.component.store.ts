@@ -21,7 +21,7 @@ export class TweetViewComponentStore extends ComponentStore<State>{
         super({tweet:{},parentTweet:{}})
      }
 
-     updateParentTweet = this.updater((state,parentTweet:TweetModel)=>({...state,parentTweet:{...state.parentTweet,...parentTweet}}))
+     updateParentTweet = this.updater((state,parentTweet:TweetModel)=>({...state,parentTweet:parentTweet}))
      updateTweet = this.updater((state,tweet:TweetModel)=>({...state,tweet:{...state.tweet,...tweet}}))
 
      tweet$ = this.select(state=>state.tweet)

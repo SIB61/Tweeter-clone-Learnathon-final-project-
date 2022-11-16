@@ -1,8 +1,9 @@
 <ng-container *ngIf="tweetModels$|async as tweetModels">
 <div class="w-full h-full relative">
-  <div class="absolute border-b border-b-gray-300 w-full z-50">
+  <div class="absolute top-0 border-b border-b-gray-300 w-full z-50">
     <mat-toolbar class="glass"> Tweet Feed </mat-toolbar>
   </div>
+
   <div
     infiniteScroll
     [infiniteScrollDistance]=".4"
