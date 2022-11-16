@@ -1,15 +1,13 @@
   <div class="p-4 flex items-center text-[16px] cursor-pointer" *ngIf="notification.fullName"
   [routerLink]="routerLink()" 
   >
-        <span class="avatar w-10 mr-2"><span class="text-xl text-gray-700">{{notification?.fullName[0]}}</span></span>
-        <span class="mx-1">{{notification?.fullName}}</span>
+    <span class="avatar w-10 mr-2"><span class="text-xl text-gray-700">{{notification?.fullName[0]}}</span></span>
+       <span class="mr-1"> {{notification?.fullName}}</span>
         <span [ngSwitch]="notification.type" >
-          <span *ngSwitchCase="'LIKE'">liked your post</span>
-          <span *ngSwitchCase="'COMMENT'">commented on your post</span>
-          <span *ngSwitchCase="'RETWEET'">retweeted your post</span>
-          <span *ngSwitchCase="'FOLLOW'">is following you</span>
+          <span *ngSwitchCase="'LIKE'"> liked your post </span>
+          <span *ngSwitchCase="'COMMENT'"> commented on your post </span>
+          <span *ngSwitchCase="'RETWEET'"> retweeted your post </span>
+          <span *ngSwitchCase="'FOLLOW'"> is following you  </span>
         </span>
-        <span class="mx-1">.</span>
-    <span class="text-gray-400 text-xs">{{notification.createdAt | timeago}}</span>
-  </div>
+    <span class="text-gray-400 text-xs ml-1">{{notification.createdAt | timeago }}</span>
   <mat-divider></mat-divider>

@@ -45,7 +45,7 @@ export class NotificationService implements AbsNotificationService {
     params = params.append('pageSize', pageSize);
     return this.httpService.get(ApiEndpoints.NOTIFICATION,params).pipe(map(
       (res:PageResponse<NotificationModel[]>)=> {
-       return res.data
+       return res.data.filter(v=>v.from!=this.myProfile.id)
       }
     ))
   }

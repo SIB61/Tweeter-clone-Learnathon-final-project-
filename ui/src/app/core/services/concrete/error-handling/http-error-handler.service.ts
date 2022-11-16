@@ -14,21 +14,27 @@ export class HttpErrorHandlerService implements AbsHttpErrorHandlerService {
   handleError( req: HttpRequest<any>, next: HttpHandler,err: HttpErrorResponse): Observable<any> {
     switch(err.status){
       case 401 : 
-      return  this.authService.refresh().pipe(
+      this.authService.refresh().pipe(
         switchMap(_=>{
           return next.handle(req)
         })
       )
+      break;
       case 409 :
         if(err.error.data=== "Username Already Exits")
           this.snackbar.open("Username already exists","ok",{duration:2000})
         else if(err.error.data=== "Email Already Exits")
           this.snackbar.open("Email already exists","ok",{duration:2000})
       break
-      // case 400 : 
-      // break
+      case 400 : 
+        if(err.error==="Invalid_username"){
+         this.snackbar.open("Invalid username","ok",{duration: 2000})
+        }
+        else if(err.error==="wrong_password"){
+         this.snackbar.open("Wrong password","ok",{duration: 2000})
+        }
+      break
       case 403 :
-       console.log(err.error)
        if(err.error==='admin_block'){
          this.snackbar.open("Blocked By Admin","ok",{duration:2000}) 
          this.authService.logout()
@@ -36,6 +42,14 @@ export class HttpErrorHandlerService implements AbsHttpErrorHandlerService {
         if(err.error==='user_blocked'){
          this.snackbar.open("Something went wrong","ok",{duration: 2000})
          this.location.back()
+        }
+      break;
+      case 404 : 
+        if(err.error.data === "Email doesn't Exits"){
+         this.snackbar.open("Invalid Email","ok",{duration: 2000})
+        }
+        else{
+        this.snackbar.open("Not Found","ok",{duration:2000})
         }
       break;
       default:

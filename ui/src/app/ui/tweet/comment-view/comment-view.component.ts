@@ -27,7 +27,6 @@ export class CommentViewComponent implements OnInit {
   @Input() comment: CommentModel = {};
   @Output() deleted = new EventEmitter<string>()
   ngOnInit(): void {
-    console.warn(this.comment)
   }
   delete(){
     this.dialog.open(PermissionComponent,{data:"Delete this comment?"}).afterClosed().subscribe(v=>{
@@ -42,7 +41,6 @@ export class CommentViewComponent implements OnInit {
       tap(res=>{
         if(res){
         let updatedComment = this.comment
-        console.log(res)
         updatedComment = {...updatedComment,content:res}
         if(updatedComment!=this.comment){
         this.store.update(updatedComment) 

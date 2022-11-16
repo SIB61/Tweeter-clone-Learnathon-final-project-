@@ -93,14 +93,15 @@ export class CommentsLayoutComponentStore extends ComponentStore<State> {
 
   sendComment = this.effect((comment$: Observable<string>) => {
     return comment$.pipe(
-
       mergeMap((comment) => {
         this.loadingService.setLoading(true)
         return this.tweetActionService
           .comment({ tweetId: this.get().tweetId, content: comment })
-          .pipe(tap(_=>{
+          .pipe(tap(res=>{
+            console.log(res)
             this.loadingService.setLoading(false)
-            let newComment:CommentModel = {content:comment,userId:this.profile.id,tweetId:'',userName:this.profile.userName,fullName:this.profile.fullName,createdAt:Date.now().toString() }
+            let newComment:CommentModel = {content:comment,userId:this.profile.id,tweetId:'',userName:this.profile.userName,fullName:this.profile.fullName,createdAt:new Date().toISOString() }
+            console.log(newComment)
             this.appendComment([newComment])
           }));
       })
