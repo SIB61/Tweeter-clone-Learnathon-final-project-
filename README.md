@@ -4,10 +4,10 @@
 # Project Overview: 
 Led the development of a web application that emulated the core functionalities of Twitter, a popular social media platform. Designed and implemented a user-friendly and scalable platform allowing users to post tweets, follow others, like and retweet posts, comment on posts, perform searches, and receive real-time notifications.
 Your role / responsibility： 
-Took charge of back-end development using C# and applied the unit of work and repository patterns with Dotnet Web API. Architected the back-end infrastructure, integrating technologies like Redis for caching and RabbitMQ for message queuing. Collaborated closely with the front-end developer to ensure seamless implementation of key features such as tweets, retweets, likes, comments, search, and real-time notifications.
+Developed a full-fledged angular app for the project and made design and architectural decisions about the projects. While the other member did the implementations of the backend according to the design decisions.
 
 # Total Number of Members：
-The project was completed by a two-member team, consisting of myself and another team member. We both had specific responsibilities, with my focus on the back-end development and the other team member handling the front-end development. Together, we successfully delivered a high-quality Twitter Clone application that met the project objectives.
+The project was completed by a two-member team, consisting of myself and another team member. We both had specific responsibilities, with my focus on the system design, maintaining code quality by reviewing the backend implementation, refactoring backend codes if needed and developing the entire frontend app and the other team member handling the responsibility of implementing the backend according to the design and instruction. Together, we successfully delivered a high-quality Twitter Clone application that met the project objectives.
 
 
  Backend: C#, Dotnet Web API
@@ -34,6 +34,7 @@ The project was completed by a two-member team, consisting of myself and another
 
 # Admin
 ![admin](https://user-images.githubusercontent.com/86300358/204150480-7ff34c2d-2861-49f6-8c8a-75083e657752.png)
+
 
 
 
