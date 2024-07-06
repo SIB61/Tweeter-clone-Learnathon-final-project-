@@ -27,9 +27,6 @@ namespace infrastructure.Services.RabbitMQ
             _factory = new ConnectionFactory()
             {
                 Uri = new Uri(rabbitMQConnectionString.Value.Uri),
-                VirtualHost = rabbitMQConnectionString.Value.VirtualHost,
-                Port = rabbitMQConnectionString.Value.Port,
-                Password = rabbitMQConnectionString.Value.Password
             };
 
             _connection = _factory.CreateConnection();
