@@ -7,6 +7,14 @@
 node_modules/
 dist/
 
+api/bin
+core/bin
+
+api/obj
+core/obj
+
+infrastructure/bin
+infrastructure/obj
 # Compiled Java class files
 *.class
 

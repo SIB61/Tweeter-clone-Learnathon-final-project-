@@ -17,12 +17,11 @@ namespace API
 
         public IConfiguration Configuration { get; }
 
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
-           
             services.AddApplicationServices(Configuration);
-            services.AddDatabaseServices(Configuration);        
+            services.AddDatabaseServices(Configuration);
             services.AddIdentityServices(Configuration);
             services.AddCacheServices(Configuration);
             services.AddRabbitMQServices(Configuration);
@@ -31,18 +30,18 @@ namespace API
 
             services.AddSignalR();
 
-            services.AddCors(opt => 
+            services.AddCors(opt =>
             {
-                opt.AddPolicy("CorsPolicy", policy => 
+                opt.AddPolicy("CorsPolicy", policy =>
                 {
                     policy.AllowAnyHeader()
                           .AllowAnyMethod()
                           .AllowAnyOrigin();
                 });
             });
-            
 
-            
+
+
             services.AddControllers();
         }
 
@@ -66,12 +65,12 @@ namespace API
             app.UseAuthentication();
             app.UseAuthorization();
 
-             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-                endpoints.MapHub<NotificationHub>("hubs/notification");
-                endpoints.MapHub<CommentHub>("hubs/comment");
-            });
+            app.UseEndpoints(endpoints =>
+           {
+               endpoints.MapControllers();
+               endpoints.MapHub<NotificationHub>("hubs/notification");
+               endpoints.MapHub<CommentHub>("hubs/comment");
+           });
 
             lifetime.ApplicationStarted.Register(() => RegisterSignalRWithRabbitMQ(app.ApplicationServices));
         }
@@ -80,24 +79,26 @@ namespace API
 
 
 
-         public void RegisterSignalRWithRabbitMQ(IServiceProvider serviceProvider)
+        public void RegisterSignalRWithRabbitMQ(IServiceProvider serviceProvider)
         {
-            try{
+            try
+            {
 
                 var rabbitMQService1 = (IConsumer<Notification>?)serviceProvider.GetService(typeof(IConsumer<Notification>));
-                if(rabbitMQService1 != null) rabbitMQService1.Connect();
+                if (rabbitMQService1 != null) rabbitMQService1.Connect();
 
                 var rabbitMQService2 = (IConsumer<Comments>?)serviceProvider.GetService(typeof(IConsumer<Comments>));
-                if(rabbitMQService2 != null) rabbitMQService2.Connect();
+                if (rabbitMQService2 != null) rabbitMQService2.Connect();
 
 
-            }catch(Exception e)
-            {
-                Console.WriteLine( "Problem\n" +  e);
             }
-            
+            catch (Exception e)
+            {
+                Console.WriteLine("Problem\n" + e);
+            }
+
         }
-        
+
     }
 }
 

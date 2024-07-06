@@ -6,40 +6,40 @@ namespace api.Helpers
 {
     public class ErrorHandlerMiddleware
     {
-         private readonly RequestDelegate _next;
+        private readonly RequestDelegate _next;
 
-    public ErrorHandlerMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
-    public async Task Invoke(HttpContext context)
-    {
-        try
+        public ErrorHandlerMiddleware(RequestDelegate next)
         {
-            await _next(context);
+            _next = next;
         }
-        catch (Exception error)
-        {
-            var response = context.Response;
-            response.ContentType = "application/json";
 
-            switch(error)
+        public async Task Invoke(HttpContext context)
+        {
+            try
             {
-                case AppException e:
-                    response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    break;
-                case KeyNotFoundException e:
-                    response.StatusCode = (int)HttpStatusCode.NotFound;
-                    break;
-                default:
-                    response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    break;
+                await _next(context);
             }
+            catch (Exception error)
+            {
+                var response = context.Response;
+                response.ContentType = "application/json";
 
-            var result = JsonSerializer.Serialize(new { message = error?.Message });
-            await response.WriteAsync(result);
+                switch (error)
+                {
+                    case AppException e:
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    case KeyNotFoundException e:
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
+                    default:
+                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        break;
+                }
+
+                var result = JsonSerializer.Serialize(new { message = error?.Message });
+                await response.WriteAsync(result);
+            }
         }
-    }
     }
 }
