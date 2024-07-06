@@ -39,8 +39,6 @@ namespace api.Controllers.Account
         public async Task<IActionResult> Signup(Signup signup)
         {
 
-            Console.WriteLine("hello");
-
             if (!ModelState.IsValid) return BadRequest(new Response<String>("Wrong Formate"));
 
 

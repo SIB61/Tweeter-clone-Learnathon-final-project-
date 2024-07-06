@@ -31,16 +31,16 @@ import { UpdateTweetComponent } from '../update-tweet/update-tweet.component';
   providers: [TweetViewComponentStore],
   animations: [slideInRightAnimation()],
 })
-export class TweetViewComponent implements OnInit,OnChanges {
+export class TweetViewComponent implements OnInit, OnChanges {
   constructor(
     private store: TweetViewComponentStore,
     public tweetActionService: AbsTweetActionService,
-    private storageService:AbsStorageService,
-    private dialog:MatDialog
-  ) {}
+    private storageService: AbsStorageService,
+    private dialog: MatDialog
+  ) { }
   ngOnChanges(changes: SimpleChanges): void {
-    let tw=changes['tweetModel'].currentValue
-    if(!tw.fullName) tw.fullName = "unknown"
+    let tw = changes['tweetModel'].currentValue
+    if (!tw.fullName) tw.fullName = "unknown"
     if (tw.isRetweet) {
       // if(tw.parentTweet==null){
       // this.store.updateParentTweet({});
@@ -55,14 +55,14 @@ export class TweetViewComponent implements OnInit,OnChanges {
 
   }
 
-  @Input() public fullView:boolean = false
+  @Input() public fullView: boolean = false
   myProfile = this.storageService.getObject<UserModel>(this.storageService.USER)
   live = false;
   faHeart = faHeart;
   faRetweet = faRetweet;
   faComment = faComment;
   @Input() public tweetModel: TweetModel = {};
-  @Output() public deleted : EventEmitter<void> = new EventEmitter()
+  @Output() public deleted: EventEmitter<void> = new EventEmitter()
   isClamp = true;
   commentText: string;
   isExpanded = false;
@@ -74,10 +74,10 @@ export class TweetViewComponent implements OnInit,OnChanges {
       this.store.updateParentTweet(this.tweetModel);
       this.store.updateTweet(this.tweetModel);
     }
-       console.error(this.tweetModel) 
+    console.error(this.tweetModel)
   }
 
-  
+
 
   tweet$ = this.store.tweet$;
   parentTweet$ = this.store.parentTweet$;
@@ -96,7 +96,7 @@ export class TweetViewComponent implements OnInit,OnChanges {
       this.store.updateParentTweet({ totalComments: tweet.totalComments + 1 });
       this.store.comment({ tweetId: tweet.id, content: this.commentText });
       this.commentText = null
-      this.isExpanded =! this.isExpanded
+      this.isExpanded = !this.isExpanded
     }
   }
   retweet(tweet: TweetModel) {
@@ -105,24 +105,23 @@ export class TweetViewComponent implements OnInit,OnChanges {
   }
 
 
-  edit(tweet:TweetModel){
-    this.dialog.open(UpdateTweetComponent,{data:tweet}).afterClosed().pipe(tap(
-      updatedTweet=> {
-        if(tweet!=updatedTweet) {
+  edit(tweet: TweetModel) {
+    this.dialog.open(UpdateTweetComponent, { data: tweet }).afterClosed().pipe(tap(
+      updatedTweet => {
+        if (tweet != updatedTweet) {
           this.store.update(updatedTweet)
         }
       }
-    )).subscribe()  
+    )).subscribe()
 
   }
-  delete(tweet:TweetModel){
-     this.dialog.open(PermissionComponent,{data:"Are you sure to delete?"}).afterClosed().pipe(tap(res=>{
-      if(res==="ok"){
-        console.log("deleted")
+  delete(tweet: TweetModel) {
+    this.dialog.open(PermissionComponent, { data: "Are you sure to delete?" }).afterClosed().pipe(tap(res => {
+      if (res === "ok") {
         // this.store.delete(tweet.id)
         this.deleted.emit()
       }
     })).subscribe()
   }
-  change() {}
+  change() { }
 }

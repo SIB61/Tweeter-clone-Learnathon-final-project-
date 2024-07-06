@@ -11,73 +11,73 @@ import { mergeMap, mergeMapTo, Observable, tap } from 'rxjs';
 
 
 interface State {
-    tweet: TweetModel
-    parentTweet: TweetModel,
+  tweet: TweetModel
+  parentTweet: TweetModel,
 }
 
 @Injectable()
-export class TweetViewComponentStore extends ComponentStore<State>{
-    constructor(private loadingService:LoadingService,private tweetActionService : AbsTweetActionService,private tweetService:AbsTweetService) {
-        super({tweet:{},parentTweet:{}})
-     }
+export class TweetViewComponentStore extends ComponentStore<State> {
+  constructor(private loadingService: LoadingService, private tweetActionService: AbsTweetActionService, private tweetService: AbsTweetService) {
+    super({ tweet: {}, parentTweet: {} })
+  }
 
-     updateParentTweet = this.updater((state,parentTweet:TweetModel)=>({...state,parentTweet:parentTweet}))
-     updateTweet = this.updater((state,tweet:TweetModel)=>({...state,tweet:{...state.tweet,...tweet}}))
+  updateParentTweet = this.updater((state, parentTweet: TweetModel) => ({ ...state, parentTweet: { ...state.parentTweet, ...parentTweet } }))
+  updateTweet = this.updater((state, tweet: TweetModel) => ({ ...state, tweet: { ...state.tweet, ...tweet } }))
 
-     tweet$ = this.select(state=>state.tweet)
-     parentTweet$ = this.select(state=>state.parentTweet)
+  tweet$ = this.select(state => state.tweet)
+  parentTweet$ = this.select(state => state.parentTweet)
 
-     retweet = this.effect((id$:Observable<string>) => {
-        return id$.pipe(
-            mergeMap(id=>{
-                return this.tweetActionService.retweet(id)
-            })
-        )
-     })
-
-     
-     like = this.effect((id$:Observable<string>) => {
-        return id$.pipe(
-            mergeMap(id=>{
-                return this.tweetActionService.like(id)
-            })
-        )
-     })
+  retweet = this.effect((id$: Observable<string>) => {
+    return id$.pipe(
+      mergeMap(id => {
+        return this.tweetActionService.retweet(id)
+      })
+    )
+  })
 
 
-     unlike = this.effect((id$:Observable<string>) => {
-        return id$.pipe(
-            mergeMap(id=>{
-                return this.tweetActionService.unlike(id)
-            })
-        )
-     })
-    
-     comment = this.effect((comment$:Observable<CommentModel>) => {
-        return comment$.pipe(
-            mergeMap(comment=>{
-             this.loadingService.setLoading(true)
-                return this.tweetActionService.comment(comment).pipe(tap(()=>{
+  like = this.effect((id$: Observable<string>) => {
+    return id$.pipe(
+      mergeMap(id => {
+        return this.tweetActionService.like(id)
+      })
+    )
+  })
+
+
+  unlike = this.effect((id$: Observable<string>) => {
+    return id$.pipe(
+      mergeMap(id => {
+        return this.tweetActionService.unlike(id)
+      })
+    )
+  })
+
+  comment = this.effect((comment$: Observable<CommentModel>) => {
+    return comment$.pipe(
+      mergeMap(comment => {
+        this.loadingService.setLoading(true)
+        return this.tweetActionService.comment(comment).pipe(tap(() => {
           this.loadingService.setLoading(false)
         }))
-            })
-        )
-     })
+      })
+    )
+  })
 
-  delete=this.effect((id$:Observable<string>)=>{
-    return id$.pipe(mergeMap(id=>{
+  delete = this.effect((id$: Observable<string>) => {
+    return id$.pipe(mergeMap(id => {
       this.loadingService.setLoading(true)
-      return this.tweetService.delete(id).pipe(tap(()=>{
+      return this.tweetService.delete(id).pipe(tap(() => {
         this.loadingService.setLoading(false)
-      })) 
+      }))
     }))
   })
 
-  update = this.effect((tweet$:Observable<TweetModel>)=>{
-     return tweet$.pipe(mergeMap(tweet=>{
+  update = this.effect((tweet$: Observable<TweetModel>) => {
+    return tweet$.pipe(mergeMap(tweet => {
       this.loadingService.setLoading(true)
       this.updateParentTweet(tweet)
-      return this.tweetService.update(tweet.id,tweet).pipe(tap(()=>{
+      return this.tweetService.update(tweet.id, tweet).pipe(tap(() => {
         this.loadingService.setLoading(false)
       }))
     }))

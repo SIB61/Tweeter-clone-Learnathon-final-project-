@@ -1,120 +1,153 @@
-
-<div *ngIf="(tweet$|async) as tweetModel">
+<div *ngIf="tweet$ | async as tweetModel">
   <div *ngIf="tweetModel.isRetweet">
-      <div  class="text-xs text-gray-500 pt-3 pl-4 capitalize font-bold flex items-center">
-        <span>
-          <fa-icon [icon]="faRetweet" class="mx-2"></fa-icon>
-          {{ tweetModel.fullName }} retweeted
-        </span>
-        <span *ngIf="tweetModel.userId === myProfile.id">
-          <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_horiz</mat-icon>
+    <div
+      class="text-xs text-gray-500 pt-3 pl-4 capitalize font-bold flex items-center"
+    >
+      <span>
+        <fa-icon [icon]="faRetweet" class="mx-2"></fa-icon>
+        {{ tweetModel.fullName }} retweeted
+      </span>
+      <span *ngIf="tweetModel.userId === myProfile.id">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="delete(tweetModel)">
+            <mat-icon>delete</mat-icon>
+            <span>remove</span>
           </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="delete(tweetModel)">
-              <mat-icon>delete</mat-icon>
-              <span>remove</span>
-            </button>
-          </mat-menu>
-        </span>
-      </div>
+        </mat-menu>
+      </span>
+    </div>
   </div>
 </div>
 
-<div *ngIf="(parentTweet$|async)==null" >
-        <div class="w-full p-4 border-b border-b-gray-300">
-          <div class="bg-aliceblue rounded-lg w-full px-8 py-6">
-            <span class="font-mono font-semibold text-gray-600">
-              unavailable
-            </span>
-          </div>
+<div *ngIf="(parentTweet$ | async) == null">
+  <div class="w-full p-4 border-b border-b-gray-300">
+    <div class="bg-aliceblue rounded-lg w-full px-8 py-6">
+      <span class="font-mono font-semibold text-gray-600"> unavailable </span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="parentTweet$ | async as tweet">
+  <mat-card class="mat-elevation-z0" [@slideInRight]>
+    <mat-card-header>
+      <div
+        class="avatar cursor-pointer"
+        matCardAvatar
+        [routerLink]="'/home/profile/' + tweet.userId"
+      >
+        <div class="font-bold text-2xl text-gray-500 cursor-pointer">
+          {{ tweet.fullName && tweet.fullName[0] }}
         </div>
+      </div>
+      <mat-card-title
+        style="width: max-content; cursor: pointer"
+        [routerLink]="'/home/profile/' + tweet.userId"
+        >{{ tweet.fullName }}
+      </mat-card-title>
+      <mat-card-subtitle
+        style="width: max-content; cursor: pointer"
+        [routerLink]="'/home/profile/' + tweet.userId"
+        >@{{ tweet.userName }} .
+        {{ tweet.createdAt | timeago: live }}</mat-card-subtitle
+      >
+
+      <mat-card-actions style="background-color: white">
+        <button
+          *ngIf="tweet.userId === myProfile.id"
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+        >
+          <mat-icon class="text-gray-500">more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="edit(tweet)">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="delete(tweet)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </mat-card-actions>
+    </mat-card-header>
+    <mat-card-content>
+      <span class="text-[16px] mb-0" [class.line-clamp-3]="isClamp">
+        {{ tweet.content }}
+      </span>
+      <span
+        (click)="isClamp = !isClamp"
+        class="text-gray-400 hover:underline cursor-pointer"
+        >{{ isClamp ? "see
+            more" : "see less" }}</span
+      >
+      <mat-chip-list class="chip-list my-2" #tagList>
+        <div *ngFor="let tag of tweet.hashTag.split(' ')">
+          <mat-chip
+            style="background-color: aliceblue; font-weight: bolder"
+            *ngIf="tag"
+          >
+            #{{ tag }}
+          </mat-chip>
+        </div>
+      </mat-chip-list>
+    </mat-card-content>
+    <mat-card-footer class="flex flex-col">
+      <div class="flex justify-evenly">
+        <div [class.text-red-500]="tweet.isLiked">
+          <button mat-icon-button (click)="like(tweet)" class="font-thin">
+            <fa-icon [icon]="faHeart" class="text-lg"></fa-icon>
+          </button>
+          {{ tweet.totalLikes }}
+        </div>
+        <div>
+          <button mat-icon-button (click)="isExpanded = !isExpanded">
+            <fa-icon [icon]="faComment" class="text-lg"></fa-icon>
+          </button>
+          {{ tweet.totalComments }}
+        </div>
+        <div>
+          <button mat-icon-button (click)="retweet(tweet)">
+            <fa-icon class="text-lg" [icon]="faRetweet"></fa-icon>
+          </button>
+          {{ tweet.totalRetweets }}
+        </div>
+      </div>
+      <mat-expansion-panel
+        [expanded]="isExpanded"
+        *ngIf="!fullView"
+        (expandedChange)="change()"
+        class="mat-elevation-z0 w-full"
+      >
+        <mat-divider></mat-divider>
+        <div
+          class="my-1 w-max hover:underline cursor-pointer text-blue-500"
+          [routerLink]="'/home/tweet/' + tweet.id"
+          [state]="tweet"
+        >
+          see all comments
+        </div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>comment</mat-label>
+          <input
+            [(ngModel)]="commentText"
+            matInput
+            class="w-full"
+            placeholder="write your comment"
+          />
+          <button
+            mat-icon-button
+            color="primary"
+            matSuffix
+            (click)="comment(tweet)"
+          >
+            <mat-icon>send</mat-icon>
+          </button>
+        </mat-form-field>
+      </mat-expansion-panel>
+    </mat-card-footer>
+  </mat-card>
 </div>
-
-
-<div *ngIf="(parentTweet$|async) as tweet">
-      <mat-card class="mat-elevation-z0" [@slideInRight]>
-        <mat-card-header>
-          <div class="avatar cursor-pointer" matCardAvatar [routerLink]="'/home/profile/' + tweet.userId">
-            <div class="font-bold text-2xl text-gray-500 cursor-pointer">
-              {{ tweet.fullName[0] }}
-            </div>
-          </div>
-          <mat-card-title style="width: max-content;cursor: pointer;" [routerLink]="'/home/profile/' + tweet.userId">{{ tweet.fullName }}
-          </mat-card-title>
-          <mat-card-subtitle style="width: max-content;cursor: pointer;" [routerLink]="'/home/profile/' + tweet.userId">@{{
-            tweet.userName }} .
-            {{ tweet.createdAt | timeago: live }}</mat-card-subtitle>
-
-          <mat-card-actions style="background-color: white">
-            <button *ngIf="tweet.userId === myProfile.id" mat-icon-button [matMenuTriggerFor]="menu">
-              <mat-icon class="text-gray-500">more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="edit(tweet)">
-                <mat-icon>edit</mat-icon>
-                <span>Edit</span>
-              </button>
-              <button mat-menu-item (click)="delete(tweet)">
-                <mat-icon>delete</mat-icon>
-                <span>Delete</span>
-              </button>
-            </mat-menu>
-          </mat-card-actions>
-        </mat-card-header>
-        <mat-card-content>
-          <span class="text-[16px] mb-0" [class.line-clamp-3]="isClamp">
-            {{ tweet.content }}
-          </span>
-          <span (click)="isClamp = !isClamp" class="text-gray-400 hover:underline cursor-pointer">{{ isClamp ? "see
-            more" : "see less" }}</span>
-          <mat-chip-list class="chip-list my-2" #tagList>
-            <div *ngFor="let tag of tweet.hashTag.split(' ')">
-              <mat-chip style="background-color: aliceblue; font-weight: bolder" *ngIf="tag">
-                #{{ tag }}
-              </mat-chip>
-            </div>
-          </mat-chip-list>
-        </mat-card-content>
-        <mat-card-footer class="flex flex-col">
-          <div class="flex justify-evenly">
-            <div [class.text-red-500]="tweet.isLiked">
-              <button mat-icon-button (click)="like(tweet)" class="font-thin">
-                <fa-icon [icon]="faHeart" class="text-lg"></fa-icon>
-              </button>
-              {{ tweet.totalLikes }}
-            </div>
-            <div>
-              <button mat-icon-button (click)="isExpanded = !isExpanded">
-                <fa-icon [icon]="faComment" class="text-lg"></fa-icon>
-              </button>
-              {{ tweet.totalComments }}
-            </div>
-            <div>
-              <button mat-icon-button (click)="retweet(tweet)">
-                <fa-icon class="text-lg" [icon]="faRetweet"></fa-icon>
-              </button>
-              {{ tweet.totalRetweets }}
-            </div>
-          </div>
-          <mat-expansion-panel [expanded]="isExpanded" *ngIf="!fullView" (expandedChange)="change()" class="mat-elevation-z0 w-full">
-            <mat-divider></mat-divider>
-            <div class="my-1 w-max hover:underline cursor-pointer text-blue-500"
-              [routerLink]="'/home/tweet/' + tweet.id" [state]="tweet">
-              see all comments
-            </div>
-            <mat-form-field appearance="outline" class="w-full">
-              <mat-label>comment</mat-label>
-              <input [(ngModel)]="commentText" matInput class="w-full" placeholder="write your comment" />
-              <button mat-icon-button color="primary" matSuffix (click)="comment(tweet)">
-                <mat-icon>send</mat-icon>
-              </button>
-            </mat-form-field>
-          </mat-expansion-panel>
-        </mat-card-footer>
-      </mat-card>
-</div>
-
-
-
-
